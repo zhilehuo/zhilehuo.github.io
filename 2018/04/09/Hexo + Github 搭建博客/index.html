@@ -5,18 +5,18 @@
   
 
   
-  <title>test | 智乐活</title>
+  <title>Hexo + Github 搭建博客 | 智乐活</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Hexo 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。 配置环境安装 Hexo 前，需要检查是否已经安装下列应用；  Node.js Git  如已安装上述必备程序，通过 sudo npm install -g hexo-cli 安装Hexo。 建站流程 在 Github 中创建仓库 userna">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="http://yoursite.com/2018/04/09/test/index.html">
+<meta property="og:title" content="Hexo + Github 搭建博客">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/Hexo + Github 搭建博客/index.html">
 <meta property="og:site_name" content="智乐活">
 <meta property="og:description" content="Hexo 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。 配置环境安装 Hexo 前，需要检查是否已经安装下列应用；  Node.js Git  如已安装上述必备程序，通过 sudo npm install -g hexo-cli 安装Hexo。 建站流程 在 Github 中创建仓库 userna">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-09T07:15:53.477Z">
+<meta property="og:updated_time" content="2018-04-09T07:20:32.729Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
+<meta name="twitter:title" content="Hexo + Github 搭建博客">
 <meta name="twitter:description" content="Hexo 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。 配置环境安装 Hexo 前，需要检查是否已经安装下列应用；  Node.js Git  如已安装上述必备程序，通过 sudo npm install -g hexo-cli 安装Hexo。 建站流程 在 Github 中创建仓库 userna">
   
     <link rel="alternate" href="/atom.xml" title="智乐活" type="application/atom+xml">
@@ -64,9 +64,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Hexo + Github 搭建博客" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/04/09/test/" class="article-date">
+    <a href="/2018/04/09/Hexo + Github 搭建博客/" class="article-date">
   <time datetime="2018-04-09T07:14:39.000Z" itemprop="datePublished">2018-04-09</time>
 </a>
     
@@ -78,7 +78,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      test
+      Hexo + Github 搭建博客
     </h1>
   
 
@@ -106,7 +106,7 @@
 <li>本地创建并切换到 hexo 分支 <code>git checkout -b hexo</code> </li>
 <li>提交本地 hexo 分支，推送并关联远程 hexo 分支</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'init hexo branch'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin hexo</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git add .</span><br><span class="line"><span class="meta">$</span> git commit -m'init hexo branch'</span><br><span class="line"><span class="meta">$</span> git push -u origin hexo</span><br></pre></td></tr></table></figure>
 <ol start="10">
 <li>将 hexo 分支设置为默认分支（使 clone 操作获取 hexo 分支内容）</li>
 <li>生成静态页面并部署至 Github，<code>hexo g -d</code></li>
@@ -119,7 +119,7 @@
 <p>常用参数有 title、date、updated、tags、categories、comments 等。</p>
 <p>Hexo 中分类具有顺序性和层次性，不支持一篇文章有多个同级分类，多个类别时会成为子分类而不是并列分类。</p>
 <h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>首先在 Hexo 根目录下安装主题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
 <p>修改 hexo 根目录配置 <code>_config.yml</code></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
 <p>调整主题配置，修改 <code>theme/yilia/_config.yml</code> ，如</p>
@@ -128,23 +128,13 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/test/" data-id="cjfrwkwmc0001644u02zxc5uz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/09/Hexo + Github 搭建博客/" data-id="cjfrwqt2v0000a04ucjauyxu1" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2018/04/09/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -177,11 +167,7 @@
       <ul>
         
           <li>
-            <a href="/2018/04/09/test/">test</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/09/hello-world/">Hello World</a>
+            <a href="/2018/04/09/Hexo + Github 搭建博客/">Hexo + Github 搭建博客</a>
           </li>
         
       </ul>

@@ -62,9 +62,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Hexo + Github 搭建博客" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/04/09/test/" class="article-date">
+    <a href="/2018/04/09/Hexo + Github 搭建博客/" class="article-date">
   <time datetime="2018-04-09T07:14:39.000Z" itemprop="datePublished">2018-04-09</time>
 </a>
     
@@ -76,7 +76,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/test/">test</a>
+      <a class="article-title" href="/2018/04/09/Hexo + Github 搭建博客/">Hexo + Github 搭建博客</a>
     </h1>
   
 
@@ -104,7 +104,7 @@
 <li>本地创建并切换到 hexo 分支 <code>git checkout -b hexo</code> </li>
 <li>提交本地 hexo 分支，推送并关联远程 hexo 分支</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'init hexo branch'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin hexo</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git add .</span><br><span class="line"><span class="meta">$</span> git commit -m'init hexo branch'</span><br><span class="line"><span class="meta">$</span> git push -u origin hexo</span><br></pre></td></tr></table></figure>
 <ol start="10">
 <li>将 hexo 分支设置为默认分支（使 clone 操作获取 hexo 分支内容）</li>
 <li>生成静态页面并部署至 Github，<code>hexo g -d</code></li>
@@ -117,7 +117,7 @@
 <p>常用参数有 title、date、updated、tags、categories、comments 等。</p>
 <p>Hexo 中分类具有顺序性和层次性，不支持一篇文章有多个同级分类，多个类别时会成为子分类而不是并列分类。</p>
 <h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>首先在 Hexo 根目录下安装主题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
 <p>修改 hexo 根目录配置 <code>_config.yml</code></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
 <p>调整主题配置，修改 <code>theme/yilia/_config.yml</code> ，如</p>
@@ -126,52 +126,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/test/" data-id="cjfrwkwmc0001644u02zxc5uz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/09/hello-world/" class="article-date">
-  <time datetime="2018-04-09T07:03:52.630Z" itemprop="datePublished">2018-04-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/hello-world/" data-id="cjfrwkwm80000644ubzb6jwfv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/09/Hexo + Github 搭建博客/" data-id="cjfrwqt2v0000a04ucjauyxu1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -212,11 +167,7 @@
       <ul>
         
           <li>
-            <a href="/2018/04/09/test/">test</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/09/hello-world/">Hello World</a>
+            <a href="/2018/04/09/Hexo + Github 搭建博客/">Hexo + Github 搭建博客</a>
           </li>
         
       </ul>
