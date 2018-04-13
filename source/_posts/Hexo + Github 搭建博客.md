@@ -2,6 +2,10 @@
 title: Hexo + Github 搭建博客
 date: 2018-04-09 15:14:39
 tags:
+- Hexo
+- Github
+categories:
+- Tech
 ---
 [Hexo](https://hexo.io/) 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。
 
@@ -114,4 +118,7 @@ subnav:
 rss: /atom.xml
 ```
 
+
+
+[查看原文](http://blog.ulyssesss.com/2018/04/09/Hexo-Github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/)
 
