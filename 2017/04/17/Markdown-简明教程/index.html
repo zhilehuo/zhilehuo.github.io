@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>Hexo + Github 搭建博客 · 智乐活</title>
+    <title>Markdown 简明教程 · 智乐活</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -191,7 +191,7 @@
                 <a href="/" >智乐活</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hexo + Github 搭建博客</a>
+                <a href="#" class="post-name">Markdown 简明教程</a>
             </div>
     </div>
     
@@ -223,7 +223,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hexo + Github 搭建博客
+            Markdown 简明教程
             <!-- 404 -->
             
         </h1>
@@ -241,15 +241,13 @@ height:50vh;
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Markdown">Markdown</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/09</span>
+                <span class="post-intro-time">2017/04/17</span>
                 
                 <span class="shareWrapper">
                     <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -350,57 +348,235 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。</p>
-<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><p>安装 Hexo 前，需要检查是否已经安装下列应用；</p>
-<ul>
-<li>Node.js</li>
-<li>Git</li>
+        <h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><blockquote>
+<p>（一）Markdown 是什么</p>
+</blockquote>
+<blockquote>
+<p>（二）为什么要使用 Markdown</p>
+</blockquote>
+<blockquote>
+<p>（三）如何使用 Markdown</p>
+</blockquote>
+<blockquote>
+<p>（四）Markdown 编辑器  </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="（一）Markdown是什么"><a href="#（一）Markdown是什么" class="headerlink" title="（一）Markdown是什么"></a>（一）Markdown是什么</h3><p>Markdown 是一种轻量级的 <strong>标记语言</strong>，以 <strong>纯文本</strong> 的形式编写文档，通过简洁的语法代替排版，并且可以导出 <strong>HTML</strong>、<strong>PDF</strong> 等格式。</p>
+<h3 id="（二）为什么要使用-Markdown"><a href="#（二）为什么要使用-Markdown" class="headerlink" title="（二）为什么要使用 Markdown"></a>（二）为什么要使用 Markdown</h3><ul>
+<li>格式清晰，读起来很舒服</li>
+<li>语法简洁，编写时可以更<strong>专注于内容</strong>而非排版格式  </li>
+<li><strong>纯文本</strong>形式，兼容所有的文本编辑器</li>
+<li>可导出 HTML、PDF 等常见格式  </li>
 </ul>
-<p>如已安装上述必备程序，通过 <code>sudo npm install -g hexo-cli</code> 安装Hexo。</p>
-<h2 id="建站流程"><a href="#建站流程" class="headerlink" title="建站流程"></a>建站流程</h2><ol>
-<li>在 Github 中创建仓库 <code>username.github.io</code></li>
-<li>创建本地目录 <code>username.github.io</code> 并在目录中执行 <code>hexo init</code></li>
-<li>修改目录中的 <code>_config.yml</code> ，详见 <a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="noopener">Hexo 配置</a> ，如下为部署相关配置：</li>
+<h3 id="（三）如何使用-Markdown"><a href="#（三）如何使用-Markdown" class="headerlink" title="（三）如何使用 Markdown"></a>（三）如何使用 Markdown</h3><p>Markdown 的语法非常简单，主要包含以下几个部分：<strong>标题</strong>，<strong>段落</strong>，<strong>列表</strong>，<strong>强调</strong>，<strong>区块引用</strong>，<strong>代码区块</strong>，<strong>行内代码</strong>，<strong>分割线</strong>，<strong>链接</strong>，<strong>自动链接</strong>，<strong>图片</strong>，<strong>反斜杠</strong>，<strong>表格（扩展）</strong>。</p>
+<h4 id="1-标题"><a href="#1-标题" class="headerlink" title="1. 标题"></a>1. 标题</h4><p>标题有两种形式，一种形式为在文字下方添加 <code>=====</code> 或 <code>-----</code>，分别表示一级标题和二级标题，如</p>
+<blockquote>
+<p>一级标题<br><code>=====</code><br>二级标题<br><code>-----</code>  </p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2></blockquote>
+<p>另一种形式在标题前添加 <code>#</code>，添加一个 <code>#</code> 为一级标题，两个为二级标题，最多可至六级标题，如</p>
+<blockquote>
+<p><code># 一级标题</code><br><code>## 二级标题</code><br><code>### 三级标题</code><br><code>#### 四级标题</code><br><code>##### 五级标题</code><br><code>###### 六级标题</code>  </p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p>#一级标题</p>
+<p>##二级标题</p>
+<p>###三级标题</p>
+<p>####四级标题</p>
+<p>#####五级标题</p>
+<p>######六级标题</p>
+</blockquote>
+<h4 id="2-段落"><a href="#2-段落" class="headerlink" title="2. 段落"></a>2. 段落</h4><p>一个 Markdown 段落是由一个或多个连续的文本行组成，<strong>段落前后要有一个以上没有文字的空行</strong>。使用 <strong>两个以上的空格加回车</strong> 可强制在 <strong>段落内换行</strong>。</p>
+<p>段落的开头 <strong>不应该使用空格或者制表符（Tab）缩进</strong>。</p>
+<h4 id="3-列表"><a href="#3-列表" class="headerlink" title="3. 列表"></a>3. 列表</h4><p>Markdown 支持无序列表和有序列表。无序列表使用<strong>星号<code>*</code>、加号<code>+</code>或减号<code>-</code>加至少一个空格或制表符（Tab）</strong>作为列表标记，如</p>
+<blockquote>
+<p><code>* 第一项</code><br><code>* 第二项</code><br><code>* 第三项</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+</blockquote>
+<p>有序列表使用<strong>数字加点<code>.</code>再加至少一个空格或制表符</strong>作为列表标记，如</p>
+<blockquote>
+<p><code>1. 第一项</code><br><code>2. 第二项</code><br><code>3. 第三项</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
 </ol>
-<figure class="highlight plain"><figcaption><span>hexo-deployer-git，npm install hexo-deployer-git --save</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:User/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>安装 hexo-deployer-git，<code>npm install hexo-deployer-git --save</code></li>
-<li>初始化本地 git 仓库，<code>git init</code></li>
-<li>本地仓库关联远程仓库，<code>git remote add origin git@github.com:User/username.github.io.git</code></li>
-<li>本地创建并切换到 hexo 分支 <code>git checkout -b hexo</code> </li>
-<li>提交本地 hexo 分支，推送并关联远程 hexo 分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'init hexo branch'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin hexo</span></span><br></pre></td></tr></table></figure>
-<ol start="10">
-<li>将 hexo 分支设置为默认分支（使 clone 操作获取 hexo 分支内容）</li>
-<li>生成静态页面并部署至 Github，<code>hexo g -d</code></li>
-</ol>
-<h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><p><code>hexo new [layout] &lt;title&gt;</code> 命令用于创建新文章，layout 默认为 post，可以通过修改 -config.yml 指定默认布局。</p>
-<p>使用 layout 参数创建文章时，Hexo 会尝试在 scaffold 目录中寻找对应的模板，根据模板创建文件。</p>
-<p>默认布局中 draft 不会显示在页面中，可通过命令 <code>hexo publish [layout] &lt;title&gt;</code> 发布文章。</p>
-<p>文章上方以 <code>—</code> 分隔的区域用于指定标题等变量，如：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2018/4/9 13:46:25</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>tech</span><br><span class="line"><span class="bullet">- </span>java</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>spring</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>常用参数有 title、date、updated、tags、categories、comments 等。</p>
-<p>Hexo 中分类具有顺序性和层次性，不支持一篇文章有多个同级分类，多个类别时会成为子分类而不是并列分类。</p>
-<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>首先在 Hexo 根目录下安装主题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span></span><br></pre></td></tr></table></figure>
-<p>修改 hexo 根目录配置 <code>_config.yml</code></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
-<p>调整主题配置，修改 <code>theme/yilia/_config.yml</code> ，如</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">主页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">随笔:</span> <span class="string">/tags/随笔/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SubNav</span></span><br><span class="line"><span class="attr">subnav:</span></span><br><span class="line"><span class="attr">  github:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  weibo:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  rss:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  zhihu:</span> <span class="string">"#"</span></span><br><span class="line">  <span class="comment">#qq: "#"</span></span><br><span class="line">  <span class="comment">#weixin: "#"</span></span><br><span class="line">  <span class="comment">#jianshu: "#"</span></span><br><span class="line">  <span class="comment">#douban: "#"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rss:</span> <span class="string">/atom.xml</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://blog.ulyssesss.com/2018/04/09/Hexo-Github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" target="_blank" rel="noopener">查看原文</a></p>
+</blockquote>
+<h4 id="4-强调"><a href="#4-强调" class="headerlink" title="4. 强调"></a>4. 强调</h4><p>内容前后加上 <strong>星号 <code>*</code> 或 下划线<code>_</code></strong> 表示 <strong>强调</strong>。前后加一个星号或下划线为 <em>斜体</em>，两个为 <strong>粗体</strong>，三个为 <strong><em>粗斜体</em></strong>。如</p>
+<blockquote>
+<p><code>*强调*</code><br><code>**强调**</code><br><code>***强调***</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p><em>强调</em><br><strong>强调</strong><br><strong><em>强调</em></strong></p>
+</blockquote>
+<h4 id="5-区块引用"><a href="#5-区块引用" class="headerlink" title="5. 区块引用"></a>5. 区块引用</h4><p>在段落的 <strong>第一行或每行开头</strong> 使用 <code>&gt;</code> 表示引用，多个 <code>&gt;</code> 表示嵌套，如</p>
+<blockquote>
+<p><code>&gt;区块引用</code><br><code>&gt;&gt;嵌套引用</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p>区块引用</p>
+<blockquote>
+<p>嵌套引用</p>
+</blockquote>
+</blockquote>
+<h4 id="6-代码区块"><a href="#6-代码区块" class="headerlink" title="6. 代码区块"></a>6. 代码区块</h4><p>每行前加 <strong>4个空格或1个制表符（Tab）</strong> 表示代码区块，效果为</p>
+<pre><code>public static void main(string[] args){
+    System.out.println(&quot;Hello, world&quot;);
+}
+</code></pre><h4 id="7-行内代码"><a href="#7-行内代码" class="headerlink" title="7. 行内代码"></a>7. 行内代码</h4><p>前后含 <strong>反引号( ` )</strong> 的内容为行内代码，如</p>
+<blockquote>
+<pre><code>`System.out.println(&quot;Hello, world&quot;)` 表示输出&quot;Hello, world&quot;。
+</code></pre></blockquote>
+<p>效果为</p>
+<blockquote>
+<p><code>System.out.println(&quot;Hello, world&quot;)</code> 表示输出”Hello, world”。</p>
+</blockquote>
+<h4 id="8-分割线"><a href="#8-分割线" class="headerlink" title="8. 分割线"></a>8. 分割线</h4><p>三个或三个以上的星号 <code>*</code>、减号 <code>-</code>及下划线 <code>_</code>表示 <strong>分割线</strong>，中间可插入空格，如</p>
+<blockquote>
+<p><code>***</code><br><code>- - -</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<hr>
+<hr>
+</blockquote>
+<h4 id="9-链接"><a href="#9-链接" class="headerlink" title="9. 链接"></a>9. 链接</h4><p>Markdown 支持两种形式的链接，<strong>行内式</strong> 和 <strong>参考式</strong>。<br><strong>行内式</strong> 的链接文字用中括号 <code>[]</code> 标记，方括号后紧接小括号 <code>()</code> 标记网址链接，可在网址链接后用引号标记链接的 title 文字，如</p>
+<blockquote>
+<p><code>[GitHub](https://github.com/ &quot;Github&quot;)</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p><a href="https://github.com/" title="GitHub" target="_blank" rel="noopener">GitHub</a></p>
+</blockquote>
+<p><strong>参考式</strong> 的链接文字同样使用中括号 <code>[]</code> 标记，后面再接一个中括号标记链接的标识，需要在文件的任意处通过 <code>[id]:url &quot;title&quot;</code> 标记链接，如</p>
+<blockquote>
+<p><code>[GitHub][1]</code><br><code>[1]:https://github.com/ &quot;GitHub&quot;</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p>[GitHub][1]<br>[1]:<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a> “GitHub”</p>
+</blockquote>
+<h4 id="10-自动链接"><a href="#10-自动链接" class="headerlink" title="10. 自动链接"></a>10. 自动链接</h4><p>Markdown 支持以 <strong>简短的自动链接</strong> 形式处理网址和电子邮箱，用尖括号 <code>&lt;&gt;</code> 标记，如</p>
+<blockquote>
+<p><code>&lt;https://github.com&gt;</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p><a href="https://github.com" target="_blank" rel="noopener">https://github.com</a></p>
+</blockquote>
+<h4 id="11-图片"><a href="#11-图片" class="headerlink" title="11. 图片"></a>11. 图片</h4><p>Markdown 中标记图片的方式与标记链接类似，同样允许 <strong>行内式</strong> 和 <strong>参考式</strong> 两种形式，只需在链接文字的标记前加一个感叹号 <code>!</code>，如</p>
+<blockquote>
+<p><code>![GitHub Icon](https://github.com/fluidicon.png &quot;GitHub Icon&quot;)</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p><img src="https://github.com/fluidicon.png" alt="GitHub Icon" title="GitHub Icon"></p>
+</blockquote>
+<p><strong><em>遗憾的是 Markdown 不支持指定图片的宽高</em></strong></p>
+<h4 id="12-反斜杠"><a href="#12-反斜杠" class="headerlink" title="12. 反斜杠"></a>12. 反斜杠</h4><p>通过反斜杠 <code>\</code> 可插入一些在 Markdown 语法中有其他意义的符号，如</p>
+<blockquote>
+<p><code>\*前后为星号\*</code></p>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<p>*前后为星号*</p>
+</blockquote>
+<p>Markdown 支持在以下符号前加反斜杠 <code>\</code> 来帮助插入普通的符号：</p>
+<pre><code>\    反斜杠   
+`    反引号
+*    星号
+_    下划线
+{}    大括号
+[]    中括号
+()    小括号
+#    井号
++    加好
+-    减号
+.    英文句号
+!    感叹号
+</code></pre><h4 id="13-表格-扩展"><a href="#13-表格-扩展" class="headerlink" title="13. 表格(扩展)"></a>13. 表格(扩展)</h4><p>表格为 <strong>扩展</strong> 的 Markdown 语法，<code>|</code> 表示纵向的边界，表头和内容之间用 <strong>三个或三个以上减号 <code>-</code> 隔开</strong>，可以使用冒号 <code>:</code> 设置 <strong>对齐方式</strong>。冒号 <code>:</code> 在左边表示左对齐，在右边表示右对齐，两边都有冒号 <code>:</code> 表示居中，不使用冒号 <code>:</code> 时默认 <strong>左对齐</strong>，如</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">gender</th>
+<th style="text-align:center">age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Jack</td>
+<td style="text-align:center">boy</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">Amy</td>
+<td style="text-align:center">girl</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>效果为</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">gender</th>
+<th style="text-align:center">age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Jack</td>
+<td style="text-align:center">boy</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">Amy</td>
+<td style="text-align:center">girl</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="（四）Markdown-编辑器"><a href="#（四）Markdown-编辑器" class="headerlink" title="（四）Markdown 编辑器"></a>（四）Markdown 编辑器</h3><p>Mac 下好用的 Markdown 编辑器有很多，如 <a href="http://macdown.uranusjr.com/" target="_blank" rel="noopener">MacDown</a>，<a href="http://25.io/mou/" target="_blank" rel="noopener">Mou</a>，<a href="https://typora.io/" target="_blank" rel="noopener">Typora</a> 等。</p>
+<p>Windows 下可以使用 <a href="http://www.markdownpad.com/" target="_blank" rel="noopener">MarkdownPad</a>，<a href="https://maxiang.io/" target="_blank" rel="noopener">马克飞象</a>，<a href="https://note.youdao.com/" target="_blank" rel="noopener">有道云笔记</a> 等。</p>
+<p><a href="http://blog.ulyssesss.com/2017/04/17/Markdown-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener">查看原文</a></p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/04/20/SSL 认证体系备忘录/" title= SSL 认证体系备忘录 >
+                    <div class="nextTitle">SSL 认证体系备忘录</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2017/12/12/Git 操作指南/" title= Git 操作指南 >
-                    <div class="prevTitle">Git 操作指南</div>
+                <a href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" title= Xcode 自动批量打包脚本使用方法 >
+                    <div class="prevTitle">Xcode 自动批量打包脚本使用方法</div>
                 </a>
             
         </li>
@@ -462,7 +638,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置环境"><span class="toc-number">1.</span> <span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建站流程"><span class="toc-number">2.</span> <span class="toc-text">建站流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写作"><span class="toc-number">3.</span> <span class="toc-text">写作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用主题"><span class="toc-number">4.</span> <span class="toc-text">使用主题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要内容"><span class="toc-number">1.</span> <span class="toc-text">主要内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正文"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（一）Markdown是什么"><span class="toc-number">2.1.</span> <span class="toc-text">（一）Markdown是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（二）为什么要使用-Markdown"><span class="toc-number">2.2.</span> <span class="toc-text">（二）为什么要使用 Markdown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（三）如何使用-Markdown"><span class="toc-number">2.3.</span> <span class="toc-text">（三）如何使用 Markdown</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-标题"><span class="toc-number">2.3.1.</span> <span class="toc-text">1. 标题</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一级标题"><span class="toc-number"></span> <span class="toc-text">一级标题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二级标题"><span class="toc-number">1.</span> <span class="toc-text">二级标题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-段落"><span class="toc-number">1.0.1.</span> <span class="toc-text">2. 段落</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-列表"><span class="toc-number">1.0.2.</span> <span class="toc-text">3. 列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-强调"><span class="toc-number">1.0.3.</span> <span class="toc-text">4. 强调</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-区块引用"><span class="toc-number">1.0.4.</span> <span class="toc-text">5. 区块引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-代码区块"><span class="toc-number">1.0.5.</span> <span class="toc-text">6. 代码区块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-行内代码"><span class="toc-number">1.0.6.</span> <span class="toc-text">7. 行内代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-分割线"><span class="toc-number">1.0.7.</span> <span class="toc-text">8. 分割线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-链接"><span class="toc-number">1.0.8.</span> <span class="toc-text">9. 链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-自动链接"><span class="toc-number">1.0.9.</span> <span class="toc-text">10. 自动链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-图片"><span class="toc-number">1.0.10.</span> <span class="toc-text">11. 图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-反斜杠"><span class="toc-number">1.0.11.</span> <span class="toc-text">12. 反斜杠</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-表格-扩展"><span class="toc-number">1.0.12.</span> <span class="toc-text">13. 表格(扩展)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（四）Markdown-编辑器"><span class="toc-number">1.1.</span> <span class="toc-text">（四）Markdown 编辑器</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

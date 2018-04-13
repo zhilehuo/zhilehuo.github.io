@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>Hexo + Github 搭建博客 · 智乐活</title>
+    <title>Xcode 自动批量打包脚本使用方法 · 智乐活</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -191,7 +191,7 @@
                 <a href="/" >智乐活</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hexo + Github 搭建博客</a>
+                <a href="#" class="post-name">Xcode 自动批量打包脚本使用方法</a>
             </div>
     </div>
     
@@ -223,7 +223,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hexo + Github 搭建博客
+            Xcode 自动批量打包脚本使用方法
             <!-- 404 -->
             
         </h1>
@@ -241,15 +241,15 @@ height:50vh;
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Xcode">Xcode</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/09</span>
+                <span class="post-intro-time">2017/04/14</span>
                 
                 <span class="shareWrapper">
                     <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -350,57 +350,79 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。</p>
-<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><p>安装 Hexo 前，需要检查是否已经安装下列应用；</p>
-<ul>
-<li>Node.js</li>
-<li>Git</li>
+        <h4 id="所需工具"><a href="#所需工具" class="headerlink" title="所需工具"></a>所需工具</h4><ul>
+<li>xlcodetool.sh<blockquote>
+<p>SVN地址：<code>svn://svn.zaijiawan.com/mengwenfeng/CommonLib/PackageTool</code></p>
+</blockquote>
+</li>
 </ul>
-<p>如已安装上述必备程序，通过 <code>sudo npm install -g hexo-cli</code> 安装Hexo。</p>
-<h2 id="建站流程"><a href="#建站流程" class="headerlink" title="建站流程"></a>建站流程</h2><ol>
-<li>在 Github 中创建仓库 <code>username.github.io</code></li>
-<li>创建本地目录 <code>username.github.io</code> 并在目录中执行 <code>hexo init</code></li>
-<li>修改目录中的 <code>_config.yml</code> ，详见 <a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="noopener">Hexo 配置</a> ，如下为部署相关配置：</li>
-</ol>
-<figure class="highlight plain"><figcaption><span>hexo-deployer-git，npm install hexo-deployer-git --save</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:User/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>安装 hexo-deployer-git，<code>npm install hexo-deployer-git --save</code></li>
-<li>初始化本地 git 仓库，<code>git init</code></li>
-<li>本地仓库关联远程仓库，<code>git remote add origin git@github.com:User/username.github.io.git</code></li>
-<li>本地创建并切换到 hexo 分支 <code>git checkout -b hexo</code> </li>
-<li>提交本地 hexo 分支，推送并关联远程 hexo 分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'init hexo branch'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin hexo</span></span><br></pre></td></tr></table></figure>
-<ol start="10">
-<li>将 hexo 分支设置为默认分支（使 clone 操作获取 hexo 分支内容）</li>
-<li>生成静态页面并部署至 Github，<code>hexo g -d</code></li>
-</ol>
-<h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><p><code>hexo new [layout] &lt;title&gt;</code> 命令用于创建新文章，layout 默认为 post，可以通过修改 -config.yml 指定默认布局。</p>
-<p>使用 layout 参数创建文章时，Hexo 会尝试在 scaffold 目录中寻找对应的模板，根据模板创建文件。</p>
-<p>默认布局中 draft 不会显示在页面中，可通过命令 <code>hexo publish [layout] &lt;title&gt;</code> 发布文章。</p>
-<p>文章上方以 <code>—</code> 分隔的区域用于指定标题等变量，如：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2018/4/9 13:46:25</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>tech</span><br><span class="line"><span class="bullet">- </span>java</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>spring</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>常用参数有 title、date、updated、tags、categories、comments 等。</p>
-<p>Hexo 中分类具有顺序性和层次性，不支持一篇文章有多个同级分类，多个类别时会成为子分类而不是并列分类。</p>
-<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>首先在 Hexo 根目录下安装主题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span></span><br></pre></td></tr></table></figure>
-<p>修改 hexo 根目录配置 <code>_config.yml</code></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
-<p>调整主题配置，修改 <code>theme/yilia/_config.yml</code> ，如</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">主页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">随笔:</span> <span class="string">/tags/随笔/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SubNav</span></span><br><span class="line"><span class="attr">subnav:</span></span><br><span class="line"><span class="attr">  github:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  weibo:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  rss:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  zhihu:</span> <span class="string">"#"</span></span><br><span class="line">  <span class="comment">#qq: "#"</span></span><br><span class="line">  <span class="comment">#weixin: "#"</span></span><br><span class="line">  <span class="comment">#jianshu: "#"</span></span><br><span class="line">  <span class="comment">#douban: "#"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rss:</span> <span class="string">/atom.xml</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://blog.ulyssesss.com/2018/04/09/Hexo-Github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" target="_blank" rel="noopener">查看原文</a></p>
+<h4 id="1-Xcode中配置"><a href="#1-Xcode中配置" class="headerlink" title="1.Xcode中配置"></a>1.Xcode中配置</h4><ul>
+<li>检查<code>target</code>的名字（名字中间不要出现空格）<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/c7bee8c083854df7a491f4d90023d455-201704143.09.34.png" alt="c7bee8c083854df7a491f4d90023d455-201704143.09.34.png"> </li>
+</ul>
+<ul>
+<li>将<code>scheme</code>里的名字需要和<code>target</code>的名字对应<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/62968b7b442d4048a41c3e1ac957ee2f-201704143.22.27.png" alt="62968b7b442d4048a41c3e1ac957ee2f-201704143.22.27.png"> </li>
+</ul>
+<ul>
+<li><p>修改target对应的info.plist名字(如 <code>FM收音机tian</code> 对应的是 <code>FM收音机.plist</code>)，需要修改三个地方，名称保持一致</p>
+<pre><code>  &gt; `Build Settings`
+![76ab7de08e5a40b18fee7cc01803ce9f-201704143.25.00.png](http://onpyrjcca.bkt.clouddn.com//file/2017/4/76ab7de08e5a40b18fee7cc01803ce9f-201704143.25.00.png) 
+</code></pre></li>
+</ul>
+<pre><code>&gt; `Xcode目录`
+</code></pre><p>  <img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/8c336d66f965409783541f6e6cd59439-201704143.26.07.png" alt="8c336d66f965409783541f6e6cd59439-201704143.26.07.png"> </p>
+<pre><code>&gt; `文件目录`
+</code></pre><p>  <img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/e2753db7710c48e69b6874e89c58fa7c-201704143.27.11.png" alt="e2753db7710c48e69b6874e89c58fa7c-201704143.27.11.png"> </p>
+<ul>
+<li>将<code>info.plist</code>的位置和工程文件<code>***.xcxcodeproj</code>在同一目录<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/aca23d27ba6a4f7e89f633340df0b42d-201704143.28.35.png" alt="aca23d27ba6a4f7e89f633340df0b42d-201704143.28.35.png"> </li>
+</ul>
+<ul>
+<li><p><code>target</code>对应的证书需要手动选择，不能使用<code>Automatically manage signing</code><br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/15b7a201aae9463ea9e2ff2680c033b0-201704143.29.37.png" alt="15b7a201aae9463ea9e2ff2680c033b0-201704143.29.37.png"> </p>
+</li>
+<li><p>检查<code>Build Setting</code>中的证书和开发者是否选择正确<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/371fbce1d9c7448596ec649520b0881a-201704143.33.01.png" alt="371fbce1d9c7448596ec649520b0881a-201704143.33.01.png"> </p>
+</li>
+</ul>
+<h4 id="2-脚本使用"><a href="#2-脚本使用" class="headerlink" title="2.脚本使用"></a>2.脚本使用</h4><ul>
+<li><p>打开终端，将<code>xlcodetool.sh</code>拖入，再将需要打包的工程拖入，如<code>CustomAudio.xcodeproj</code>,然后键入回车</p>
+<blockquote>
+<p>注意：没有使用<code>cocoapods</code>的拖入<code>***.xcodeproj</code>,使用<code>cocoapods</code>的拖入<code>***.xcworkspace</code><br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/b5af421f396d4790a86d82506a6176fa-201704143.36.24.png" alt="b5af421f396d4790a86d82506a6176fa-201704143.36.24.png"> </p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>输入想打包的版本号，如需多版本打包则在版本号中间加入空格，完成后键入回车<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/26f3c0c84c8244978137203f1414077d-201704143.38.49.png" alt="26f3c0c84c8244978137203f1414077d-201704143.38.49.png"> </li>
+</ul>
+<ul>
+<li>选择打包方式，1是选择一个<code>target</code>,2是将工程内所有<code>target</code>全部打包<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/180651e3c95344ecb18397131d331581-201704143.41.08.png" alt="180651e3c95344ecb18397131d331581-201704143.41.08.png"> </li>
+</ul>
+<ul>
+<li>如果选择<code>2</code>则开始自动打包，选择<code>1</code>，将会出现工程内所有<code>target</code>的列表，输入想打包的<code>target</code>名(只支持单个)<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/55c1030d8180415c8f20567783e59b63-201704143.42.44.png" alt="55c1030d8180415c8f20567783e59b63-201704143.42.44.png"> </li>
+</ul>
+<h4 id="3-完成打包"><a href="#3-完成打包" class="headerlink" title="3.完成打包"></a>3.完成打包</h4><ul>
+<li><code>archive</code>文件将会存放在<code>/build/archives</code>中<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/00c02bc54f4647bb99a72475ac1b1bf6-201704143.52.15.png" alt="00c02bc54f4647bb99a72475ac1b1bf6-201704143.52.15.png"> </li>
+</ul>
+<ul>
+<li><p><code>ipa</code>文件将会存放在<code>/build/ipa</code>中<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/15e67253ab1c46d09fbf3008647a78dc-201704143.54.09.png" alt="15e67253ab1c46d09fbf3008647a78dc-201704143.54.09.png"> </p>
+</li>
+<li><p>如想打出<code>ipa</code>包的名字，在<code>scheme</code>中修改<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/17c1bd9af8de40eab8a6999dd3dcbc9a-201704143.57.44.png" alt="17c1bd9af8de40eab8a6999dd3dcbc9a-201704143.57.44.png"> </p>
+</li>
+</ul>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/04/17/Markdown-简明教程/" title= Markdown 简明教程 >
+                    <div class="nextTitle">Markdown 简明教程</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2017/12/12/Git 操作指南/" title= Git 操作指南 >
-                    <div class="prevTitle">Git 操作指南</div>
+                <a href= "/2017/04/01/Jetty 概览/" title= Jetty 概览 >
+                    <div class="prevTitle">Jetty 概览</div>
                 </a>
             
         </li>
@@ -462,7 +484,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置环境"><span class="toc-number">1.</span> <span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建站流程"><span class="toc-number">2.</span> <span class="toc-text">建站流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写作"><span class="toc-number">3.</span> <span class="toc-text">写作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用主题"><span class="toc-number">4.</span> <span class="toc-text">使用主题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#所需工具"><span class="toc-number">1.</span> <span class="toc-text">所需工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Xcode中配置"><span class="toc-number">2.</span> <span class="toc-text">1.Xcode中配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-脚本使用"><span class="toc-number">3.</span> <span class="toc-text">2.脚本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-完成打包"><span class="toc-number">4.</span> <span class="toc-text">3.完成打包</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

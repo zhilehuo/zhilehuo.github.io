@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>Hexo + Github 搭建博客 · 智乐活</title>
+    <title>Jetty UrlRewrite 使用 · 智乐活</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -191,7 +191,7 @@
                 <a href="/" >智乐活</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hexo + Github 搭建博客</a>
+                <a href="#" class="post-name">Jetty UrlRewrite 使用</a>
             </div>
     </div>
     
@@ -223,7 +223,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hexo + Github 搭建博客
+            Jetty UrlRewrite 使用
             <!-- 404 -->
             
         </h1>
@@ -241,15 +241,13 @@ height:50vh;
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/09</span>
+                <span class="post-intro-time">2017/07/12</span>
                 
                 <span class="shareWrapper">
                     <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -350,57 +348,144 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。</p>
-<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><p>安装 Hexo 前，需要检查是否已经安装下列应用；</p>
-<ul>
-<li>Node.js</li>
-<li>Git</li>
-</ul>
-<p>如已安装上述必备程序，通过 <code>sudo npm install -g hexo-cli</code> 安装Hexo。</p>
-<h2 id="建站流程"><a href="#建站流程" class="headerlink" title="建站流程"></a>建站流程</h2><ol>
-<li>在 Github 中创建仓库 <code>username.github.io</code></li>
-<li>创建本地目录 <code>username.github.io</code> 并在目录中执行 <code>hexo init</code></li>
-<li>修改目录中的 <code>_config.yml</code> ，详见 <a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="noopener">Hexo 配置</a> ，如下为部署相关配置：</li>
+        <h4 id="Jetty下载"><a href="#Jetty下载" class="headerlink" title="Jetty下载"></a><a href="https://www.eclipse.org/jetty/download.html" target="_blank" rel="noopener">Jetty下载</a></h4><h4 id="Jetty文档"><a href="#Jetty文档" class="headerlink" title="Jetty文档"></a><a href="http://www.eclipse.org/jetty/documentation/current/index.html" target="_blank" rel="noopener">Jetty文档</a></h4><h2 id="UrlRewrite"><a href="#UrlRewrite" class="headerlink" title="UrlRewrite"></a>UrlRewrite</h2><blockquote>
+<ol>
+<li>更加简洁明快，例如<code>http://www.zhilehuo.com/video.jsp?id=1</code>的网址可以使用rewrite写成<code>http://www.zhilehuo.com/video/1.html</code></li>
+<li>提高安全性，有效避免一些参数名，ID等直接暴露在用户面前，同时不出    现<code>.jsp</code>、<code>.aspx</code>等字眼，能够隐藏网站开发语言</li>
+<li>有利于搜索引擎更好的抓取网站内容，搜索引擎更喜欢静态页面形式的网页，对静态页面的评分相对高于动态页面，使用UrlRewrite重写URl后更容易被搜索引擎收录</li>
 </ol>
-<figure class="highlight plain"><figcaption><span>hexo-deployer-git，npm install hexo-deployer-git --save</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:User/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>安装 hexo-deployer-git，<code>npm install hexo-deployer-git --save</code></li>
-<li>初始化本地 git 仓库，<code>git init</code></li>
-<li>本地仓库关联远程仓库，<code>git remote add origin git@github.com:User/username.github.io.git</code></li>
-<li>本地创建并切换到 hexo 分支 <code>git checkout -b hexo</code> </li>
-<li>提交本地 hexo 分支，推送并关联远程 hexo 分支</li>
+</blockquote>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>license-eplv10-aslv20.html</td>
+<td>Jetty的许可文件</td>
+</tr>
+<tr>
+<td>README.txt</td>
+<td>有用的开始信息</td>
+</tr>
+<tr>
+<td>VERSION.txt</td>
+<td>版本信息</td>
+</tr>
+<tr>
+<td>bin/</td>
+<td>存放在Unix系统下运行的shell脚本</td>
+</tr>
+<tr>
+<td>demo-base/</td>
+<td>一个可运行包含示例web应用的Jetty服务器基目录</td>
+</tr>
+<tr>
+<td>etc/</td>
+<td>Jetty的配置文件</td>
+</tr>
+<tr>
+<td>lib/</td>
+<td>Jetty运行所必须的jar文件</td>
+</tr>
+<tr>
+<td>logs/</td>
+<td>日志</td>
+</tr>
+<tr>
+<td>modules/</td>
+<td>各个模块</td>
+</tr>
+<tr>
+<td>notice.html</td>
+<td>许可信息等</td>
+</tr>
+<tr>
+<td>resources/</td>
+<td>包含新增到classpath配置文件夹，如log4j.properties</td>
+</tr>
+<tr>
+<td>start.ini</td>
+<td>存放启动信息</td>
+</tr>
+<tr>
+<td>start.jar</td>
+<td>运行Jetty的jar</td>
+</tr>
+<tr>
+<td>webapps/</td>
+<td>一个用来存放运行在默认配置下的Jetty Web应用目录</td>
+</tr>
+</tbody>
+</table>
+<p>OK，看完下载解压后的目录结构，进行Rewrite之前肯定先要跑一个项目看看效果。</p>
+<h2 id="运行Jetty"><a href="#运行Jetty" class="headerlink" title="运行Jetty"></a>运行Jetty</h2><p>执行以下代码，默认在8080端口开启服务</p>
+<pre><code>cd $JETTY_HOME
+java -jar start.jar
+</code></pre><p>执行成功会出现以下信息</p>
+<pre><code>2017-07-12 15:01:02.906:INFO::main: Logging initialized @417ms
+2017-07-12 15:01:02.956:WARN:oejs.HomeBaseWarning:main: This instance of Jetty is not running from a separate {jetty.base} directory, this is not recommended.  See documentation at http://www.eclipse.org/jetty/documentation/current/startup.html
+2017-07-12 15:01:03.126:INFO:oejs.Server:main: jetty-9.2.22.v20170606
+2017-07-12 15:01:03.144:INFO:oejdp.ScanningAppProvider:main: Deployment monitor [file:/Users/user/Desktop/jetty/webapps/] at interval 1
+2017-07-12 15:01:04.156:INFO:oejsh.ContextHandler:main: Started o.e.j.w.WebAppContext@3c756e4d{/test,file:/Users/user/Desktop/jetty/webapps/test/,AVAILABLE}{/test}
+2017-07-12 15:01:04.177:INFO:oejs.ServerConnector:main: Started ServerConnector@52a8ebc{HTTP/1.1}{0.0.0.0:8080}
+2017-07-12 15:01:04.178:INFO:oejs.Server:main: Started @1689ms
+</code></pre><p>这个时候可以通过浏览器访问<code>http://localhost:8080</code> 但是这时候你会惊喜的发现你看到了一个伟大的404错误，为啥呢？因为你的<code>$JETTY_HOME/webapps</code> 目录下没有部署任何web应用。但是刚刚目录结构有提到一个<code>demo-base</code>是一个包含示例web应用的服务器基目录，那么，我们运行这个demo看看：</p>
+<pre><code>cd $JETTY_HOME/demo-base/
+java -jar $JETTY_HOME/start.jar
+</code></pre><p>这次运行成功之后将会看到以下信息：<br>这次运行成功之后将会看到以下信息：</p>
+<pre><code>2017-07-12 15:11:40.083:INFO::main: Logging initialized @394ms
+2017-07-12 15:11:40.346:WARN::main: demo test-realm is deployed. DO NOT USE IN PRODUCTION!
+2017-07-12 15:11:40.352:INFO:oejs.Server:main: jetty-9.2.22.v20170606
+2017-07-12 15:11:40.372:INFO:oejdp.ScanningAppProvider:main: Deployment monitor [file:/Users/user/Desktop/jetty/demo-base/webapps/] at interval 1
+2017-07-12 15:11:40.612:WARN::main: test-jaas webapp is deployed. DO NOT USE IN PRODUCTION!
+2017-07-12 15:11:41.039:INFO:oejsh.ContextHandler:main: Started o.e.j.w.WebAppContext@343f4d3d{/test-jaas,file:/private/var/folders/7j/v6j553qx4n9d21lzcjk3w_yw0000gp/T/jetty-0.0.0.0-8080-test-jaas.war-_test-jaas-any-6566505087846391340.dir/webapp/,AVAILABLE}{/test-jaas.war}
+......
+......
+2017-07-12 15:11:42.152:INFO:oejs.Server:main: Started @2463ms
+</code></pre><p>这次有点过分，输出好多，为了避免凑字数嫌疑，我加上了省略号<br>再次通过浏览器访问<code>http://localhost:8080</code> 这个时候就可以看到Jetty的欢迎页</p>
+<p><img src="http://images2015.cnblogs.com/blog/936870/201609/936870-20160902101000277-826824358.png" alt="Jetty欢迎页"></p>
+<p>好吧，用jetty开启一个服务，也看到了欢迎页了，到此结束，直接看配置Rewrite吧。</p>
+<h2 id="Rewrite使用"><a href="#Rewrite使用" class="headerlink" title="Rewrite使用"></a>Rewrite使用</h2><ol>
+<li>首先直接在Jetty中的webapps中部署项目，在这里面就跟正常的使用tomcat发布web应用一样，使用Intellij IDEA的可以在<code>Project Structure &gt; Artifacts</code> 中添加一个<code>:war exploded</code> 后，指定输出目录后，便可以得到一个直接部署的war包，放在webapps中就可以了。当然还有个粗鲁的方法就是直接找到你的项目位置，直接复制需要部署的目录文件夹，例如使用Intellij IDEA，就是项目的web文件夹复制过去就行。</li>
+<li>在Jetty的根目录中新建一个文件夹(test_etc)存放Rewrite的配置xml文件。</li>
+<li>开始根据项目进行编写Rewrite配置(官网和<code>demo-base</code>中的<code>etc/demo-rewrite-rules.xml</code>均可以进行参考)，后面我将会用实际代码举例。</li>
+<li>将此xml命名为rewrite.xml放入刚刚新建的文件夹中。</li>
+<li><p>为服务器添加重写模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $JETTY_HOME</span><br><span class="line">java -jar start.jar --add-to-start=rewrite</span><br></pre></td></tr></table></figure>
+<p>然后你可以在Jetty根目录的<code>start.ini</code>中看到新增了一句 <code>--module=rewrite</code> ,然后在这句后面添上刚刚配置的rewrite.xml文件路径(此处例子全部是配置在Jetty的根目录的，可以直接写成<code>test_etc/rewrite.xml</code>)</p>
+</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'init hexo branch'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin hexo</span></span><br></pre></td></tr></table></figure>
-<ol start="10">
-<li>将 hexo 分支设置为默认分支（使 clone 操作获取 hexo 分支内容）</li>
-<li>生成静态页面并部署至 Github，<code>hexo g -d</code></li>
-</ol>
-<h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><p><code>hexo new [layout] &lt;title&gt;</code> 命令用于创建新文章，layout 默认为 post，可以通过修改 -config.yml 指定默认布局。</p>
-<p>使用 layout 参数创建文章时，Hexo 会尝试在 scaffold 目录中寻找对应的模板，根据模板创建文件。</p>
-<p>默认布局中 draft 不会显示在页面中，可通过命令 <code>hexo publish [layout] &lt;title&gt;</code> 发布文章。</p>
-<p>文章上方以 <code>—</code> 分隔的区域用于指定标题等变量，如：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2018/4/9 13:46:25</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>tech</span><br><span class="line"><span class="bullet">- </span>java</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>spring</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>常用参数有 title、date、updated、tags、categories、comments 等。</p>
-<p>Hexo 中分类具有顺序性和层次性，不支持一篇文章有多个同级分类，多个类别时会成为子分类而不是并列分类。</p>
-<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>首先在 Hexo 根目录下安装主题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span></span><br></pre></td></tr></table></figure>
-<p>修改 hexo 根目录配置 <code>_config.yml</code></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
-<p>调整主题配置，修改 <code>theme/yilia/_config.yml</code> ，如</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">主页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">随笔:</span> <span class="string">/tags/随笔/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SubNav</span></span><br><span class="line"><span class="attr">subnav:</span></span><br><span class="line"><span class="attr">  github:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  weibo:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  rss:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  zhihu:</span> <span class="string">"#"</span></span><br><span class="line">  <span class="comment">#qq: "#"</span></span><br><span class="line">  <span class="comment">#weixin: "#"</span></span><br><span class="line">  <span class="comment">#jianshu: "#"</span></span><br><span class="line">  <span class="comment">#douban: "#"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rss:</span> <span class="string">/atom.xml</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://blog.ulyssesss.com/2018/04/09/Hexo-Github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" target="_blank" rel="noopener">查看原文</a></p>
+<h3 id="rewrite的匹配规则xml文件示例："><a href="#rewrite的匹配规则xml文件示例：" class="headerlink" title="rewrite的匹配规则xml文件示例："></a>rewrite的匹配规则xml文件示例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE Configure PUBLIC &quot;-//Jetty//Configure//EN&quot; &quot;http://www.eclipse.org/jetty/configure_9_3.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;Configure id=&quot;Server&quot; class=&quot;org.eclipse.jetty.server.Server&quot;&gt;</span><br><span class="line">  &lt;Ref refid=&quot;Rewrite&quot;&gt;</span><br><span class="line">      &lt;!-- Add rule to protect against IE ssl bug --&gt;</span><br><span class="line">      &lt;Call name=&quot;addRule&quot;&gt;</span><br><span class="line">        &lt;Arg&gt;</span><br><span class="line">          &lt;New class=&quot;org.eclipse.jetty.rewrite.handler.MsieSslRule&quot;/&gt;</span><br><span class="line">        &lt;/Arg&gt;</span><br><span class="line">      &lt;/Call&gt;</span><br><span class="line"></span><br><span class="line">      &lt;!-- redirect from the welcome page to a specific page --&gt;</span><br><span class="line">      &lt;Call name=&quot;addRule&quot;&gt;</span><br><span class="line">        &lt;Arg&gt;</span><br><span class="line">          &lt;New class=&quot;org.eclipse.jetty.rewrite.handler.RewritePatternRule&quot;&gt;</span><br><span class="line">            &lt;Set name=&quot;pattern&quot;&gt;/test.html&lt;/Set&gt;</span><br><span class="line">            &lt;Set name=&quot;replacement&quot;&gt;/test/world.html&lt;/Set&gt;</span><br><span class="line">          &lt;/New&gt;</span><br><span class="line">        &lt;/Arg&gt;</span><br><span class="line">      &lt;/Call&gt; </span><br><span class="line"></span><br><span class="line">      &lt;!-- reverse the order of the path sections --&gt;</span><br><span class="line">      &lt;Call name=&quot;addRule&quot;&gt;</span><br><span class="line">        &lt;Arg&gt;</span><br><span class="line">          &lt;New class=&quot;org.eclipse.jetty.rewrite.handler.RewriteRegexRule&quot;&gt;</span><br><span class="line">            &lt;Set name=&quot;regex&quot;&gt;^/world/(\d+).html$&lt;/Set&gt;</span><br><span class="line">            &lt;Set name=&quot;replacement&quot;&gt;/test/world.jsp?tid=$1&lt;/Set&gt;</span><br><span class="line">          &lt;/New&gt;</span><br><span class="line">        &lt;/Arg&gt;</span><br><span class="line">      &lt;/Call&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;/Ref&gt;</span><br><span class="line">&lt;/Configure&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>xml中&lt; set&gt;标签中配置有<code>pattern</code> 为重写后的显示在地址栏的URl,replacement即为实际的地址<br><code>regex</code> 便可以优雅的使用正则进行URLRewrite。<br>本例子中展示了下这两种常用的重写方式，均可正常使用。</p>
+</blockquote>
+<p>到此，便可以看到URL实现了重写，当然如果你链接跳转访问被重写的页面，你的URL也要写成重写后的样式，不然地址栏还是显示重写前的地址，当然你直接在地址栏输入重写后的地址也是可以访问的。</p>
+<blockquote>
+<p>注意：匹配重写的xml文件在<code>start.ini</code>文件中路径一定要设置正确，不然会报错not found</p>
+</blockquote>
+<p>当然生产环境下，有可能并不会在Jetty根目录下的webapps中部署项目，这个时候就需要出现创建新的Jetty基目录。<br><a href="http://www.eclipse.org/jetty/documentation/current/quickstart-running-jetty.html" target="_blank" rel="noopener">创建Jetty基目录</a>,此处官网有演示，这时进行Rewrite的话也就是在新建的基目录文件夹中增加<code>start.ini</code>，并且也是必须在<code>start.ini</code>文件中添加rewrite模块以及配置重写规则xml文件的路径。</p>
+<p>如下截图设置<br><img src="http://onpyrjcca.bkt.clouddn.com/69d2386a2b4d4aa9b3a830887137c12e.png" alt="1.png"><br><img src="http://onpyrjcca.bkt.clouddn.com/40112ab2a75e404cbf64aa248016b917.png" alt="2.png"></p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/09/11/Java 8 中的日期时间 API/" title= Java 8 中的日期时间 API >
+                    <div class="nextTitle">Java 8 中的日期时间 API</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2017/12/12/Git 操作指南/" title= Git 操作指南 >
-                    <div class="prevTitle">Git 操作指南</div>
+                <a href= "/2017/05/22/主 app 性能测试总结/" title= 主 app 性能测试总结 >
+                    <div class="prevTitle">主 app 性能测试总结</div>
                 </a>
             
         </li>
@@ -462,7 +547,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置环境"><span class="toc-number">1.</span> <span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建站流程"><span class="toc-number">2.</span> <span class="toc-text">建站流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写作"><span class="toc-number">3.</span> <span class="toc-text">写作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用主题"><span class="toc-number">4.</span> <span class="toc-text">使用主题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Jetty下载"><span class="toc-number">1.</span> <span class="toc-text">Jetty下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Jetty文档"><span class="toc-number">2.</span> <span class="toc-text">Jetty文档</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UrlRewrite"><span class="toc-number"></span> <span class="toc-text">UrlRewrite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number"></span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行Jetty"><span class="toc-number"></span> <span class="toc-text">运行Jetty</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rewrite使用"><span class="toc-number"></span> <span class="toc-text">Rewrite使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rewrite的匹配规则xml文件示例："><span class="toc-number"></span> <span class="toc-text">rewrite的匹配规则xml文件示例：</span></a>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

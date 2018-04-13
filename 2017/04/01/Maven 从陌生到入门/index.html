@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>Maven 从陌生到入门 · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Maven 从陌生到入门</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Maven 从陌生到入门
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Maven">Maven</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/04/01</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p><strong>官网：</strong> <a href="http://maven.apache.org/" title="Maven官网" target="_blank" rel="noopener">http://maven.apache.org/</a></p>
+<p><strong>主要功能：</strong></p>
+<ul>
+<li>工程管理（工程创建、编译、测试、发布），其中工程依赖管理功能非常强大，也是我们要使用它的主要目的</li>
+</ul>
+<p><strong>版本说明：</strong> </p>
+<ul>
+<li>3.3.+： JDK1.7及以上</li>
+<li>3.2.+： JDK1.6及以上</li>
+</ul>
+<h3 id="POM-Project-Object-Model"><a href="#POM-Project-Object-Model" class="headerlink" title="POM (Project Object Model)"></a>POM (Project Object Model)</h3><p>Maven的运行是基于一个XML格式的POM文件的，下面是一个简单的POM文件的例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.zhilehuo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zlhcommon<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.11<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>user-deploy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>Releases<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://bjoffice1/nexus/repository/maven-releases/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>user-deploy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>Snapshot<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://bjoffice1/nexus/repository/maven-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="中央库（Central-Repository）"><a href="#中央库（Central-Repository）" class="headerlink" title="中央库（Central Repository）"></a>中央库（Central Repository）</h3><p>每个Maven项目都可以将自己发布到中央库，发布后其它人就可以在自己的项目中依赖你发布的项目。另外可以自己建私服，将项目发布至自己的私服上。私服是合法的<i class="icon-smile"></i>，后边会介绍如何设置仓库地址[<a href="#setrepo">点我直接跳过去</a>]。</p>
+<h3 id="项目坐标（Coordinates）"><a href="#项目坐标（Coordinates）" class="headerlink" title="项目坐标（Coordinates）"></a>项目坐标（Coordinates）</h3><ul>
+<li><em>groupId</em>: 组织或工程的标识，全局唯一</li>
+<li><em>artifactId</em>: 项目名字</li>
+<li><em>version</em>: 版本</li>
+<li><em>packaging</em>: 打包格式，比如jar/war/…</li>
+<li><em>classifier</em>: 类型？翻译不准确，比如一个项目打出来多个jar包，分别适配jdk1.5和jdk1.7，就可以定义两个classifier分别叫jdk5和jdk7（比如<code>net.sf.json</code>就是这么干的），还有常见的项目发布时，同时发布了source和doc包，也是通过不同的classifier来实现。</li>
+</ul>
+<h3 id="项目依赖（Depencencies）"><a href="#项目依赖（Depencencies）" class="headerlink" title="项目依赖（Depencencies）"></a>项目依赖（Depencencies）</h3><p>Maven一个非常重要的功能就是定义项目之间的依赖关系，这给我们带来的好处就是，当我们引用一个库时，只需要在POM中配置要引用这个库即可，而不需要再去手动下载这个库依赖的其它库。<br>定义项目依赖时，需要用到如下参数：</p>
+<ul>
+<li><em>groupId,artifactId,version:</em> 必填的3项，定位一个依赖</li>
+<li><em>classifier,type:</em> 不一定每个项目都需要，type相当于前面的packaging</li>
+<li><em>scope:</em> 定义依赖的有效范围，比如javax-servlet-api只在编译时使用，部署时不需要，那么scope就要设置为compile，以免打war包时将这个包也打进去</li>
+</ul>
+<h3 id="发布项目（Deploy）"><a href="#发布项目（Deploy）" class="headerlink" title="发布项目（Deploy）"></a><span id="deployproj">发布项目（Deploy）</span></h3><p>我们自己的项目可以发布到Maven库中（中央库，或是私服），发布时有两种版本类型：<code>SNAPSHOT</code>版本和<code>Release</code>版本，<code>SNAPSHOT</code>就是开发中的版本，可能会被频繁更新，<code>Release</code>则是正式发布的版本，且相同版本不允许覆盖。<br>定义项目发布时，需要在POM中做如下配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>user-deploy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Releases<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://bjoffice1/nexus/repository/maven-releases/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>user-deploy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Snapshot<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://bjoffice1/nexus/repository/maven-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>解释几个字段：</p>
+<ul>
+<li><em><code>id</code>:</em> 引用的用户认证ID，这是在settings.xml文件中配置的，下边详细说明。</li>
+<li><em><code>name</code>:</em> 名字而已，没啥用</li>
+<li><em><code>url</code>:</em> 要提交的仓库地址</li>
+</ul>
+<p>发布时，如果当前版本号带有<code>-SNAPSHOT</code>后缀，则自动发布至snapshot仓库，否则就发布至release仓库。<br>再来看下settings.xml中的认证配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>user-deploy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>deploy<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>无需太多解释，<code>id</code>就是前边<code>pom.xml</code>引用的字段。</p>
+<h3 id="Maven的配置文件"><a href="#Maven的配置文件" class="headerlink" title="Maven的配置文件"></a>Maven的配置文件</h3><p>Maven常用的配置文件有两个：<code>setting.xml</code>和<code>pom.xml</code></p>
+<ul>
+<li><code>setting.xml</code>有一个全局的配置，和一个可选的用户自己的配置。全局的setting一般在Maven的安装目录中，比如在我的Mac中，他存在于<code>/Users/nianxingyan/work/develop/tools/apache-maven-3.2.5/conf/settings.xml</code>。该配置文件中要是关于maven的一些全局设定，比如仓库（Repository）的位置，项目部署时使用的认证信息。</li>
+<li><code>pom.xml</code>一般位于每个工程的根目录下，都是关于项目本身的配置，比如坐标、依赖关系等。</li>
+</ul>
+<h4 id="设置仓库位置"><a href="#设置仓库位置" class="headerlink" title="设置仓库位置"></a><span id="setrepo">设置仓库位置</span></h4><p>在<code>setting.xml</code>文件中，涉及到两个设置，一个是<code>mirror</code>，用来配置一个仓库镜像地址，一个是<code>profile</code>，用来配置<code>Release</code>和<code>SNAPSHOT</code>版本使用的镜像。<br>先来看mirror的配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Zhilehuo Inc. Maven Central<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://bjoffice1/nexus/repository/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>我来试图解释一下几个字段：</p>
+<ul>
+<li><em><code>id</code>:</em> 镜像的标识</li>
+<li><em><code>mirrorOf</code>:</em> 可以写个特定的名字，用来后面被profile引用，也可以是<code>*</code>，意思就是全部</li>
+<li><em><code>name</code>:</em> 没啥用，说明而已</li>
+<li><em><code>url</code>:</em> 仓库的地址</li>
+</ul>
+<p>再来看看prifile的配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>development<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>always<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>挑重点解释一下：</p>
+<ul>
+<li><em><code>repositories</code>和<code>pluginRepositories</code>:</em> 分别代表<code>Release</code>和<code>SNAPSHOT</code>版本的仓库配置</li>
+<li><em><code>url</code>:</em> 这里可以写一个实际的仓库地址，也可以引用上边mirror中配置的地址。<code>http://central</code>就是引用一个叫<code>central</code>的镜像，这就是上边的<code>mirrorOf</code>字段，所以这里其实就是命中了<code>*</code>这个镜像。</li>
+<li><em><code>release.enable</code>和<code>snapshots.enable</code>:</em> 配置这个仓库中哪些类型的版本是有效的。</li>
+<li><em><code>snapshots.updatePolicy</code>:</em> <code>SNAPSHOT</code>版本的更新频率，<code>always</code>就是每次编译都检查新版本，此外还有<code>daily</code>等。<code>SNAPSHOT</code>的默认频率好像是<code>daily</code>。<code>Release</code>默认的更新频率应该是<code>never</code>，就是一旦依赖关系下载完成后，只要本地有缓存，就不会去仓库中检查更新。</li>
+</ul>
+<p>此外，prifile还要配置一个activeProfile:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>development<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>development</code>就是刚才<code>profile</code>中的<code>id</code>字段。</p>
+<hr>
+<h2 id="常用maven命令"><a href="#常用maven命令" class="headerlink" title="常用maven命令"></a>常用maven命令</h2><p>maven的可执行程序叫<code>mvn</code>，命令格式为 <code>mvn [options] [&lt;goal(s)&gt;] [&lt;phase(s)&gt;]</code>。</p>
+<blockquote>
+<p>我用得也不多，就简单说一下我理解到的吧，如果不对请告诉我：<br><code>goal</code>里边包含<code>phase</code>，可以理解为<code>phase</code>是<code>goal</code>的子任务。有些任务执行时会将<code>goal</code>和<code>phase</code>直接写成<code>goal:phase</code>的形式，比如<code>mvn jetty:run</code>。下边写到的几个命令应该是<code>goal</code>级别的。</p>
+</blockquote>
+<p><code>clean</code></p>
+<p>用来清理项目。mvn编译时生成的中间文件会放在<code>target</code>目录，这个命令其实就是将<code>target</code>目录清空。</p>
+<p><code>compile</code></p>
+<p>编译项目，这中间就会进行依赖关系的检查和下载。</p>
+<p><code>package</code></p>
+<p>打包项目，这个步骤包含了<code>compile</code>，并且会将当前项目打包成一个<code>jar</code>（也有可能是其它格式），放在<code>target</code>目录中。</p>
+<p><code>deploy</code></p>
+<p>发布项目，根据项目版本号来决定发布至<code>Release</code>或是<code>SNAPSHOT</code>仓库。</p>
+<hr>
+<h2 id="Nexus介绍"><a href="#Nexus介绍" class="headerlink" title="Nexus介绍"></a>Nexus介绍</h2><p>Nexus是一个开源的maven仓库服务，我们可以用它来搭建我们自己的“私服”。我已经在192.168.10.8上将Nexus环境搭建好了，一会可以试一下。</p>
+<blockquote>
+<p>Nexus中可以创建多个仓库，仓库在创建时有3种类型：<br><strong>proxy</strong><br>这是一个代理，一般情况下，我们会创建一个仓库来代理Maven的中央仓库，这样我们在公司内部就可以通过Nexus来访问中央仓库了，带来的好处就是，别人在中央仓库下载过的包，下次再下载时就不用再去远程下了，节省了带宽和时间。</p>
+<p><strong>hosted</strong><br>本地仓库，相当于是一个完事的仓库，我们自己发布的项目，如果不想发布到Maven中央库，主可以发布到我们自己的<code>hosted</code>仓库中。</p>
+<p><strong>group</strong><br>这是一个仓库集合，当公司内部拥有不只一个仓库时（同时拥有<code>proxy</code>和<code>hosted</code>仓库的情况还是很常见的），为了不让客户端将所有仓库都设置一遍，就可以创建一个<code>group</code>类型的仓库，将其它的仓库都集成进去，这样客户端只需要设置这个<code>group</code>仓库就可以了。</p>
+</blockquote>
+<p>Nexus安装后，默认创建了4个仓库：</p>
+<ul>
+<li><em>maven-central</em>: Maven中央库的代理(<code>proxy</code>)</li>
+<li><em>maven-release</em>: 用来存放私有<code>Release</code>版本的仓库(<code>hosted</code>)</li>
+<li><em>maven-snapshot</em>: 用来存储私有<code>SNAPSHOT</code>版本的仓库(<code>hosted</code>)</li>
+<li><em>maven-public</em>: 上边3个仓库的集合(<code>group</code>)</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong> <code>maven-release</code>和<code>maven-snapshot</code>是为了管理方便，人为分出来的两个库，其实<code>Release</code>和<code>SNAPSHOT</code>版本的库是可以同时发布到一个仓库中的。</p>
+</blockquote>
+<p>在我们的Nexus库中，我还创建了一个<code>3rd-party-repo</code>仓库，用来存放那些公共的、没有被发布至中央库的第3方库（实际上是存在这种库的，虽然目前这个库里还是空的）。同时将<code>3rd-party-repo</code>也加到了<code>maven-public</code>集合中。</p>
+<h3 id="将第三方库手动发布至Nexus"><a href="#将第三方库手动发布至Nexus" class="headerlink" title="将第三方库手动发布至Nexus"></a>将第三方库手动发布至Nexus</h3><p>上边说到，我们自己创建了一个叫<code>3rd-party-repo</code>的仓库，用来存放第3方库，下面就来说一下具体如何操作。<br><strong>Step 1</strong><br>找到要发布的第3方库（应该就是一个Jar包），然后为它创建一个POM文件。文件名随意，因为一会发布时会指定POM文件。另外，其实maven也支持通过命令行直接发布一个Jar包，但那样的话定义依赖关系就是很麻烦，所以在没有依赖的时候，可以考虑不创建POM文件。这里以POM文件示例。<br><strong>Step 2</strong><br>编辑POM文件，需要定义的内容主要包括<code>坐标定义</code>和<code>依赖关系</code>。比如：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.3rd-party<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>3rd-party-lib<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Step 3</strong><br>执行命令：<br><code>mvn deploy:deploy-file -Dfile=[jarfile] -DpomFile=[pomfile] -Durl=http://bjoffice1/nexus/repository/3rd-party-repo/ -DrepositoryId=user-deploy</code><br>上面参数中，<code>url</code>就是要发布到的仓库地址，<code>repositoryId</code>就是之前说到的用户认证。</p>
+<blockquote>
+<p><strong>能不能更简单一点？</strong><br>上面这种方式写在命令行上的参数还是有点多，所以为了简化，我试过在POM文件中像正常项目一样配置一个<code>distributionManagement</code>来定义<code>url</code>和<code>repositoryId</code>，但是失败了，似乎在部署时maven并没有去关心我配的<code>distributionManagement</code>这部分，依然还是去读了命令行里的参数。</p>
+</blockquote>
+<p>上面提到的也可以不使用POM文件进行发布，即通过命令行指定项目坐标，命令是这样的：<br><code>mvn deploy:deploy-file -Dfile=[jarfile] -DgroupId=com.3rd-party -DartifactId=3rd-party-lib -Dversion=1.5.3 -DrepositoryId=user-deploy -Durl=http://bjoffice1/nexus/repository/3rd-party-repo/</code></p>
+<h3 id="Nexus管理后台"><a href="#Nexus管理后台" class="headerlink" title="Nexus管理后台"></a>Nexus管理后台</h3><ul>
+<li>登录地址：<a href="http://bjoffice1/nexus/" title="Nexus管理地址" target="_blank" rel="noopener">http://bjoffice1/nexus/</a></li>
+<li>用户名：admin</li>
+<li>密码：zlh123456</li>
+</ul>
+<blockquote>
+<ul>
+<li><code>bjoffice1</code> 这是一个配置在公司内网的域名，将被解释至<code>192.168.10.8</code>，Nexus就装在这台公司内网的机器上。</li>
+<li>因为Nexus被安装在了公司内网，所以南京的同事是访问不了的，如果以后南京的同事有访问需求，我们再想办法解决。</li>
+</ul>
+</blockquote>
+<h3 id="Nexus仓库地址"><a href="#Nexus仓库地址" class="headerlink" title="Nexus仓库地址"></a>Nexus仓库地址</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">仓库类型</th>
+<th style="text-align:left">地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">依赖下载地址</td>
+<td style="text-align:left"><a href="http://bjoffice1/nexus/repository/maven-public/" target="_blank" rel="noopener">http://bjoffice1/nexus/repository/maven-public/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">内部Release版本发布</td>
+<td style="text-align:left"><a href="http://bjoffice1/nexus/repository/maven-release/" target="_blank" rel="noopener">http://bjoffice1/nexus/repository/maven-release/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">内部SNAPSHOT版本发布</td>
+<td style="text-align:left"><a href="http://bjoffice1/nexus/repository/maven-snapshots/" target="_blank" rel="noopener">http://bjoffice1/nexus/repository/maven-snapshots/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">第3方库发布</td>
+<td style="text-align:left"><a href="http://bjoffice1/nexus/repository/3rd-party-repo/" target="_blank" rel="noopener">http://bjoffice1/nexus/repository/3rd-party-repo/</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="实际项目处理"><a href="#实际项目处理" class="headerlink" title="实际项目处理"></a>实际项目处理</h2><p>下面我根据工作中实际遇到的一些项目类型，来讲一下如何将让现有项目支持Maven。<br>我先来列举一下我们工作中遇到的项目类型：<code>独立项目</code>（比如ISAS）、<code>公共库</code>（比如isasclient）、<code>Web项目</code>（比如peanut_baby）、<code>可独立运行的Jar包</code>（比如serveralarm.jar）和<code>Android项目</code>。</p>
+<p><strong>注意</strong>：公司内部的项目在定义坐标时，<code>groupId</code>统一为<code>com.zhilehuo</code>，<code>artifactId</code>全部由<code>小写字母</code>和<code>横线</code>组成，比如<code>isas</code>、<code>sum-dem</code>。</p>
+<h3 id="独立项目"><a href="#独立项目" class="headerlink" title="独立项目"></a>独立项目</h3><p>在Idea中，在工程上添加Framework，选中maven，IDE会自动在工程根目录创建pom.xml，并更新目录结构：<br>u<img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/cb38a785ed9a4900b4ed26102660e054-1490759582075.png" alt="cb38a785ed9a4900b4ed26102660e054-1490759582075.png"><br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/6c850ff713324d9d86ad1e4144a4bb2d-1490759618007.png" alt="6c850ff713324d9d86ad1e4144a4bb2d-1490759618007.png"> </p>
+<p>IDEA会主动修改源码目录结构：</p>
+<ul>
+<li>原来的工程默认源码目录是<code>src</code>，默认测试代码目录是<code>test</code></li>
+<li>新的工程默认源码目录是<code>src/main/java</code>，测试代码目录是<code>src/test/java</code>；同时，新的工程中还多出来了一种资源目录，我现在不太知道这个目录是干嘛的，猜测是不是打包的时候，资源目录里的东西会被打进去？</li>
+</ul>
+<p>之前我们的工程一般会配置一个第3方库的引用目录<code>lib</code>，改为Maven后，这个目录不再需要，可以在工程设置中删除相关配置，同时删除这个目录，以免混淆视听。</p>
+<blockquote>
+<p>虽然开发阶段不再需要lib目录，但是项目部署时是需要将依赖库上传至线上服务器的，所以在部署阶段，可以将项目依赖的库拷贝出来，这可以通过一个Maven插件来自动实现。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">&gt; <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">&gt;   <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">&gt;     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">&gt;       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">&gt;       <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">&gt;         <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">&gt;           <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">&gt;           <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">&gt;           <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">&gt;             <span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">&gt;           <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">&gt;           <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">&gt;             <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>$&#123;build.directory&#125;/lib/<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">&gt;             <span class="tag">&lt;<span class="name">overWriteReleases</span>&gt;</span>false<span class="tag">&lt;/<span class="name">overWriteReleases</span>&gt;</span></span><br><span class="line">&gt;             <span class="tag">&lt;<span class="name">overWriteSnapshots</span>&gt;</span>false<span class="tag">&lt;/<span class="name">overWriteSnapshots</span>&gt;</span></span><br><span class="line">&gt;             <span class="tag">&lt;<span class="name">overWriteIfNewer</span>&gt;</span>true<span class="tag">&lt;/<span class="name">overWriteIfNewer</span>&gt;</span></span><br><span class="line">&gt;           <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">&gt;         <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">&gt;       <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">&gt;     <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">&gt;   <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">&gt; <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>现在工程已经配置好了，编译、运行、调试和以前没有差别。</p>
+<h4 id="导出Jar包"><a href="#导出Jar包" class="headerlink" title="导出Jar包"></a>导出Jar包</h4><p>打包时稍有差别，之前是通过在工程配置中增加Artifact配置来实现导出jar包的，现在可以换个方式了（虽然之前的方式也能用，但是既然用了Maven，就可以抛弃之前的方式了）。<br>在Idea右侧栏上找到<strong>Maven</strong>工具，点开，在<code>LifeCycle</code>下会发现里边列出了一系列的指令，其中包括<code>package</code>：<br><img src="//onpyrjcca.bkt.clouddn.com//file/2017/4/6c3642fbcfb94b4397bf8092f79da280-1490760761843.png" alt="6c3642fbcfb94b4397bf8092f79da280-1490760761843.png"> </p>
+<p>双击<code>package</code>，就相当于执行了<code>mvn package</code>命令，这时Maven就会编译项目，并在target目录中生成Jar包。这个Jar包的名字是由项目坐标决定的。</p>
+<h3 id="公共库"><a href="#公共库" class="headerlink" title="公共库"></a>公共库</h3><p>公共库项目与独立运行的项目唯一的不同点就是需要发布。另外，公共库编译时尽量使用jdk1.6，因为依赖的工程可能是jdk1.6的。<br>关于项目发布的配置可以参考<a href="#deployproj">项目发布</a></p>
+<blockquote>
+<p>如何使用SNAPSHOT版本？<br>:    发布时，如果版本号带有后缀<code>-SNAPSHOT</code>，则发布至shapshot库。Snapshot一般是开发中的版本，可能会被频繁更新，比如被一个工程依赖时，为了修改后在那个工程中进行测试，就可以发布一个shapshot版本，然后在那个工程中依赖配置为使用shapshot：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">&gt; <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.zhilehuo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">&gt; <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zlhredis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">&gt; <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">&gt; <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="Web项目"><a href="#Web项目" class="headerlink" title="Web项目"></a>Web项目</h3><p>在独立运行项目的基础上，需要添加一个jetty插件。不过，jetty插件在运行时不认识Maven的依赖关系，所以需要将依赖的库拷贝至WEB-INF/lib目录下。最终配置是这样的：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>9.2.21.v20170120<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">httpConnector</span>&gt;</span><span class="tag">&lt;<span class="name">port</span>&gt;</span>8090<span class="tag">&lt;/<span class="name">port</span>&gt;</span><span class="tag">&lt;/<span class="name">httpConnector</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">webAppSourceDirectory</span>&gt;</span>$&#123;basedir&#125;/WebContent/<span class="tag">&lt;/<span class="name">webAppSourceDirectory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">webApp</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">contextPath</span>&gt;</span>/peanut_baby<span class="tag">&lt;/<span class="name">contextPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">webApp</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">phase</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>$&#123;basedir&#125;/WebContent/WEB-INF/lib/<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">overWriteReleases</span>&gt;</span>false<span class="tag">&lt;/<span class="name">overWriteReleases</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">overWriteSnapshots</span>&gt;</span>false<span class="tag">&lt;/<span class="name">overWriteSnapshots</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">overWriteIfNewer</span>&gt;</span>true<span class="tag">&lt;/<span class="name">overWriteIfNewer</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>还要增加一个运行配置：之前启动Jetty时，配置的是Jetty运行模式，现在要修改为使用Maven来启动Jetty，如下图：<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/50fef16f5ce74e4b9dfef91abe9e620f-1490761779740.png" alt="50fef16f5ce74e4b9dfef91abe9e620f-1490761779740.png"> </p>
+<p>之后在运行时，选择<code>jetty:run</code>，再启动运行或是调试就可以了：<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/1e0fa1f3e8114c1ba73d4d6b91dd597e-1490761823137.png" alt="1e0fa1f3e8114c1ba73d4d6b91dd597e-1490761823137.png"> </p>
+<blockquote>
+<p><strong>注意</strong>：使用Maven后，依赖库的管理就都要在Maven的管理下，也就是说，如果要增加一个引用库时，不能直接拷贝至lib目录，而是要在Maven的依赖配置中进行配置，直接拷贝是不好使的。</p>
+</blockquote>
+<blockquote>
+<p><strong>补充说明：</strong><br>使用Maven管理Web项目时，为了使用Servlet和JSP，通常要在依赖中添加<code>servlet-api</code>和<code>jsp-api</code>，而在项目发布时，我们又不需要将这两个包拷贝至目标目录，所以，在引入这两个包时可以加上Scope为privoded</p>
+</blockquote>
+<h3 id="可独立运行的Jar包"><a href="#可独立运行的Jar包" class="headerlink" title="可独立运行的Jar包"></a>可独立运行的Jar包</h3><p>和独立运行工程的区别是：独立运行工程在运行时一般还需要其它库的支持，自己无法运行；而可独立运行的Jar包，不需要其它库支持，自己即可执行，比如 serveralarm.jar。要达到这种效果，就要求在打包时，将所有依赖库一并打出到Jar包中，并修改MANIFAST文件，设置运行时的入口的类。<br>要完成这个任务，还要用到一个Maven插件：<code>maven-assembly-plugin</code><br>先看一个配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-assembly-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">goals</span>&gt;</span><span class="tag">&lt;<span class="name">goal</span>&gt;</span>single<span class="tag">&lt;/<span class="name">goal</span>&gt;</span><span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">archive</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>com.message.Send<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">archive</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">descriptorRefs</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">descriptorRef</span>&gt;</span>jar-with-dependencies<span class="tag">&lt;/<span class="name">descriptorRef</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">descriptorRefs</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;artifactId&#125;-$&#123;version&#125;-executable<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appendAssemblyId</span>&gt;</span>false<span class="tag">&lt;/<span class="name">appendAssemblyId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attach</span>&gt;</span>false<span class="tag">&lt;/<span class="name">attach</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>解释一下上边的配置（只解释我可能知道的）：</p>
+<ul>
+<li><code>mainClass</code>：设置运行时的入口类</li>
+<li><code>descriptorRef</code>：定义了打包的方式，除了<code>jar-with-dependencies</code>这个好像还有<code>source</code>,<code>bin</code>啥的，总之这个就是把依赖的Jar包进行合并。</li>
+<li><code>finalName</code>,<code>apendAssemblyId</code>,<code>attach</code>：有点复杂，下边单独解释。</li>
+</ul>
+<p>关于<code>finalName</code>,<code>apendAssemblyId</code>,<code>attach</code>这三个标签，我来尝试解释一下吧。</p>
+<p>首先，如果不加这3个标签，则<code>package</code>时会打出来两个包，一个是不带要依赖关系的<code>serveralarm-1.0.jar</code>，和一个带依赖关系的<code>serveralarm-1.0-jar-with-dependencies.jar</code>，而且在<code>deploy</code>时，这两个包都将上传至仓库中。如果不是因为第2个包的名字比较奇怪，那这个结果是比较理想的。</p>
+<p>但是这个名字我不能忍……所以就发现了<code>finalName</code>这个标签，它可以给生成的包改名，于是我加了这个标签，可是结果的包名是这样的：<code>serveralarm-1.0-executable-jar-with-dependencies.jar</code><br>竟然还是带着后缀，于是下一步，将<code>appendAssemblyId</code>配置为<code>false</code>，再<code>package</code>，OK，这次生成了两个包的名字是完美的，分别是<code>serveralarm-1.0.jar</code>和<code>serveralarm-1.0-executable.jar</code>。</p>
+<p>可是，当我<code>deploy</code>的时候，却发现仓库中只有一个版本的jar包，就是<code>serveralarm-1.2.1.jar</code>，并没有<code>serveralarm-1.2.1-executable.jar</code>，而且更奇怪的是，仓库中的<code>serveralarm-1.2.1.jar</code>，并不是我刚打出来的那个，而是<code>serveralarm-1.2.1-executable.jar</code>（通过文件大小看出来的，也可以下载下来看）！</p>
+<p>下面开始排查问题，我发现了在打包过程中有一个警告：<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[WARNING]</span> Configuration options: 'appendAssemblyId' is set to false, and 'classifier' is missing.</span><br><span class="line">Instead of attaching the assembly file: /Users/nianxingyan/work/develop/svn/server/ServerNotification/SendSDK/target/serveralarm-<span class="number">1</span>.<span class="number">2</span>.<span class="number">1</span>-executable.jar, it will become the file for main project artifact.</span><br><span class="line">NOTE: If multiple descriptors or descriptor-formats are provided for this project, the value of this file will be non-deterministic!</span><br><span class="line"><span class="string">[WARNING]</span> Replacing pre-existing project main-artifact file: /Users/nianxingyan/work/develop/svn/server/ServerNotification/SendSDK/target/serveralarm-<span class="number">1</span>.<span class="number">2</span>.<span class="number">1</span>.jar</span><br><span class="line">with assembly file: /Users/nianxingyan/work/develop/svn/server/ServerNotification/SendSDK/target/serveralarm-<span class="number">1</span>.<span class="number">2</span>.<span class="number">1</span>-executable.jar</span><br></pre></td></tr></table></figure></p>
+<p>人家说得很明白，用<code>serveralarm-1.2.1-executable.jar</code>替换了<code>serveralarm-1.2.1.jar</code>！为什么这样子……</p>
+<p>百度了一顿饭的时间，说说我的理解：<br><code>appendAssemblyId</code>为<code>true</code>时，相当于创建了一个名为<code>jar-with-dependencies</code>的<code>classifier</code>，而我们将其设置为<code>false</code>后，就没有这个<code>classifier</code>了，虽然我们用<code>finalName</code>修改了文件名，但Maven仍然认为这个包的<code>classifier</code>没有被设置，所以新生成的两个包的<code>classifier</code>都是空，但是<code>jar-with-dependences</code>是后生成的，所以在逻辑上覆盖了之前生成的包，这样虽然我们能看到两个文件，但是Maven只认识后生成的那个包。</p>
+<p>如何解决呢？我试了很多办法，没有成功，最后只能设置了<code>attach</code>参数为<code>false</code>，意思就是这个包和项目没啥关系，所以项目发布的时候也不会理它。反正这个可执行的Jar包放到依赖库里也没啥用，所以就这样吧~</p>
+<h3 id="Android项目（Gradle）"><a href="#Android项目（Gradle）" class="headerlink" title="Android项目（Gradle）"></a>Android项目（Gradle）</h3><p>使用Gradle构建的Android项目，只需要修改一个仓库位置即可：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">  <span class="keyword">repositories</span> &#123;</span><br><span class="line">    <span class="comment">//mavenCentral()</span></span><br><span class="line">    maven&#123; url <span class="string">'http://bjoffice1/nexus/repository/maven-public/'</span>&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>dependencies</code>如果要加我们自己的包的话，也是一样，格式是<code>&lt;groupid&gt;:&lt;artifactid&gt;:&lt;version&gt;</code>，比如：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">  <span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">classpath</span> <span class="string">'com.zhilehuo:zlhcommon:1.2.+'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="现有项目SVN的处理"><a href="#现有项目SVN的处理" class="headerlink" title="现有项目SVN的处理"></a>现有项目SVN的处理</h2><p>最后说一个SVN的处理。因为目录结构发生了改变，所以SVN处理起来要小心一点。处理流程建议是这样的：</p>
+<ol>
+<li>先<code>update</code>工程，保证本地没有修改</li>
+<li>在Idea中添加Maven Framework</li>
+<li>将Idea自动转移至新目录的源码（比如<code>src/main/java</code>）整体移动回原来的位置（比如<code>src</code>），包括测试代码</li>
+<li>在SVN中将新的目录结构进行<code>add</code>操作，原来一些没有用的目录（比如<code>lib</code>）执行<code>remove</code></li>
+<li>在SVN中将原来的代码目录整体<code>move</code>到新的目录中</li>
+<li>提交SVN之前，记得将<code>target</code>目录设置为<code>ignore</code></li>
+</ol>
+<p>以上步骤能保证转移过去的代码还能看到历史记录。如果不用<code>move</code>指令，而是在SVN中将转移过去的代码进行<code>add</code>操作的话，历史记录就全部丢失了。</p>
+<hr>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/04/01/Jetty 概览/" title= Jetty 概览 >
+                    <div class="nextTitle">Jetty 概览</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本介绍"><span class="toc-number">1.</span> <span class="toc-text">基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#POM-Project-Object-Model"><span class="toc-number">1.1.</span> <span class="toc-text">POM (Project Object Model)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中央库（Central-Repository）"><span class="toc-number">1.2.</span> <span class="toc-text">中央库（Central Repository）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目坐标（Coordinates）"><span class="toc-number">1.3.</span> <span class="toc-text">项目坐标（Coordinates）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目依赖（Depencencies）"><span class="toc-number">1.4.</span> <span class="toc-text">项目依赖（Depencencies）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布项目（Deploy）"><span class="toc-number">1.5.</span> <span class="toc-text">发布项目（Deploy）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maven的配置文件"><span class="toc-number">1.6.</span> <span class="toc-text">Maven的配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#设置仓库位置"><span class="toc-number">1.6.1.</span> <span class="toc-text">设置仓库位置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用maven命令"><span class="toc-number">2.</span> <span class="toc-text">常用maven命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nexus介绍"><span class="toc-number">3.</span> <span class="toc-text">Nexus介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#将第三方库手动发布至Nexus"><span class="toc-number">3.1.</span> <span class="toc-text">将第三方库手动发布至Nexus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nexus管理后台"><span class="toc-number">3.2.</span> <span class="toc-text">Nexus管理后台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nexus仓库地址"><span class="toc-number">3.3.</span> <span class="toc-text">Nexus仓库地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际项目处理"><span class="toc-number">4.</span> <span class="toc-text">实际项目处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#独立项目"><span class="toc-number">4.1.</span> <span class="toc-text">独立项目</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导出Jar包"><span class="toc-number">4.1.1.</span> <span class="toc-text">导出Jar包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公共库"><span class="toc-number">4.2.</span> <span class="toc-text">公共库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Web项目"><span class="toc-number">4.3.</span> <span class="toc-text">Web项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可独立运行的Jar包"><span class="toc-number">4.4.</span> <span class="toc-text">可独立运行的Jar包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android项目（Gradle）"><span class="toc-number">4.5.</span> <span class="toc-text">Android项目（Gradle）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#现有项目SVN的处理"><span class="toc-number">5.</span> <span class="toc-text">现有项目SVN的处理</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

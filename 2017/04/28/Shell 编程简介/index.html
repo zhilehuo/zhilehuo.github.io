@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>Shell 编程简介 · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Shell 编程简介</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Shell 编程简介
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Shell">Shell</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/04/28</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <blockquote>
+<p>以下示例都在<code>Mac</code>系统中进行，因为大家用Mac居多，而且Mac系统也是在Linux基础上开发的，所以很多东西和Linux都是一样的。<br>Mac下的终端程序<code>Terminal</code>是很好用的，工欲善其事必先利其器，所以我们可以先来配置一下终端程序。</p>
+</blockquote>
+<h3 id="什么是Shell编程"><a href="#什么是Shell编程" class="headerlink" title="什么是Shell编程"></a>什么是Shell编程</h3><blockquote>
+<p><strong>什么是Shell</strong><br><em>直译就是<code>外壳</code>，可以理解成是Linux系统内核的外壳，我们通过这个外壳和Linux系统进度交互。再具体点，可以理解成是<code>终端</code>。</em></p>
+</blockquote>
+<p>一般情况下，我们在操作Linux系统时，就是在终端上搞各种<code>指令</code>。而Shell编程，或者通俗点说叫<code>Shell脚本</code>，其实就是把一堆指令集中在一个脚本文件里，然后通过运行这个脚本文件，来执行这一大堆的指令。所以它的目的就是为了<strong>方便我们进行一些批量操作</strong>。<br><strong>Shell编程，其实指的就是我们写的这些Shell脚本。</strong></p>
+<h3 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world!"></a>Hello world!</h3><p>一个Shell脚本其实就是一个普通的文本文件，所以可以使用任意的文本编辑器来编辑Shell脚本，比如SublimeText。不过既然脚本是在终端下运行的，所以如果能直接在终端下编辑脚本的话，就最舒服不过了。所以如果有兴趣的话，可以学习一下<code>vim</code>的使用。<br>接下来写个Hello World吧。将以下内容写到脚本里，并保存为<code>hello.sh</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash</span><br><span class="line">echo &quot;Hello world!&quot;</span><br></pre></td></tr></table></figure>
+<p>接下来在终端里进到刚刚保存文件的目录里，并确认文件存在的话，就可以用以下命令来运行了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nianxingyan@NianxyMBP shell]$ls</span><br><span class="line">hello.sh</span><br><span class="line">[nianxingyan@NianxyMBP shell]$sh hello.sh </span><br><span class="line">Hello world!</span><br><span class="line">[nianxingyan@NianxyMBP shell]$</span><br></pre></td></tr></table></figure>
+<p>上边<code>$</code>符号之后的部分是我们输入的内容，<code>$</code>及其之前的部分是命令行提示符，显示一些当前状态。<br><code>sh hello.sh</code>的作用就是执行<code>hello.sh</code>。</p>
+<blockquote>
+<p>解释一下以上出现的一些命令：</p>
+<ul>
+<li><strong>echo</strong>: 在终端输出字符串，相当于<code>print</code></li>
+<li><strong>cd</strong>: 改变当前目录</li>
+<li><strong>ls</strong>: 显示当前目录下的文件列表</li>
+</ul>
+</blockquote>
+<h3 id="一个稍微复杂点的例子"><a href="#一个稍微复杂点的例子" class="headerlink" title="一个稍微复杂点的例子"></a>一个稍微复杂点的例子</h3><p>下面玩个稍微复杂点的，它的功能是这样的：</p>
+<ol>
+<li>在当前目录下创建一个<code>db.20170412</code>目录，其中<code>20170412</code>是执行脚本时的当前日期，注意要替换掉</li>
+<li>将当前目录下所有以<code>dat</code>结尾的文件都转移到刚刚创建的这个目录中</li>
+<li>将当前目录下一个<code>db.latest</code>的软链接指向刚刚创建的目录</li>
+</ol>
+<blockquote>
+<p><em>上面描述的这个功能可以用在如下场景：</em>假如有个服务程序，每小时在当前目录下生成一个以<code>dat</code>结尾的数据文件，这样每天就会生成<code>24</code>个数据文件。这些数据文件如果不加整理，那么一段时间后目录内的文件数量就是非常多，不利于管理。</p>
+</blockquote>
+<p>要完成以上功能，可以编写如下一段脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取当天日期</span></span><br><span class="line">today=`date +%F`</span><br><span class="line"><span class="comment"># 创建目录</span></span><br><span class="line">mkdir db.<span class="variable">$today</span></span><br><span class="line"><span class="comment"># 转移dat文件</span></span><br><span class="line">mv *.dat db.<span class="variable">$today</span>/</span><br><span class="line"><span class="comment"># 删除之前的软链接，并创建一个新的软链接</span></span><br><span class="line">ln -f -s db.<span class="variable">$today</span> db.latest</span><br></pre></td></tr></table></figure>
+<p>逐行解释一下：</p>
+<ul>
+<li>第2行，<strong>反引号“ ` ”</strong>的作用是将其中的命令输出做为字符串进行返回，而<code>date +%F</code>就是将当前日期以<code>yyyyMMdd</code>的格式进行显示，所以，变量<code>today</code>此时的值就是当前日期了。</li>
+<li><code>mkdir</code>的功能是创建目录，后边跟目录名。此时目录名中的<code>$today</code>就是对<code>today</code>变量的引用。</li>
+<li>mv是move的缩写，也就是转移文件。</li>
+<li>ln的作用就是创建软链接</li>
+</ul>
+<p>以上命令保存为<code>cleanup.sh</code>，执行后是如下效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[nianxingyan@NianxyMBP shell]$touch test1.dat test2.dat</span><br><span class="line">[nianxingyan@NianxyMBP shell]$ls -l</span><br><span class="line">total 16</span><br><span class="line">-rw-r--r--  1 nianxingyan  staff  196  4 12 15:48 cleanup.sh</span><br><span class="line">-rw-r--r--  1 nianxingyan  staff   20  4 12 15:21 hello.sh</span><br><span class="line">-rw-r--r--  1 nianxingyan  staff    0  4 12 15:49 test1.dat</span><br><span class="line">-rw-r--r--  1 nianxingyan  staff    0  4 12 15:49 test2.dat</span><br><span class="line">[nianxingyan@NianxyMBP shell]$sh cleanup.sh </span><br><span class="line">[nianxingyan@NianxyMBP shell]$ls -l</span><br><span class="line">total 24</span><br><span class="line">-rw-r--r--  1 nianxingyan  staff  196  4 12 15:48 cleanup.sh</span><br><span class="line">drwxr-xr-x  4 nianxingyan  staff  136  4 12 15:49 db.2017-04-12</span><br><span class="line">lrwxr-xr-x  1 nianxingyan  staff   13  4 12 15:49 db.latest -&gt; db.2017-04-12</span><br><span class="line">-rw-r--r--  1 nianxingyan  staff   20  4 12 15:21 hello.sh</span><br><span class="line">[nianxingyan@NianxyMBP shell]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>命令解释：</p>
+<ul>
+<li><strong>touch</strong>: 暂时可以理解为生成了test1.dat和test2.dat这两个空文件。</li>
+<li><strong>ls -l</strong>: 刚才的ls命令已经用过了，加-l参数目的就相当于以列表的形式显示当前目录中的文件，而不只是以排列的方式显示文件名</li>
+</ul>
+</blockquote>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><p>Shell脚本中也是可以进行分支、循环等流程控制的。</p>
+<h4 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h4><p>举例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var1=Alice</span><br><span class="line">if [ $var1 == &quot;Alice&quot; ] ; then</span><br><span class="line">    echo &quot;Hello, Alice!&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;Who are you?&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>以上代码应该不难能懂，主要是记住书写格式，关键点列举一下：</p>
+<ol>
+<li><code>[]</code>中间是条件判断，且每个括号两边要留空格</li>
+<li><code>then</code>如果和<code>if</code>写在同一行，就需要中间的<code>;</code>分隔，如果要<code>then</code>写在下一行，就不要写<code>;</code></li>
+<li><code>else</code>也是一样，如果和其它命令写在一行，就需要命令之间用<code>;</code>分隔，否则不需要<code>;</code></li>
+<li>最后一定不要忘记写<code>fi</code>，否则分支判断没有结束（<code>fi</code>就是<code>if</code>反过来写，意为结束）</li>
+</ol>
+<blockquote>
+<p>上边说到的<code>;</code>问题，其实和<code>if</code>命令本身没什么关系，在Linux的终端里，多个命令如果想写在同一行，就可以用<code>;</code>分隔，这时系统就会顺序执行该行内的每条指令。比如：<code>ifdown eth1; ifup eth1</code>，意思就是先停用网终接口<code>eth1</code>，然后再把它启动起来，其实就是重启该接口。</p>
+</blockquote>
+<p>还有一点要注意，每个分支内部必须有指令，如果是一个空的分支，执行会报错，比如将上边第3行注释掉，再运行脚本时就是如下效果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[nianxingyan@NianxyMBP shell]<span class="variable">$sh</span> alice.sh </span><br><span class="line">alice.sh: line 4: syntax error near unexpected token `<span class="keyword">else</span><span class="string">'</span></span><br><span class="line"><span class="string">alice.sh: line 4: `else'</span></span><br><span class="line">[nianxingyan@NianxyMBP shell]$</span><br></pre></td></tr></table></figure>
+<p>深层意思就是“<em>这个分支里我还什么都没干，怎么就发现了else</em>”。虽然我不理解为什么要这样规定，但仍然不得不接受这个事实。</p>
+<p>接下来要重点介绍一下我们的条件判断格式，也就是<code>[]</code>中间的部分。</p>
+<h5 id="条件判断格式"><a href="#条件判断格式" class="headerlink" title="条件判断格式"></a>条件判断格式</h5><p>上面的示例中，用<code>==</code>来判断两个字符串是否相等，注意<code>==</code>两边要留空格。类似<code>==</code>，还有如下几种判断：</p>
+<ul>
+<li><code>-eq</code>：两个数字相等</li>
+<li><code>-ne</code>：两个数字不相等</li>
+<li><code>-lt</code>：左边的数字小于右边的数字</li>
+<li><code>-le</code>：左边的数字小于或等于右边的数字</li>
+<li><code>-gt</code>：左边的数字大于右边的数字</li>
+<li><code>-ge</code>：左边的数字大于或等于右边的数字</li>
+<li><code>!=</code>：两个字符串不相等</li>
+</ul>
+<p>注意以上这5个判断参数只能用来判断数字，而<code>==</code>和<code>!=</code>只能用来判断字符串。所以，Shell里边是不能比较两个字符串谁大谁小的。</p>
+<p>如果想对条件判断取“反”，即“非xxx”，写法是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if [ ! 1 -eq 1 ] ; then</span><br></pre></td></tr></table></figure>
+<p>就是在判断最开始加<code>!</code>限定。</p>
+<p>多个条件组合的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ 1 -eq 1 ] &amp;&amp; [ 2 -eq 2 ] ; then</span><br><span class="line">或是</span><br><span class="line">if [ 1 -eq 1 ] || [ 2 -eq 2 ] ; then</span><br></pre></td></tr></table></figure>
+<p>即将<code>&amp;&amp;</code>或是<code>||</code>写在两个条件判断中间</p>
+<blockquote>
+<p><strong>引号的作用</strong><br>在Shell里，引号并不是用来区分字符串的，而是用来强调一个整体的。所以，即使是数字也可以用引号括起来，比如这样：<code>[ &quot;1&quot; -eq &quot;1&quot; ]</code>。不过对于字符串，还是强烈建议都用引号括起来，以免发生意外，比如下面这段代码：</p>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; var1=&quot;Alice Chen&quot;</span><br><span class="line">&gt; if [ $var1 == &quot;Alice Chen&quot; ] ; then</span><br><span class="line">&gt;   echo &quot;Hello, Alice!&quot;</span><br><span class="line">&gt; else</span><br><span class="line">&gt;   echo &quot;Who are you?&quot;</span><br><span class="line">&gt; fi </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这段代码就会报错，因为Shell脚本在执行时，是先将变量进行替换，再执行指令，于是上边代码的第2行在替换完后就变成了这个样子：</p>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; if [ Alice Chen == &quot;Alice Chen&quot; ]; then</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这显然是不对的。<br>仍然是刚才那段代码，再看一个示例：</p>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; var1=&quot;&quot;</span><br><span class="line">&gt; if [ $var1 == &quot;Alice Chen&quot; ] ; then</span><br><span class="line">&gt;   echo &quot;Hello, Alice!&quot;</span><br><span class="line">&gt; else</span><br><span class="line">&gt;   echo &quot;Who are you?&quot;</span><br><span class="line">&gt; fi </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>变量var1此时是一个空串，按刚才的解释，代码执行前，第2行会被替换成这个样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; if [  == &quot;Alice Chen&quot; ] ; then</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这样显然也是不对的。<br>所以，我们在写Shell脚本的时候，对于字符串变量，或者说所有的<strong>变量</strong>，在引用时，最好都加上<strong>双引号</strong></p>
+</blockquote>
+<h5 id="双引号和单引号的区别"><a href="#双引号和单引号的区别" class="headerlink" title="双引号和单引号的区别"></a>双引号和单引号的区别</h5><p>这两种引号的区别在于：双引号忽略除<code>$</code> <code>\</code> <code>反引号</code>以外的所有特殊字符，而单引号则没有例外。<br>特殊字符比如有：<code>空格</code> <code>&amp;</code> <code>!</code> <code>()</code> <code>[]</code>等等。<br>看下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var1=&quot;Alice Chen&quot;</span><br><span class="line">echo &quot;\$var1 is $var1&quot;</span><br><span class="line">echo &apos;\$var1 is $var1&apos;</span><br></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$var1 is Alice Chen</span><br><span class="line">\$var1 is $var1</span><br></pre></td></tr></table></figure>
+<p>第一个<code>echo</code>用了双引号，所以<code>\$</code>转义后变成了<code>$</code>，<code>$var1</code>变成了<code>Alice Chen</code>；第二个<code>echo</code>用了单引号，相当于直接输出了内部的原始内容。</p>
+<h4 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a>while语句</h4><p>解释了<code>if</code>语句后，再看<code>while</code>就容易很多了。直接看示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test=0</span><br><span class="line">while [ $test -ne 1 ] ; then</span><br><span class="line"></span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h4 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h4><p>for语句有两种写法</p>
+<ul>
+<li>第一种 for 是一种简单的for循环，和平时用的for循环一样</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (( i=1 ; $i &lt;= 100; i++ )) </span><br><span class="line">do </span><br><span class="line">echo $i; </span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第二种 for in 是一种简单的字符串枚举遍历法，利用for in格式对字符串按空格切份的功能</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for i in $(seq 1 100)</span><br><span class="line">do </span><br><span class="line">echo $i </span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><h4 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h4><p>在终端输入 <strong><em>.sh 后，紧跟着输入的数据，中间可以用空格隔开，将作为参数传入到 </em></strong>.sh中 </p>
+<ul>
+<li>$0 这个程序的执行名字</li>
+<li>$n 这个程序的第n个参数值，n=1…9</li>
+<li>$* 这个程序的所有参数</li>
+<li>$# 这个程序的参数个数</li>
+</ul>
+<p>例 test.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $0</span><br><span class="line">echo $1</span><br><span class="line">echo $*</span><br><span class="line">echo $#</span><br></pre></td></tr></table></figure>
+<p>执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admindeMac-mini:~ xc$ /Users/xlc/Desktop/test.sh a b c d</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/Users/xlc/Desktop/test.sh</span><br><span class="line">a</span><br><span class="line">a b c d</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h4 id="方法的使用"><a href="#方法的使用" class="headerlink" title="方法的使用"></a>方法的使用</h4><ul>
+<li>创建</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function test()&#123;</span><br><span class="line">	echo $1</span><br><span class="line">	echo $2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test a b</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
+<h4 id="读取用户输入的字符"><a href="#读取用户输入的字符" class="headerlink" title="读取用户输入的字符"></a>读取用户输入的字符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">read style</span><br><span class="line">sleep 0.5</span><br><span class="line">buildstyle=&quot;$style&quot;</span><br><span class="line">echo $buildstyle</span><br></pre></td></tr></table></figure>
+<h4 id="XCode打包脚本的实现原理"><a href="#XCode打包脚本的实现原理" class="headerlink" title="XCode打包脚本的实现原理"></a>XCode打包脚本的实现原理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">function build_xcodeproj()&#123;</span><br><span class="line">  /usr/libexec/PlistBuddy -c &apos;Set :CFBundleShortVersionString &apos;$2&apos;&apos; &quot;$Project_Path/$1&quot;.plist || errexit &quot;版本号设置失败&quot;</span><br><span class="line">  /usr/libexec/PlistBuddy -c &apos;Set :CFBundleVersion &apos;$2&apos;&apos; &quot;$Project_Path/$1&quot;.plist || errexit &quot;版本号设置失败&quot;</span><br><span class="line"></span><br><span class="line">  if [ `ls build/ipa/&quot;$1&quot;/&quot;$2&quot;/|wc -l` -eq 0 ]; then</span><br><span class="line"></span><br><span class="line">    if [ -e build/archives/&quot;$2&quot;/&quot;$1&quot;.xcarchive ]; then</span><br><span class="line">      echo &quot;&apos;$1&apos; &apos;$2&apos; 版本archive包已存在 如需重新打包,请删除旧包&quot;</span><br><span class="line">    else</span><br><span class="line">      xcodebuild -project &quot;$Project_Path/$Project_Name&quot; -scheme &quot;$1&quot; -configuration &quot;$Configuration&quot; clean archive build -archivePath &quot;$Project_Path&quot;/build/archives/&quot;$2&quot;/&quot;$1&quot;.xcarchive || errexit &quot;&apos;$1&apos; &apos;$2&apos; archive失败&quot;</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">      create_export_plist $ProjectExportPlistFile</span><br><span class="line"></span><br><span class="line">      xcodebuild -exportArchive -archivePath &quot;$Project_Path&quot;/build/archives/&quot;$2&quot;/&quot;$1&quot;.xcarchive -exportOptionsPlist $ProjectExportPlistFile -exportPath &quot;$Project_Path&quot;/build/ipa/&quot;$1&quot;/&quot;$2&quot;</span><br><span class="line"></span><br><span class="line">      if [ $? -ne 0 ] ; then</span><br><span class="line">        rm -f $ProjectExportPlistFile</span><br><span class="line">        errexit &quot;&apos;$1&apos; &apos;$2&apos; archive失败&quot;</span><br><span class="line">      fi</span><br><span class="line">      rm -f $ProjectExportPlistFile</span><br><span class="line"></span><br><span class="line">  else</span><br><span class="line">    echo &quot;&apos;$1&apos; &apos;$2&apos; 版本ipa包已存在 如需重新打包,请删除旧包&quot;</span><br><span class="line">  fi</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/04/28/Servlet 从入门到实战/" title= Servlet 从入门到实战 >
+                    <div class="nextTitle">Servlet 从入门到实战</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2017/04/20/SSL 认证体系备忘录/" title= SSL 认证体系备忘录 >
+                    <div class="prevTitle">SSL 认证体系备忘录</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Shell编程"><span class="toc-number">1.</span> <span class="toc-text">什么是Shell编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hello-world"><span class="toc-number">2.</span> <span class="toc-text">Hello world!</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个稍微复杂点的例子"><span class="toc-number">3.</span> <span class="toc-text">一个稍微复杂点的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#流程控制"><span class="toc-number">4.</span> <span class="toc-text">流程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#if语句"><span class="toc-number">4.1.</span> <span class="toc-text">if语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#条件判断格式"><span class="toc-number">4.1.1.</span> <span class="toc-text">条件判断格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#双引号和单引号的区别"><span class="toc-number">4.1.2.</span> <span class="toc-text">双引号和单引号的区别</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#while语句"><span class="toc-number">4.2.</span> <span class="toc-text">while语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#for语句"><span class="toc-number">4.3.</span> <span class="toc-text">for语句</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本使用"><span class="toc-number">5.</span> <span class="toc-text">基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本参数"><span class="toc-number">5.1.</span> <span class="toc-text">基本参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法的使用"><span class="toc-number">5.2.</span> <span class="toc-text">方法的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读取用户输入的字符"><span class="toc-number">5.3.</span> <span class="toc-text">读取用户输入的字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XCode打包脚本的实现原理"><span class="toc-number">5.4.</span> <span class="toc-text">XCode打包脚本的实现原理</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

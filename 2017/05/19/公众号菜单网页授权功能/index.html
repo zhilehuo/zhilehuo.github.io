@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>Hexo + Github 搭建博客 · 智乐活</title>
+    <title>公众号菜单网页授权功能 · 智乐活</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -191,7 +191,7 @@
                 <a href="/" >智乐活</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hexo + Github 搭建博客</a>
+                <a href="#" class="post-name">公众号菜单网页授权功能</a>
             </div>
     </div>
     
@@ -223,7 +223,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hexo + Github 搭建博客
+            公众号菜单网页授权功能
             <!-- 404 -->
             
         </h1>
@@ -241,15 +241,13 @@ height:50vh;
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Wechat">Wechat</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/09</span>
+                <span class="post-intro-time">2017/05/19</span>
                 
                 <span class="shareWrapper">
                     <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -350,57 +348,37 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。</p>
-<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><p>安装 Hexo 前，需要检查是否已经安装下列应用；</p>
-<ul>
-<li>Node.js</li>
-<li>Git</li>
-</ul>
-<p>如已安装上述必备程序，通过 <code>sudo npm install -g hexo-cli</code> 安装Hexo。</p>
-<h2 id="建站流程"><a href="#建站流程" class="headerlink" title="建站流程"></a>建站流程</h2><ol>
-<li>在 Github 中创建仓库 <code>username.github.io</code></li>
-<li>创建本地目录 <code>username.github.io</code> 并在目录中执行 <code>hexo init</code></li>
-<li>修改目录中的 <code>_config.yml</code> ，详见 <a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="noopener">Hexo 配置</a> ，如下为部署相关配置：</li>
-</ol>
-<figure class="highlight plain"><figcaption><span>hexo-deployer-git，npm install hexo-deployer-git --save</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:User/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>安装 hexo-deployer-git，<code>npm install hexo-deployer-git --save</code></li>
-<li>初始化本地 git 仓库，<code>git init</code></li>
-<li>本地仓库关联远程仓库，<code>git remote add origin git@github.com:User/username.github.io.git</code></li>
-<li>本地创建并切换到 hexo 分支 <code>git checkout -b hexo</code> </li>
-<li>提交本地 hexo 分支，推送并关联远程 hexo 分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'init hexo branch'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin hexo</span></span><br></pre></td></tr></table></figure>
-<ol start="10">
-<li>将 hexo 分支设置为默认分支（使 clone 操作获取 hexo 分支内容）</li>
-<li>生成静态页面并部署至 Github，<code>hexo g -d</code></li>
-</ol>
-<h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><p><code>hexo new [layout] &lt;title&gt;</code> 命令用于创建新文章，layout 默认为 post，可以通过修改 -config.yml 指定默认布局。</p>
-<p>使用 layout 参数创建文章时，Hexo 会尝试在 scaffold 目录中寻找对应的模板，根据模板创建文件。</p>
-<p>默认布局中 draft 不会显示在页面中，可通过命令 <code>hexo publish [layout] &lt;title&gt;</code> 发布文章。</p>
-<p>文章上方以 <code>—</code> 分隔的区域用于指定标题等变量，如：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2018/4/9 13:46:25</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>tech</span><br><span class="line"><span class="bullet">- </span>java</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>spring</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>常用参数有 title、date、updated、tags、categories、comments 等。</p>
-<p>Hexo 中分类具有顺序性和层次性，不支持一篇文章有多个同级分类，多个类别时会成为子分类而不是并列分类。</p>
-<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>首先在 Hexo 根目录下安装主题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span></span><br></pre></td></tr></table></figure>
-<p>修改 hexo 根目录配置 <code>_config.yml</code></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
-<p>调整主题配置，修改 <code>theme/yilia/_config.yml</code> ，如</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">主页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">随笔:</span> <span class="string">/tags/随笔/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SubNav</span></span><br><span class="line"><span class="attr">subnav:</span></span><br><span class="line"><span class="attr">  github:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  weibo:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  rss:</span> <span class="string">"#"</span></span><br><span class="line"><span class="attr">  zhihu:</span> <span class="string">"#"</span></span><br><span class="line">  <span class="comment">#qq: "#"</span></span><br><span class="line">  <span class="comment">#weixin: "#"</span></span><br><span class="line">  <span class="comment">#jianshu: "#"</span></span><br><span class="line">  <span class="comment">#douban: "#"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rss:</span> <span class="string">/atom.xml</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://blog.ulyssesss.com/2018/04/09/Hexo-Github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" target="_blank" rel="noopener">查看原文</a></p>
+        <h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><p>官方文档参照：在<a href="https://mp.weixin.qq.com/wiki" target="_blank" rel="noopener">官方开发者文档</a> 中 –&gt; 微信网页授权项（要下班啦，官方文档上的说明不描述啦，这里仅显示实现方法及代码demo）</p>
+<h3 id="公众号菜单配置"><a href="#公众号菜单配置" class="headerlink" title="公众号菜单配置"></a>公众号菜单配置</h3><p>1.获取菜单配置接口：<a href="https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN" target="_blank" rel="noopener">https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN</a> access_token由自己存储在服务器端 </p>
+<p>2.菜单配置方式: 使用Postman工具进行配置<br>请求：POST<br>Headers: Content-Type：application/json<br>Body:(raw型 JSON) </p>
+<blockquote>
+<p>{<br>“button”:[<br>{ “type”:”click”,<br>“name”:”孕妇课堂”,<br>“key”:”click_knowledges”<br>},<br>{ “type”:”view”,<br>“name”:”关于我们”,<br>“url”:”<a href="http://www.baidu.com&quot;}" target="_blank" rel="noopener">www.baidu.com&quot;}</a> ]<br>}</p>
+</blockquote>
+<p>3.将我们的view点击后的希望跳转地址进行urlEncode编码，<br>urlEncode编码地址：<a href="http://tool.chinaz.com/tools/urlencode.aspx" target="_blank" rel="noopener">http://tool.chinaz.com/tools/urlencode.aspx</a><br>我们自己写的微信菜单接口地址，如：test.com/project1/servlet1/view<br>编码后为：zhilehuo.com%2fproject1%2fservlet1%2fview </p>
+<p>4.view中url填地址：<br><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect" target="_blank" rel="noopener">https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect</a> 若提示“该链接无法访问”，请检查参数是否填写错误，是否拥有scope参数对应的授权作用域权限。 </p>
+<p>5.编写服务器端处理请求代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(value = &quot;servlet1/view&quot;)</span><br><span class="line">public class MenuServletController extends HttpServlet &#123;</span><br><span class="line">@RequestMapping     </span><br><span class="line">public void weixinLogin(HttpServletRequest request,HttpServletResponse response) throws Exception &#123;  </span><br><span class="line"> String code = request.getParameter(&quot;code&quot;); //获取code</span><br><span class="line"> if (null == code || &quot;&quot;.equals(code))</span><br><span class="line">             throw new Exception();</span><br><span class="line"> //这一步就是拼写微信api请求地址并通过微信的appid 和 微信公众号的AppSecret 以及我们获取到的针对用户授权回调的code 拿到 这个用户的 openid </span><br><span class="line"> String requestUrl = &quot;https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&amp;secret=APPSECRET&amp;code=CODE&amp;grant_type=authorization_code&quot;.replace(&quot;APPID&quot;, 填写微信APPID).replace(&quot;APPSECRET&quot;, 填写微信公众号的AppSecret).replace(&quot;CODE&quot;, code);  </span><br><span class="line"> String requestResult = RequestService.getRequest(requestUrl);//自己写一个doGet方法 发送doGet请求   </span><br><span class="line"> JSONObject getCodeResultJson = JSON.parseObject(requestResult);//把请求成功后的结果转换成JSON对象  </span><br><span class="line"> if(getCodeResultJson.getString(&quot;openid&quot;) == null) &#123;  </span><br><span class="line">     throw new Exception();  //没有拿到openid  </span><br><span class="line">  &#125;  </span><br><span class="line"> String openid = getCodeResultJson.getString(&quot;openid&quot;);//拿到openid  </span><br><span class="line"> //我们自己的动态地址一般需要用户的openid以及其他由openid算出的用户参数</span><br><span class="line">    ..... //得到openid以后我们可以算出链接所需参数</span><br><span class="line"> //发送我们的链接url，带上参数</span><br><span class="line"> response.sendRedirect(url+“?openid=&quot;+openid+&quot;&amp;par1=&quot;+par1+&quot;&amp;par2=&quot;+par2);</span><br><span class="line">&#125;catch (Exception e)&#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自己写的doGet方法附上:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class RequestService &#123;</span><br><span class="line">public static String getRequest(String urlString) throws IOException&#123;</span><br><span class="line">    HttpURLConnection conn = null;</span><br><span class="line">    BufferedReader responseReader = null;</span><br><span class="line">    StringBuffer sb = null;</span><br><span class="line">    try &#123;</span><br><span class="line">        URL url = new URL(urlString);</span><br><span class="line">        conn = (HttpURLConnection) url.openConnection();</span><br><span class="line">        //设置请求属性</span><br><span class="line">        conn.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json&quot;);</span><br><span class="line">        conn.setRequestProperty(&quot;Connection&quot;, &quot;Keep-Alive&quot;);// 维持长连接</span><br><span class="line">        conn.setRequestProperty(&quot;Charset&quot;, &quot;UTF-8&quot;);</span><br><span class="line">        conn.connect();</span><br><span class="line">        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK)&#123;</span><br><span class="line">            sb=new StringBuffer();</span><br><span class="line">            String readLine=new String();</span><br><span class="line">            responseReader=new BufferedReader(new InputStreamReader(conn.getInputStream(),&quot;UTF-8&quot;));</span><br><span class="line">            while((readLine=responseReader.readLine())!=null)&#123;</span><br><span class="line">                sb.append(readLine).append(&quot;\n&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        if (responseReader != null)&#123;</span><br><span class="line">            responseReader.close();</span><br><span class="line">        &#125;</span><br><span class="line">        if (conn != null) &#123;</span><br><span class="line">            conn.disconnect();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if (sb != null) &#123;</span><br><span class="line">        return sb.toString();</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>6.简单实现了view点击后直接跳转动态链接功能，相比于设置为click事件，点击click后返回一个此形式的文本超链接 效果更好。</p>
+<p>7.关于此功能的拓展：<br>除了获取openid，还可以获取很多用户信息【拉取用户信息(需scope为 snsapi_userinfo)】，通过code换取网页授权access_token（请求方法：获取code后，请求以下链接获取access_token： ）【注意：此网页授权access_token与基础支持的access_token不同】<br>获取access_token后，发送请求：http：GET  可以获取用户信息，包括openid，用户昵称，性别，国家，省份，城市，头像等用户信息。（不可以获取用户的微信号）</p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/05/22/主 app 性能测试总结/" title= 主 app 性能测试总结 >
+                    <div class="nextTitle">主 app 性能测试总结</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2017/12/12/Git 操作指南/" title= Git 操作指南 >
-                    <div class="prevTitle">Git 操作指南</div>
+                <a href= "/2017/05/12/狼人杀新手教科书/" title= 狼人杀新手教科书 >
+                    <div class="prevTitle">狼人杀新手教科书</div>
                 </a>
             
         </li>
@@ -462,7 +440,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置环境"><span class="toc-number">1.</span> <span class="toc-text">配置环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建站流程"><span class="toc-number">2.</span> <span class="toc-text">建站流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写作"><span class="toc-number">3.</span> <span class="toc-text">写作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用主题"><span class="toc-number">4.</span> <span class="toc-text">使用主题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#官方"><span class="toc-number">1.</span> <span class="toc-text">官方</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公众号菜单配置"><span class="toc-number">2.</span> <span class="toc-text">公众号菜单配置</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

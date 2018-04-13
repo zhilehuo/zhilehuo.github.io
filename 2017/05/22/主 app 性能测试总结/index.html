@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>主 app 性能测试总结 · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">主 app 性能测试总结</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            主 app 性能测试总结
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Test">Test</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/05/22</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>2017年5月，我们针对半米主app进行了目标为 <strong>30万</strong> 日活跃量的后端性能测试，所以记录一下测试的准备、实施、调优过程。（具体的业务和数据，不希望在文章中公开，都放在了公司内部文档服务器-&gt;作者的个人文件夹中^^）</p>
+<p>背景：</p>
+<blockquote>
+<p>当前活跃量：1.6万/天<br>目标活跃量：30万/天</p>
+</blockquote>
+<p>结论：30W日活时性能稳定；60W日活时服务偶尔有性能抖动，短时间内可恢复，待优化。</p>
+<h2 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h2><p>上面已经说了这次的目标是支撑30万日活，准备阶段我们提出了如下几个问题：</p>
+<ul>
+<li>如何搭建测试环境</li>
+<li>如何确定测试目标接口、参数集合、并发量等指标</li>
+<li>如何准备测试用假数据</li>
+<li>如何执行测试请求</li>
+<li>评估结果并找出可能的性能瓶颈</li>
+</ul>
+<p>下面我来描述一下这四个问题是如何提出的，以及为什么会提出这些问题。如果各位看官想直接了解本次性能测试中的解决方法，可跳过<strong>“提出问题”</strong>这一小节，直接阅读<strong>“解决问题”</strong>部分。</p>
+<h3 id="一、提出问题"><a href="#一、提出问题" class="headerlink" title="一、提出问题"></a>一、提出问题</h3><h4 id="1-如何搭建测试环境"><a href="#1-如何搭建测试环境" class="headerlink" title="1.如何搭建测试环境"></a>1.如何搭建测试环境</h4><p>想要做性能测试，首先需要搭建一个与线上生产环境功能相同、又完全独立的测试环境，目的是为了避免性能测试时所带来的服务不稳定会影响线上服务。</p>
+<h4 id="2-如何确定测试目标接口、参数集合、并发量等"><a href="#2-如何确定测试目标接口、参数集合、并发量等" class="headerlink" title="2.如何确定测试目标接口、参数集合、并发量等"></a>2.如何确定测试目标接口、参数集合、并发量等</h4><p>性能测试的基本思路是希望在特定目标日活跃量的条件下，模拟用户向后端服务发起的请求，并观察服务是否可用、稳定、性能良好，其中<strong>目标接口</strong>、<strong>参数集合</strong>、<strong>并发量</strong>这几个条件是我们比较关注的，因此我们先描述一下这几个概念：</p>
+<blockquote>
+<p>目标接口：一个应用可能拥有上百个接口，其中有一些接口请求量很大(如：应用首页的请求)，有一些则很小(如支付接口-_-)。需要挑选请求量大的接口，而不是全部接口去做测试。目的是有重点地测试，从而节省准备时间。</p>
+</blockquote>
+<blockquote>
+<p>参数集合：在发送测试请求时，针对同一个接口，多次请求间需要使用不同的输入参数，目的是为了避免相同参数每次都能命中应用内缓存或数据库缓存，导致与真实场景下的请求模式不一致，性能测试结果出现偏差。因此我们需要构造一个请求参数的集合，去模拟多用户同时访问的情景。</p>
+</blockquote>
+<blockquote>
+<p>并发量：并发量是指针对某一个接口，以什么样的频率发送请求、以及同时发送多少个请求。这个指标是根据目标日活跃量测算出来的(本文下一节将介绍如何测算这个指标)，它直接影响了性能测试的结果。</p>
+</blockquote>
+<h4 id="3-如何准备测试用假数据"><a href="#3-如何准备测试用假数据" class="headerlink" title="3.如何准备测试用假数据"></a>3.如何准备测试用假数据</h4><p>由于目标日活跃量远大于当前活跃量，一个不得不考虑的因素是：当日活达到目标量时，数据库内的数据量也定会远超过当前量级，那时的数据查询和写入性能将不及现在，如果我们还使用当前数据库备份进行测试，将带来结论的偏差。</p>
+<p>考虑到这一点，我们需要向数据库部分数据表中填入大量仿造的数据，以达到预想的数据量级。</p>
+<h4 id="4-如何执行请求"><a href="#4-如何执行请求" class="headerlink" title="4.如何执行请求"></a>4.如何执行请求</h4><p>执行请求过程，需要模拟客户端，定时定量地发送一批又一批的携带不同参数的请求，并记录它们的响应时间、成功率、实际并发量等指标。如何能简单快速实现这个功能是这次考虑的另一个问题。</p>
+<h4 id="5-评估结果并找出性能瓶颈"><a href="#5-评估结果并找出性能瓶颈" class="headerlink" title="5.评估结果并找出性能瓶颈"></a>5.评估结果并找出性能瓶颈</h4><p>性能测试的最终目的是：</p>
+<ul>
+<li>测算目前应用能否承受目标日活跃量的用户请求，并能保持稳定。</li>
+<li>找到应用最大能承受的日活跃量上限，知道何时该考虑优化性能这件事情。</li>
+<li>找出应用未来的性能瓶颈可能是哪里，日后优化时有章可循。</li>
+</ul>
+<p>如何完成这些目标是我们最终关心的问题。</p>
+<h3 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h3><p>本节对上一节提出的问题给出解决方案，这些方案不一定是唯一答案，只是在本次性能测试中采用的。</p>
+<h4 id="1-搭建测试环境"><a href="#1-搭建测试环境" class="headerlink" title="1.搭建测试环境"></a>1.搭建测试环境</h4><p>半米主app目前的应用部署结构是这样的：<br><img src="http://onpyrjcca.bkt.clouddn.com/74e2a712593140139ff4f2af566d034b.png" alt="1.png"></p>
+<p>注意：在实际生产环境中，为了实现高可用，<code>peanut_baby</code>这个应用是部署在多台服务器上的多实例结构。而<code>ServerPeanut</code>和<code>uis</code>这两个应用因为业务复杂，暂时还是单个实例部署。</p>
+<p>搞清楚了应用部署结构，我们在搭建测试环境时，就需要完整地复制出这样一套系统，具体分为如下几步：</p>
+<ol>
+<li>购买两个ECS云服务器实例（按量付费，用完即可释放，注意留下磁盘镜像），一个1核1G用于部署nginx代理，另一个2核4G用于部署上述三个应用（由于目前MongoDB和memcached两个系统也是我们自己部署的，没有使用云服务实例，所以也部署在这台机器上）。</li>
+<li>购买一个RDS云数据库实例（同样按量付费），配置为1核1G，尽量与当前使用的4核600M的配置相似，并将线上用到的<code>peanut</code>和<code>uis</code>两个数据库迁移至新实例。</li>
+<li>部署这些应用时，注意修改它们的配置文件中各服务的地址以及端口，包括数据库的地址，全部从线上地址改为测试地址。</li>
+<li>最后，为测试环境准备了一个新的域名，配置在nginx当中，并将该域名下的请求转发至测试应用服务器。</li>
+<li>经过简单的接口调用测试，证实测试环境已全部搭建完毕</li>
+</ol>
+<h4 id="2-确定测试目标接口、参数集合、并发量"><a href="#2-确定测试目标接口、参数集合、并发量" class="headerlink" title="2. 确定测试目标接口、参数集合、并发量"></a>2. 确定测试目标接口、参数集合、并发量</h4><h5 id="目标接口："><a href="#目标接口：" class="headerlink" title="目标接口："></a>目标接口：</h5><ul>
+<li>为了让测试过程尽量真实，我们先对线上应用的访问日志进行了过滤，挑选出某一天请求高峰期（20:00-21:00）的半米主app请求，并按接口进行分类并计数，统计出请求量排名前30的请求列表。</li>
+<li>由于应用正处在改版阶段，后端部分接口也存在未来弃用的情况，因此我们对某些目标接口进行了替换，如<strong>旧版首页接口</strong>在下一个版本将不再提供服务，因此我们将它替换为了与其对应的<strong>新版首页接口</strong>，这样的情况不止一个。</li>
+</ul>
+<h5 id="参数集合"><a href="#参数集合" class="headerlink" title="参数集合"></a>参数集合</h5><ul>
+<li>针对每个请求，我们要结合业务逻辑，分析出不同用户发来的请求间，可能需要发生变化的参数组合，并将它们随机的生成出来。（如：首页会根据不同用户id，返回该用户的个性化数据，因此在此接口处，<code>userid</code>将是一个需要参数化的点）</li>
+<li>对于一些不容易构造的请求参数，如：验证用的签名sig，可以通过修改后端验证逻辑，对所有请求放行的办法，避免了验证时发生错误而阻止后续业务逻辑执行的情况发生。<strong>注意</strong>：这里一定不能删除验证过程，这相当于减少了接口的计算量，会造成测试结果不准确。</li>
+</ul>
+<h5 id="并发量"><a href="#并发量" class="headerlink" title="并发量"></a>并发量</h5><ul>
+<li>在测算并发量时，我们先将上述一小时内的真实访问量进行计数，并将该数字乘以20(当前日活量与目标量的倍数差距)，再将其换算成每秒请求量这样一个指标。</li>
+<li>每秒请求量这个指标，实际上是 <strong>并发数✖️步调频率</strong> 的乘积，经过简单的规划，就能得到合理的并发数和步调时间了。如：首页请求约每秒45个，我们将其规划成5个并发、步调频率每秒9次，也就是步调时间为110毫秒。</li>
+</ul>
+<h4 id="3-准备测试用假数据"><a href="#3-准备测试用假数据" class="headerlink" title="3.准备测试用假数据"></a>3.准备测试用假数据</h4><ul>
+<li>方法很直接，结合业务逻辑，找出在目标日活的情况下，哪些数据表的数据量可能增长一个或多个量级，然后结合上文中构造的请求参数集合，向目标数据库中填充数据，比如：用户信息表，在用户量暴涨的情况下，数据量将会上一个量级，对它进行填充是必要的。</li>
+</ul>
+<blockquote>
+<p>本次测试中，主要填充了<code>用户信息</code>相关的表和<code>问答</code>相关的数据表。</p>
+</blockquote>
+<h4 id="4-如何执行请求-1"><a href="#4-如何执行请求-1" class="headerlink" title="4.如何执行请求"></a>4.如何执行请求</h4><p>考虑到自己实现测试客户端，需要不小的成本，而一些常见的测试工具，又不能完全满足我们请求参数化的需求。因此，本次测试，使用了阿里云提供的性能测试服务，该服务支持测试脚本的参数化，以及对请求并发数和步调时间的定制，并可以统计测试结果的各项指标。</p>
+<p>根据上文中确定的请求列表，我们在阿里云的性能测试功能中创建了20个不同请求的测试脚本，并上传参数集合文件(.csv格式)，完成参数化的定制。之后构建一个测试场景，将所有测试脚本加入进来，并设置测算好的并发数和步调时间，如下图所示：</p>
+<p><img src="http://onpyrjcca.bkt.clouddn.com/d01b95b7b12247419e09b55679863924.png" alt="2.png"></p>
+<blockquote>
+<p>注意：脚本命名规则有助于我们分辨请求的接口名称和请求量排名。</p>
+</blockquote>
+<p>场景设置好后，我们就可以开始执行测试了。测试时间持续1-2个小时为好，不能太短。</p>
+<h4 id="5-评估结果"><a href="#5-评估结果" class="headerlink" title="5.评估结果"></a>5.评估结果</h4><p>评估结果时，分两部分指标进行检查：</p>
+<ul>
+<li><strong>请求相关指标</strong>：各接口请求的平均响应时间，业务调用的成功率，实际达到的并发数是否与预期相符，这些都可以在阿里云性能测试监控页面看到，比较方便。这些指标<strong>直接</strong>表达了服务是否能达到目标要求。</li>
+<li><strong>服务器指标</strong>：要查看nginx服务器、应用服务器、数据库服务器的性能指标，比如：CPU占用率、负载、IO次数、内存使用情况等。这些指标<strong>间接</strong>反映了在服务出现问题时，可能的性能瓶颈会在哪个环节。</li>
+</ul>
+<h2 id="实施阶段"><a href="#实施阶段" class="headerlink" title="实施阶段"></a>实施阶段</h2><p>用较长的篇幅描述了测试的准备阶段，确实，准备阶段花费了我们不少的时间，当真正开始测试后，似乎轻松了一点。</p>
+<ul>
+<li>打开阿里云的性能测试实时监控页面，查看实时收集到的请求结果统计</li>
+<li>打开zabbix查看两台服务器的状态</li>
+<li>打开阿里云RDS监控与报警页面查看<code>Mysql</code>数据库的各项指标。</li>
+</ul>
+<h2 id="验证结果阶段"><a href="#验证结果阶段" class="headerlink" title="验证结果阶段"></a>验证结果阶段</h2><p>测试跑完后，我们首先按请求量查看各接口平均响应时间是否足够快，错误率是否够低，并发数是否达到目标值。</p>
+<blockquote>
+<p>以前的一个经验数据是：排名前十的接口，平均响应时间应该在100ms以内，错误率0.1%以内。</p>
+</blockquote>
+<p>另外，整个测试时间段内，服务是否一直保持稳定，是否有性能的抖动，出现服务短暂不可用的情况。如果有这种情况，也需要分析其原因是什么，寻求改进。</p>
+<p>这次测试中，我们分别对30万日活和60万日活两个目标进行了测试，测试的部分数据结果如下：</p>
+<h3 id="30W日活"><a href="#30W日活" class="headerlink" title="30W日活"></a>30W日活</h3><h4 id="请求相关指标"><a href="#请求相关指标" class="headerlink" title="请求相关指标"></a>请求相关指标</h4><p>请求成功率接近100%，响应时间大部分都在100ms以下，部分<strong>问答业务</strong>相关的接口响应时间偶尔高于100ms，如图：</p>
+<p><img src="http://onpyrjcca.bkt.clouddn.com/81a593e0275946988fdff0fcdd016d6f.png" alt="3.png"><br><img src="http://onpyrjcca.bkt.clouddn.com/f386334a96cd4bbe9179ddd947b33e20.png" alt="4.png"></p>
+<p>请求的实际并发数与预期相同。</p>
+<h4 id="服务器指标"><a href="#服务器指标" class="headerlink" title="服务器指标"></a>服务器指标</h4><p>测试期间，Nginx服务器负载和CPU占用都较小(使用了https连接)，应用服务器的CPU占用在30%-40%左右，且负载最多在0.3左右，性能良好。</p>
+<p>数据库服务器的CPU使用率在20%，IOPS为45，连接数10以内。每秒SQL语句执行次数为1200+。<br>每秒增删改查的次数为：<br><img src="http://onpyrjcca.bkt.clouddn.com/8865af5c897c413da4caf785c670479b.png" alt="5.png"></p>
+<p>综上可见，在请求量在30W左右日活时，服务性能比较良好，可稳定提供服务。</p>
+<h3 id="60W日活"><a href="#60W日活" class="headerlink" title="60W日活"></a>60W日活</h3><p>构造60w日活的方法就是在30w的基础上，将并发量加倍，而其它指标不变，再次进行测试，这次进行了两个小时的测试。</p>
+<h4 id="请求相关指标-1"><a href="#请求相关指标-1" class="headerlink" title="请求相关指标"></a>请求相关指标</h4><p>这次测试指标都还接近预期值，平均响应时间比30W日活时略有升高。</p>
+<p>但在测试进行到1小时42分钟时，出现了短暂的响应超时、并发数下降的情况，如图：<br><img src="http://onpyrjcca.bkt.clouddn.com/0382e05ba49c474faadcf725090f8e9a.png" alt="6.png"><br>可以看到首页请求的TPS在19点42分时骤降，其它请求也基本如此。</p>
+<h4 id="服务器指标-1"><a href="#服务器指标-1" class="headerlink" title="服务器指标"></a>服务器指标</h4><p>nginx服务器的性能良好。</p>
+<p>应用服务器负载和CPU都出现过短暂的过高，如图：<br><img src="http://onpyrjcca.bkt.clouddn.com/ba66863d1a8340b5b05b0e0c2abb7062.png" alt="7.png"></p>
+<p>数据库服务器每秒3400个SQL语句执行，增删改查数目在：<br><img src="http://onpyrjcca.bkt.clouddn.com/d9ea45740fc345cea28b1c49852209b5.png" alt="8.png"><br>CPU占用最高达到70%，IOPS达到过330/1500，连接数30+</p>
+<p>综上可见，在60W日活的情况下，应用服务器和数据库服务器都经受了比较大的压力，其中出现的短暂服务不可用的现象，需要解决。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上数据比较凌乱，这里总结了一个表格：</p>
+<table>
+<thead>
+<tr>
+<th>指标名称/用户量</th>
+<th>30W</th>
+<th>60W</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nginx服务器负载/CPU</td>
+<td>很低</td>
+<td>CPU 10+%</td>
+</tr>
+<tr>
+<td>应用服务器负载</td>
+<td>平均0.2</td>
+<td>平均0.5，偶尔超过2</td>
+</tr>
+<tr>
+<td>应用服务器CPU使用率</td>
+<td>平均35%</td>
+<td>平均65%，偶尔爆表</td>
+</tr>
+<tr>
+<td>数据库CPU使用率</td>
+<td>平均20%</td>
+<td>最高70%</td>
+</tr>
+<tr>
+<td>数据库IOPS</td>
+<td>45</td>
+<td>最高330</td>
+</tr>
+<tr>
+<td>数据库连接数</td>
+<td>10以内</td>
+<td>最高30+</td>
+</tr>
+<tr>
+<td>请求成功率</td>
+<td>基本100%</td>
+<td>偶有波动，表现为请求超时，1-2min后自动恢复</td>
+</tr>
+<tr>
+<td>请求平均响应时间</td>
+<td>平均100ms以内</td>
+<td>少部分请求超过100ms</td>
+</tr>
+<tr>
+<td>实际并发数</td>
+<td>与预期相符</td>
+<td>与预期相符，除去服务不稳定的情况</td>
+</tr>
+</tbody>
+</table>
+<h2 id="调优-amp-再次测试"><a href="#调优-amp-再次测试" class="headerlink" title="调优&amp;再次测试"></a>调优&amp;再次测试</h2><p>根据测试结果，我们需要全面分析其中发现的问题，并准确找到限制性能的瓶颈，优化它，然后再次测试直到指标正常。在这里我举几个本次测试中实施过的和将要实施的优化手段。</p>
+<ul>
+<li><strong>数据库查询慢，添加索引</strong>：一般当某个请求响应很慢时，很容易想到是否是这个请求是否进行了很慢的数据库操作导致的，在本次测试中，通过跟踪慢响应请求的业务逻辑，找到了不止一处没有合理添加数据库索引的位置，加上后优化效果明显。</li>
+<li><strong>CPU占用高，扩充机器或升级配置</strong>：对于60W日活时，出现的应用服务器CPU占用偶尔爆表的情况，考虑升级该服务器的配置或扩充更多的应用服务器并采用负载均衡策略是可选的解决办法。当然如果能够找出应用内计算量较大的过程，并思考优化办法也是一种思路。</li>
+<li><strong>数据库性能遇到瓶颈</strong>：对于60W日活时，数据库服务器CPU已达70%使用率，算是较高的水平，仍然可以考虑升级该机器的配置。其它一些优化数据库的手段包括分库分表、读写分离等，作者还没有使用过，暂不多说。</li>
+</ul>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>这章说一些本次测试中遇到的问题，算是替小伙伴们先踩了几个坑了。</p>
+<h3 id="请求失败，TLS版本问题"><a href="#请求失败，TLS版本问题" class="headerlink" title="请求失败，TLS版本问题"></a>请求失败，TLS版本问题</h3><p>由于本次测试都是https的请求，一次测试过程中，发现测试开始的几分钟后，请求全部失败，报错为SSLHandShakeException,经过调查和询问阿里云的客服，发现是TLS协议的问题，在客户端指定使用TLSv1.2协议将会解决这个问题，具体：</p>
+<p>在测试脚本中加入这两句话即可，其它类似方案读者请自行查找。</p>
+<pre><code>from java.lang import System
+System.setProperty(&quot;https.protocols&quot;, &quot;TLSv1.2&quot;)
+</code></pre><h3 id="周期性请求超时，Linux系统的TCP连接数限制"><a href="#周期性请求超时，Linux系统的TCP连接数限制" class="headerlink" title="周期性请求超时，Linux系统的TCP连接数限制"></a>周期性请求超时，Linux系统的TCP连接数限制</h3><p>测试过程中层出现周期性请求超时，查看服务器系统日志，发现如下错误：</p>
+<pre><code>/var/log/message错误：
+May 20 16:05:16 iZbp1iilv2rcpfyeufid9cZ kernel: nf_conntrack: table full, dropping packet.
+May 20 16:12:15 iZbp1exxqofq686dq3q16kZ kernel: TCP: time wait bucket table overflow
+</code></pre><p>富有经验的总工找出了这个问题所在，并修改了几个相关的系统参数，解决了问题：</p>
+<pre><code>/etc/sysctl.conf
+net.netfilter.nf_conntrack_max = 318720
+net.nf_conntrack_max = 318720
+net.ipv4.tcp_max_tw_buckets = 500000
+</code></pre>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/07/12/Jetty UrlRewrite 使用/" title= Jetty UrlRewrite 使用 >
+                    <div class="nextTitle">Jetty UrlRewrite 使用</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2017/05/19/公众号菜单网页授权功能/" title= 公众号菜单网页授权功能 >
+                    <div class="prevTitle">公众号菜单网页授权功能</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备阶段"><span class="toc-number">1.</span> <span class="toc-text">准备阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、提出问题"><span class="toc-number">1.1.</span> <span class="toc-text">一、提出问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-如何搭建测试环境"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.如何搭建测试环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-如何确定测试目标接口、参数集合、并发量等"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.如何确定测试目标接口、参数集合、并发量等</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-如何准备测试用假数据"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.如何准备测试用假数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-如何执行请求"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.如何执行请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-评估结果并找出性能瓶颈"><span class="toc-number">1.1.5.</span> <span class="toc-text">5.评估结果并找出性能瓶颈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、解决问题"><span class="toc-number">1.2.</span> <span class="toc-text">二、解决问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-搭建测试环境"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.搭建测试环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-确定测试目标接口、参数集合、并发量"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 确定测试目标接口、参数集合、并发量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#目标接口："><span class="toc-number">1.2.2.1.</span> <span class="toc-text">目标接口：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#参数集合"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">参数集合</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#并发量"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">并发量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-准备测试用假数据"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.准备测试用假数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-如何执行请求-1"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.如何执行请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-评估结果"><span class="toc-number">1.2.5.</span> <span class="toc-text">5.评估结果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实施阶段"><span class="toc-number">2.</span> <span class="toc-text">实施阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证结果阶段"><span class="toc-number">3.</span> <span class="toc-text">验证结果阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#30W日活"><span class="toc-number">3.1.</span> <span class="toc-text">30W日活</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#请求相关指标"><span class="toc-number">3.1.1.</span> <span class="toc-text">请求相关指标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务器指标"><span class="toc-number">3.1.2.</span> <span class="toc-text">服务器指标</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#60W日活"><span class="toc-number">3.2.</span> <span class="toc-text">60W日活</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#请求相关指标-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">请求相关指标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务器指标-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">服务器指标</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">3.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调优-amp-再次测试"><span class="toc-number">4.</span> <span class="toc-text">调优&amp;再次测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">5.</span> <span class="toc-text">遇到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请求失败，TLS版本问题"><span class="toc-number">5.1.</span> <span class="toc-text">请求失败，TLS版本问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#周期性请求超时，Linux系统的TCP连接数限制"><span class="toc-number">5.2.</span> <span class="toc-text">周期性请求超时，Linux系统的TCP连接数限制</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>ProxySQL 调研记录 · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">ProxySQL 调研记录</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            ProxySQL 调研记录
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL">SQL</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/04/28</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <blockquote>
+<p><strong>ProxySQL官网：</strong> <a href="http://www.proxysql.com/" target="_blank" rel="noopener">http://www.proxysql.com/</a><br><strong>ProxySQL文档：</strong> <a href="https://github.com/sysown/proxysql/wiki" target="_blank" rel="noopener">https://github.com/sysown/proxysql/wiki</a></p>
+</blockquote>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>阿里云的RDS按连接数售卖，所以，当我们部署了很多的服务实例后，每个实例再配置适当的连接池，就导致了RDS经常连接数过多，因为很多连接是由连接池创建的。而我们在调整多次连接池的参数后，也没有达到满意的效果。</p>
+<p>所以，这个情况下的解决方案就是设置一个统一的MySQL代理，所有应用的连接池都连至这个代理，然后代理通过自己的连接池再连接Backend MySQL，这样能够更有效的利用连接资源。</p>
+<blockquote>
+<p>几个可选的项目概况：<br><strong>MySQL Proxy</strong><br>MySQL官方品牌，但据说很久不维护了，以及稳定性一直被诟病<br><strong>Atlas</strong><br>360在MySQL Proxy基础上修改的一个版本，据说性能比MySQL Proxy强大不少，目前已经不维护了<br><strong>ProxySQL</strong><br>国外的资料中使用比较多的一个项目<br><strong>MaxScale</strong><br>同样是国外使用较多的一个项目，经常拿来和ProxySQL做对比，开源版本最多支持2个Backend DB</p>
+<p>最后综合了各种资料后，还是决定试用ProxySQL。</p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>官网下载RPM安装包后，直接安装。</p>
+<p>我在安装时，被提示缺少<code>perl-MySQL(DBD)</code>组件，直接用<code>yum</code>安装即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@server3 download]<span class="comment"># rpm -ivh proxysql-1.3.6-1-centos67.x86_64.rpm </span></span><br><span class="line">error: Failed dependencies:</span><br><span class="line">	perl(DBD::mysql) is needed by proxysql-1.3.6-1.x86_64</span><br><span class="line">[root@server3 download]<span class="comment">#</span></span><br><span class="line">[root@server3 download]<span class="comment"># yum install perl-DBD-MySQL</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后，ProxySQL自动创建了<code>/etc/init.d/proxysql</code>脚本用来控制服务启动，同时也将ProxySQL加到了<code>service</code>中，可以通过service命令控制。</p>
+<p>默认安装后的配置文件为<code>/etc/proxysql.cnf</code></p>
+<h3 id="使用前奏"><a href="#使用前奏" class="headerlink" title="使用前奏"></a>使用前奏</h3><p>使用之前要说一下ProxySQL的配置方式。</p>
+<p>ProxySQL的配置分为3层：<code>Runtime</code>/<code>Memory</code>/<code>Disk</code>，这3层可以理解为ProxySQL配置的3个复本。其中，Runtime是正在生效的配置；Memory是内存中的配置，内存中的配置被修改后，不会反应在运行状态中，而是需要手动加载，才可以覆盖运行中的配置（即Runtime配置）；Disk则是持久化的配置，Memory中的配置只在手动刷新到Disk中，才可以被保存，否则服务重启后配置就会丢失。</p>
+<p>ProxySQL所有的配置都支持在运行时修改(除了两个配置，一个是线程数，还有一个是什么来着，忘了~)，详细可以参考 <a href="https://github.com/sysown/proxysql/wiki/Multi-layer-configuration-system" target="_blank" rel="noopener">Multi layer configuration system</a>。</p>
+<p>Disk配置分为配置文件和db文件两种，db文件位于ProxySQL的datadir中。ProxySQL在启动时，优先加载datadir中的db文件，如果db文件不存在，就加载配置文件。</p>
+<h3 id="首次启动"><a href="#首次启动" class="headerlink" title="首次启动"></a>首次启动</h3><p>可以使用<code>service proxysql start</code>来启动ProxySQL。默认加<code>载/etc/proxysql.cnf</code>，这个配置文件中默认指定<code>/var/lib/proxysql</code>目录为datadir，这个datadir中已经默认存在了<code>proxysql.db</code>文件，所以，ProxySQL此时会自动加载db文件。</p>
+<p>服务启动后，看一下进程信息：<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/67cf0be85be34ef89ebd60beb0461bbe-1493368198897.png" alt="67cf0be85be34ef89ebd60beb0461bbe-1493368198897.png"> </p>
+<p>ProxySQL启动后，默认开启两个端口：<code>6032</code>和<code>6033</code>。其中，6032是管理端口，6033是数据端口。现在什么都没配，所以数据端口没有合法用户，是连接不上的，因此可以先来连接一下管理端口：</p>
+<pre><code>mysql -uadmin -padmin -h127.0.0.1 -P6032
+</code></pre><p>默认用户名和密码都是<code>admin</code>。连接成功后可以<code>show databases</code>看一下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@server3 ~]<span class="comment"># mysql -uadmin -padmin -h127.0.0.1 -P6032</span></span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 5.5.30 (ProxySQL Admin Module)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">'help;'</span> or <span class="string">'\h'</span> <span class="keyword">for</span> <span class="built_in">help</span>. Type <span class="string">'\c'</span> to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; show databases;</span><br><span class="line">+-----+---------+-------------------------------+</span><br><span class="line">| seq | name    | file                          |</span><br><span class="line">+-----+---------+-------------------------------+</span><br><span class="line">| 0   | main    |                               |</span><br><span class="line">| 2   | disk    | /var/lib/proxysql/proxysql.db |</span><br><span class="line">| 3   | stats   |                               |</span><br><span class="line">| 4   | monitor |                               |</span><br><span class="line">+-----+---------+-------------------------------+</span><br><span class="line">4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
+<p>其中 <strong>main</strong> 库用来配置各种参数。可以看看当前的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from main.global_variables;</span><br><span class="line">+---------------------------------+----------------+</span><br><span class="line">| variable_name                   | variable_value |</span><br><span class="line">+---------------------------------+----------------+</span><br><span class="line">| mysql-shun_on_failures          | 5              |</span><br><span class="line">| mysql-shun_recovery_time_sec    | 10             |</span><br><span class="line">| mysql-query_retries_on_failure  | 1              |</span><br><span class="line">| mysql-connect_retries_delay     | 1             </span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+<h3 id="如何修改配置"><a href="#如何修改配置" class="headerlink" title="如何修改配置"></a>如何修改配置</h3><p>先看看 <strong>main</strong> 库中都有哪些表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables;</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| tables                               |</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| global_variables                     |</span><br><span class="line">| mysql_collations                     |</span><br><span class="line">| mysql_query_rules                    |</span><br><span class="line">| mysql_replication_hostgroups         |</span><br><span class="line">| mysql_servers                        |</span><br><span class="line">| mysql_users                          |</span><br><span class="line">| runtime_global_variables             |</span><br><span class="line">| runtime_mysql_query_rules            |</span><br><span class="line">| runtime_mysql_replication_hostgroups |</span><br><span class="line">| runtime_mysql_servers                |</span><br><span class="line">| runtime_mysql_users                  |</span><br><span class="line">| runtime_scheduler                    |</span><br><span class="line">| scheduler                            |</span><br><span class="line">+--------------------------------------+</span><br><span class="line">13 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>runtime_</code>打头的都是运行是配置，这是不可以修改的；<code>global_variables</code>和<code>mysql_</code>打头的表，是Memory配置表。<br>修改Memory其实就是修改这几张表中的数据，其中：</p>
+<ul>
+<li><code>global_variables</code>表，是运行的基础配置</li>
+<li><code>mysql_users</code>表，是授权用户配置</li>
+<li><code>mysql_servers</code>表，是Backend MySQL配置</li>
+<li><code>mysql\_qurey\_rules</code>表，是查询策略配置（这个我们暂时使用不到）</li>
+</ul>
+<p>修改<code>global_variables</code>表时，也支持使用<code>SET</code>语法。</p>
+<p>根据之前所述，Memory配置修改后，是不会在线上生效的，需要用如下指令使其生效：</p>
+<pre><code>mysql&gt;LOAD MYSQL SERVERS TO RUNTIME;
+</code></pre><p>再看看如何将Memory刷到DISK：</p>
+<pre><code>mysql&gt;SAVE MYSQL SERVERS TO DISK;
+</code></pre><p>这两步千万不要忘，尤其是刷Disk，很容易被遗忘。</p>
+<p>上述命令中的<code>mysql servers</code>，还有几类可选值，分别为：</p>
+<ul>
+<li>mysql users</li>
+<li>mysql variables</li>
+<li>admin variables</li>
+<li>mysql query rules</li>
+</ul>
+<h4 id="添加Backend-MySQL"><a href="#添加Backend-MySQL" class="headerlink" title="添加Backend MySQL"></a>添加Backend MySQL</h4><p>将Backend MySQL添加至<code>mysql_servers</code>表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO mysql_servers (hostname) VALUES (&apos;10.168.21.138&apos;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT * FROM mysql_servers\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">       hostgroup_id: 0</span><br><span class="line">           hostname: 172.16.0.1</span><br><span class="line">               port: 3306</span><br><span class="line">             status: ONLINE</span><br><span class="line">             weight: 1</span><br><span class="line">        compression: 0</span><br><span class="line">    max_connections: 1000</span><br><span class="line">max_replication_lag: 0</span><br><span class="line">            use_ssl: 0</span><br><span class="line">     max_latency_ms: 0</span><br><span class="line">            comment:</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>未设置的字段都以默认值填充。其中，<code>hostgroup_id</code>相当于后端分组，在我们的场景中也暂时用不到。</p>
+<h4 id="添加User"><a href="#添加User" class="headerlink" title="添加User"></a>添加User</h4><p>这里添加的用户，就是应用程序连接ProxySQL时使用的用户，同时也是ProxySQL连接后端的用户信息。用户的密码默认以明文存储，如果想以摘要存储，可以参考<a href="https://github.com/sysown/proxysql/wiki/Passwords-management" target="_blank" rel="noopener">Passwords management</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO mysql_users(username,password) VALUES (&apos;nianxy&apos;,&apos;nianxy&apos;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT * FROM mysql_users \G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">              username: nianxy</span><br><span class="line">              password: nianxy</span><br><span class="line">                active: 1</span><br><span class="line">               use_ssl: 0</span><br><span class="line">     default_hostgroup: 1</span><br><span class="line">        default_schema: NULL</span><br><span class="line">         schema_locked: 0</span><br><span class="line">transaction_persistent: 0</span><br><span class="line">          fast_forward: 0</span><br><span class="line">               backend: 1</span><br><span class="line">              frontend: 1</span><br><span class="line">       max_connections: 10000</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">ERROR: </span><br><span class="line">No query specified</span><br></pre></td></tr></table></figure>
+<h4 id="设置Global-Variables"><a href="#设置Global-Variables" class="headerlink" title="设置Global Variables"></a>设置Global Variables</h4><p>变量较多，挑一堆有用的列举一下，其它可以参考<a href="https://github.com/sysown/proxysql/wiki/Global-variables" target="_blank" rel="noopener">Global variables</a>：<br><strong>admin-admin_credentials</strong><br>管理端口用户名和密码<br><strong>admin-mysql_ifaces</strong><br>管理端口<br><strong>admin-stats_credentials</strong><br>数据端口用户名和密码<br><strong>mysql-commands_stats</strong><br>是否开启SQL统计。开启后会分析每条SQL语句。默认开启。<br><strong>mysql-connection_max_age_ms</strong><br>到Backend的连接空闲多久后会自动关闭。默认1秒。<br><strong>mysql-default_query_timeout</strong><br>到Backend的查询超时时间，超过后会主动停止查询，并从Backend Kill掉该连接。默认24小时。<br><strong>mysql-free_connections_pct</strong><br>允许的Backend空闲连接数，是一个占mysql-max_connections数量的百分比，默认是10。<br><strong>mysql-interfaces</strong><br>数据端口配置<br><strong>mysql-max_connections</strong><br>ProxySQL可接收的最大连接数。默认10000。<br><strong>mysql-server_version</strong><br>ProxySQL返回给客户端的MySQL版本号，有可能影响客户端行为。默认5.5.30。<br><strong>mysql-session_idle_show_processlist</strong><br>管理端口进行show processlist时，是否显示空闲连接，开启后会影响性能。默认关闭。<br><strong>mysql-wait_timeout</strong><br>客户端连接空闲超时时间，默认8小时。</p>
+<p>以上请注意<code>mysql-connection_max_age_ms</code>和<code>mysql-wait_timeout</code>的区别，前者是到Backend的超时，后者是到客户端的超时。</p>
+<h3 id="启动多个实例"><a href="#启动多个实例" class="headerlink" title="启动多个实例"></a>启动多个实例</h3><p>ProxySQL中配置的所有Backend会认为在数据上是等效的，即数据都是同步的，所以，当我们需要连接多个不同的MySQL服务时，就需要启动多个ProxySQL实例了。</p>
+<p>根据前边的内容，其实，只要指定不同的Datadir或Conf，就可以实现多实例启动了。ProxySQL在安装时，自动安装了<code>/etc/init.d/proxysql</code>脚本，通过观察这个脚本，发现只要修改脚本头部的<code>DATADIR</code>变量的值，即可指定ProxySQL启动时的Datadir。</p>
+<p>当我们首次指定一个Datadir时，因为目录为空，所以其中不会包含db配置文件，此时，ProxySQL就会根据<code>/etc/proxysql.cnf</code>来初始化ProxySQL实例，并在目录中生成db文件，以后就可以通过修改db文件，来完成ProxySQL的配置了。需要注意的是，下次再启动实例时，<code>/etc/proxysql.cnf</code>也失去作用了。</p>
+<p>综上，理论上我们通过拷贝<code>/etc/init.d/proxysql</code>，并修改里边的<code>DATADIR</code>，即可实现多实例启动了。</p>
+<p>不过，实际操作时发现<code>/etc/init.d/proxysql</code>对多实例支持并不友好，在停止服务时，它会将所有proxysql进程全部杀死，所以我们需要改造一下这个脚本，具体如下：</p>
+<ol>
+<li>将头部<code>DATADIR</code>变量，修改为实际使用的目录</li>
+<li>将头部<code>OPTS</code>变量中的<code>-c /etc/proxysql.cnf</code>去掉，我们用不到配置文件<br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/9b4b2e11b0724368a9c54f46c59d3aa0-1493374029201.png" alt="9b4b2e11b0724368a9c54f46c59d3aa0-1493374029201.png"> </li>
+<li>在第32行左右，getpid这个函数里，找到<code>pid=ps -p $pid | grep ...</code>这一行，修改ps命令的参数为<code>pid=ps -o pid,ppid --ppid $pid | grep ...</code><br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/0ccfa0e2c22b4fcd9113abc6d98a8a0d-1493374170805.png" alt="0ccfa0e2c22b4fcd9113abc6d98a8a0d-1493374170805.png"> </li>
+<li>在第97行左右，stop这个函数里，将<code>for i in pgrep proxysql...</code>这个循环整体注释掉，替换为<code>kill $pid</code><br><img src="http://onpyrjcca.bkt.clouddn.com//file/2017/4/368423d0114c441484a5131fbd4c6616-1493374201255.png" alt="368423d0114c441484a5131fbd4c6616-1493374201255.png"> </li>
+</ol>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" title= jetty 容器实例部署时的问题解决方法 >
+                    <div class="nextTitle">jetty 容器实例部署时的问题解决方法</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2017/04/28/Servlet 从入门到实战/" title= Servlet 从入门到实战 >
+                    <div class="prevTitle">Servlet 从入门到实战</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用前奏"><span class="toc-number">3.</span> <span class="toc-text">使用前奏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#首次启动"><span class="toc-number">4.</span> <span class="toc-text">首次启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何修改配置"><span class="toc-number">5.</span> <span class="toc-text">如何修改配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加Backend-MySQL"><span class="toc-number">5.1.</span> <span class="toc-text">添加Backend MySQL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加User"><span class="toc-number">5.2.</span> <span class="toc-text">添加User</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置Global-Variables"><span class="toc-number">5.3.</span> <span class="toc-text">设置Global Variables</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动多个实例"><span class="toc-number">6.</span> <span class="toc-text">启动多个实例</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+
