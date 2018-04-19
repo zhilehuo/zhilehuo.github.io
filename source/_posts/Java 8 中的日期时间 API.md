@@ -4,7 +4,7 @@ date: 2017-09-11 09:52:02
 tags:
 - Java
 categories:
-- Tech
+- Java
 ---
 
 > 本文内容基本是对《Java 8实战》这本书中关于新日期时间API的讲述的再整理。

@@ -4,7 +4,7 @@ date: 2017-04-28 14:53:44
 tags:
 - Shell
 categories:
-- Tech
+- Linux
 ---
 
 > 以下示例都在`Mac`系统中进行，因为大家用Mac居多，而且Mac系统也是在Linux基础上开发的，所以很多东西和Linux都是一样的。

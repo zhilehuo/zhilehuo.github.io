@@ -4,7 +4,7 @@ date: 2017-04-28 17:12:11
 tags:
 - Java
 categories:
-- Tech
+- Java
 ---
 
 Javaweb的后端研发需要学习的是tomcat+servlet+jsp+mysql 这些技术，其中的核心技术就是servlet。本篇详细介绍servlet。

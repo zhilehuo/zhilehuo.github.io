@@ -4,7 +4,7 @@ date: 2017-07-12 18:02:48
 tags:
 - Jetty
 categories:
-- Tech
+- 构建/部署
 ---
 
 #### [Jetty下载][1]

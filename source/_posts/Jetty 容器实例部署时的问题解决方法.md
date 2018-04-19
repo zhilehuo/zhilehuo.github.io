@@ -4,7 +4,7 @@ date: 2017-05-03 14:47:15
 tags:
 - Jetty
 categories:
-- Tech
+- 构建/部署
 ---
 
 # jetty应用部署时的注意点

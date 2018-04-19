@@ -5,7 +5,7 @@ tags:
 - Xcode
 - iOS
 categories:
-- Tech
+- iOS
 ---
 
 #### 所需工具

@@ -4,7 +4,7 @@ date: 2017-10-26 18:15:08
 tags:
 - DNS
 categories:
-- Tech
+- 架构
 ---
 
 > 官网：[https://www.isc.org/downloads/bind/](https://www.isc.org/downloads/bind/)

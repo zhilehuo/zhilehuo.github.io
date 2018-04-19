@@ -4,7 +4,7 @@ date: 2017-04-01 15:21:45
 tags:
 - Maven
 categories:
-- Tech
+- 构建/部署
 ---
 
 ## 基本介绍

@@ -4,7 +4,7 @@ date: 2017-05-08 20:29:16
 tags:
 - Hibernate
 categories:
-- Tech
+- 数据库
 ---
 
 * Hibernate API
@@ -26,12 +26,11 @@ categories:
          ​
        
       //属性和表的字段映射
-       
-    
-        
-    
+
+
+​        
+​    
     ​```
-    
 
 *   Hierbnate的配置文件
 *   Hierbnate的配置文件
@@ -41,13 +40,13 @@ categories:
     ​```
     
     ​```
-    
-    
-    
+
+
+​    
     2.hibernate.properties：java属性文件，采用“健=值”形式 
-    
-    
-    
+
+
+​    
     ​```
     //指定数据库使用的sql方言
     hibernate.dialect=org.hibernate.dialect.MYSQLDialect
@@ -61,7 +60,6 @@ categories:
     //值为true时，控制台输出sql语句
     hibernate.show_sql=true
     ​```
-    
 
 *   Hibernate API中的接口
 *   Hibernate API中的接口
@@ -75,38 +73,38 @@ categories:
     //创建一个sessionfactory实例，把配置信息放入sessionFactory缓存
     sessionFactory=config.buildSessionFactory();  
     ​```
-    
-    
-    
+
+
+​    
     也可以写成：
-    
-    
-    
+
+
+​    
     ​```
     seessionFactory = new Configuration().addClass(Monkey.class).buildSessionFactory();     
     ​```
-    
-    
-    
+
+
+​    
     2.SessionFactory接口：一个SessionFactory实例对应一个数据存储源
     3.Session接口：提供了和持久化相关的操作，如保存、更新、删除、加载对象,可通过SessionFactory实例的openSession()方法获取Session实例。
     Session提供了save()方法，update()方法，delete()方法，get()/load()方法
-    
-    
-    
+
+
+​    
     ​```
     Session session = factory.openSession(); 
     tx=session.beginTransaction();
     session.save(monkey);
     tx.commit();
     ​```
-    
-    
-    
+
+
+​    
     4.Transaction接口：是hibernate的数据库事物接口 
-    
-    
-    
+
+
+​    
     ​```
     Transaction tx;
         try{
@@ -122,17 +120,16 @@ categories:
             session.close();
         }
     ​```
-    
-    
-    
+
+
+​    
     5.Query接口：Hibernate的查询接口,
-    
-    
-    
+
+
+​    
     ​```
     Query query=session.createQuery("from Monkey as m order by m.name by m.name asc");
     ​```
-    
 
 *   OID
 *   OID
@@ -143,7 +140,6 @@ categories:
     Monkey monkey1 =(Monkey)session.get(Monkey.class,new Long(1));
     Monkey monkey2 =(Monkey)session.get(Monkey.class,new Long(1));
     ​```
-    
 
 *   Session缓存的作用
 *   Session缓存的作用
@@ -163,46 +159,45 @@ categories:
     
     List result=query.list();
     ​```
-    
-    
-    
+
+
+​    
     或者采用方法链编程风格：
-    
-    
-    
+
+
+​    
     ​```
     Query query=session.createQuery("from Monkey as m where m.name=:monkeyName "+"and m.age=:monkeyAge")
     .setString("MonkeyName","Tom")
     .setInteger("monkeyAge",21)
     .list();
     ​```
-    
-    
-    
+
+
+​    
     2.QBC检索方式 QBC API由org.hibernate.Criteria接口和org.hibernate.criterion.Criterion接口和org.hibernate.criterion.Restrictions类组成
-    
-    
-    
+
+
+​    
     ​```
     List result=session.createCriteria(Monkey.class)
     .add(Restrictions.like("name","T%"))
     .add(Restrictions.eq("age",newInteger(21)))
     .list();
     ​```
-    
-    
-    
+
+
+​    
     3.sql检索方式 有的时候可能需要根据底层数据库的sql方言来生成一些特殊的查询语句，这时候将sql语句代入即可
-    
-    
-    
+
+
+​    
     ​```
     Query query=session.createQuery("select * from MONKEYS where NAME like :monkeyName "+"and AGE=:monkeyAge")
     .setString("MonkeyName","Tom")
     .setInteger("monkeyAge",21)
     .list();
     ​```
-    
 
 *   实际使用
 *   实际使用

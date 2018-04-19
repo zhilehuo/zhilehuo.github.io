@@ -4,7 +4,7 @@ date: 2017-10-26 11:42:53
 tags:
 - Vue
 categories:
-- Tech
+- 前端
 ---
 
 > 官方文档：[https://cn.vuejs.org/v2/guide/](https://cn.vuejs.org/v2/guide/)

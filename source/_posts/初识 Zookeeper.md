@@ -4,7 +4,7 @@ date: 2017-05-09 11:10:52
 tags:
 - Zookeeper
 categories:
-- Tech
+- 分布式系统
 ---
 
 

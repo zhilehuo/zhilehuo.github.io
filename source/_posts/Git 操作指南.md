@@ -4,7 +4,7 @@ date: 2017-12-12 13:41:56
 tags:
 - Git
 categories:
-- Tech
+- Git
 ---
 ## 安装git
 

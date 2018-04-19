@@ -4,7 +4,7 @@ date: 2017-04-28 17:31:25
 tags:
 - SQL
 categories:
-- Tech
+- 数据库
 ---
 
 > **ProxySQL官网：** http://www.proxysql.com/
