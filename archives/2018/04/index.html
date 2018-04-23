@@ -300,6 +300,170 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/23/Spring-Cloud-Config-配置中心/" >
+                
+                    <span>Spring Cloud Config 配置中心</span>
+            </a>
+            <div class="abstract-content">
+                Spring Cloud Config 用于为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，分为服务端和客户端。
+服务端为分布式配置中心，是一个独立的微服务应用；客户端为分布式系统中的基础设置或微服务应用，通过指定配置中心来管理相关的配置。
+Spring Cloud Config 构建的配置中心，除了适用于 Spring 构建的应用外，也可以在任何其他语言构建的应用中使用。
+Spring Cloud Config 默认采用 Git 存储配置信息，天然支持对配置信息的版本管理。
+
+构建配置中心创建 Spring Boot 工程 config-server，然后按以下步骤完成配...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/23</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/20/互联网安全问题/" >
+                
+                    <span>互联网应用安全威胁及应对方法</span>
+            </a>
+            <div class="abstract-content">
+                互联网应用安全威胁的应对
+written by xiaokaiqun, 2018-04-20
+
+在 《大型网站技术架构》 一书中提到：安全、高可用、可拓展、性能、可伸缩是衡量一个网站架构能力的五个方面。其中，安全是必不可少的组成部分。
+由于我之前对安全问题的理解都比较碎片化，不够系统，最近就有针对性的看了一些资料，并将它们整理在这里，希望读者看完后能了解常见的安全威胁和应对方法，并运用到实际生产中去。
+本文是安全问题的总览，对某些问题的深入探讨我们会单独写一篇文章进行讨论。
+参考资料包括：
+1.MartinFowler的博客
+2.《大型网站技术架构》中的 
+3.《阿里巴巴Java开发手册...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "安全">安全</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >
+                
+                    <span>Spring Cloud Zuul 网关（二）</span>
+            </a>
+            <div class="abstract-content">
+                上篇文章 Spring Cloud Zuul 网关（一） 介绍了 Spring Cloud Zuul 的基本使用方法，本篇文章会对 Zuul 的过滤器机制、hystrix 及 ribbon 支持做进一步介绍。
+
+过滤器Zuul 中的过滤器负责在转发外部请求的过程中对处理过程进行干预，在实际运行时，路由映射和请求转发等步骤都是由不同的过滤器完成。
+Spring Cloud Zuul 中的过滤器包含以下 4 个基本特征：
+
+过滤类型
+
+
+过滤器所处的生命周期，Zuul 默认定义了 4 种不同生命周期，分别为 pre（请求被路由前调用）、routing（在路由请求时被调用）、post（在 ro...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >
+                
+                    <span>Spring Cloud Zuul 网关（一）</span>
+            </a>
+            <div class="abstract-content">
+                利用之前提到的微服务组件，已经可以建立起一个简单的微服务系统：
+
+通过 Spring Cloud Eureka 实现高可用服务注册中心
+通过 Spring Cloud Ribbon 或 Feign 实现服务间负载均衡的接口调用
+通过 Spring Cloud Hystrix 实现线程隔离和熔断，防止故障扩散
+
+
+但是由于在微服务架构中，后端服务往往不直接开放给外部程序调用，所以需要一个 API 网关，根据请求的 Url 路由到相应的服务。API 网关负责外部应用到微服务系统之间的请求路由、负载均衡和校验过滤等功能的实现。
+在 Spring Cloud 体系中，Spring Cloud Z...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/17</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >
+                
+                    <span>Spring Cloud Feign 声明式服务调用</span>
+            </a>
+            <div class="abstract-content">
+                在微服务的实践过程中，Spring Cloud Ribbon 和 Spring Cloud Hystrix 通常一起使用。
+Spring Cloud Feign 是对这两个基础工具的更高层次封装，在 Netflix Feign 的基础上扩展了对 Spring MVC 的注解支持，提供了一种声明式的 Web 服务客户端定义方式。
+
+快速入门启动服务注册中心 eureka-server 及服务提供方 hello-service，创建 spring boot 工程 feign-consumer。
+1.添加依赖12345678&lt;dependency&gt;    &lt;groupId&g...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/13</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/09/Hexo + Github 搭建博客/" >
                 
                     <span>Hexo + Github 搭建博客</span>
@@ -329,6 +493,41 @@ Git
         <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >
+                
+                    <span>Spring Cloud Hystrix 容错保护</span>
+            </a>
+            <div class="abstract-content">
+                在微服务架构中，系统被拆分成很多个服务单元，各个服务单元的应用通过 HTTP 相互调用、依赖。
+在某个服务由于网络或其他原因自身出现故障、延迟时，调用方也会出现延迟。若调用方请求不断增加，可能会形成任务积压，最终导致调用方服务瘫痪，服务不可用现象逐渐放大。
+
+Spring Cloud Hystrix针对上述问题，Spring Cloud Hystrix 实现了一系列服务保护措施，从而实现服务降级、服务熔断等功能，对延迟和故障提供强大的容错能力。
+Hystrix 有以下主要特性：
+
+服务熔断
+
+
+Hystrix 会记录各个服务的请求信息，通过 成功、失败、拒绝、超时 等统计信息判断是否打开...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/09</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
     
 </div>
                 
@@ -640,7 +839,106 @@ Git
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 29 </div>
     
     <div class="post-archive">
     
@@ -652,7 +950,52 @@ Git
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
         </li>
     
     
@@ -721,12 +1064,12 @@ Git
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
@@ -751,12 +1094,12 @@ Git
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
         </li>
     
     </div>
@@ -802,6 +1145,10 @@ Git
     
         <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
     
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -838,6 +1185,28 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
     
         <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

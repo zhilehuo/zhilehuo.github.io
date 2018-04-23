@@ -313,6 +313,331 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2017/12/12/Git 操作指南/" >
+                
+                    <span>Git 操作指南</span>
+            </a>
+            <div class="abstract-content">
+                安装gitLinuxyum install git 
+Mac OS下载地址
+让仓库忽略一些文件编辑 .gitignore 文件
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbd...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/12/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Git">Git</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/10/26/DNS 服务 bind 配置说明/" >
+                
+                    <span>DNS 服务 bind 配置说明</span>
+            </a>
+            <div class="abstract-content">
+                
+官网：https://www.isc.org/downloads/bind/
+
+安装：
+123yum install bindyum install bind-utils # 包含了dig/nslookup/host等工具yum install bind-chroot # 说是可以出于安全原因，改变配置文件的根路径，但不知道怎么用，感觉不装也行
+安装完成后，默认配置文件位于：
+12/etc/named.conf/var/named/
+注意，/var/named/目录下的解析文件权限必须是0640，且必须在named用户组，否则解析文件会加载失败，导致解析相应域名时出现SERVFAIL错...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "DNS">DNS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/10/26/Vue 介绍/" >
+                
+                    <span>Vue 介绍</span>
+            </a>
+            <div class="abstract-content">
+                
+官方文档：https://cn.vuejs.org/v2/guide/
+
+简介
+Vue.js（后面简称Vue）是国人开发的，用于Web前端开发，可以做UI、界面路由等，利用插件还可以实现HTTP请求等更加丰富的功能
+Vue比较轻量，而且使用简单，上手很容易，同时功能也很丰富
+目前感觉开发大型前端项目可能比较费力，当然也很可能是我目前应用经验不足，认知有限
+
+与其它常见框架/工具/名词的关系
+后记：写完这段后才发现文字太多了，这些和学习Vue没啥太大关系，所以，可以不看……
+
+
+Node.js是一个Javascript独立运行环境，可以理解成一个Javascript解释器，就像Pytho...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/09/11/Java 8 中的日期时间 API/" >
+                
+                    <span>Java 8 中的日期时间 API</span>
+            </a>
+            <div class="abstract-content">
+                
+本文内容基本是对《Java 8实战》这本书中关于新日期时间API的讲述的再整理。
+
+Java 8之前的日期、时间类的缺陷使用过java8之前的日期和时间类（Date、Calendar、DateFormat）的同学一定对其易用性的缺失表示遗憾，我本人平时使用时，对它们有以下几点不爽：
+
+Date和Calendar类的Month值是从0开始计算的，有点反人类。
+Date和Calendar类是可变对象，给代码可维护性造成了困难。
+DateFormat类的方法不是线程安全的，导致无法在线程间共享单例。只能每次使用时去new个新对象或是使用ThreadLocal机制避开多线程访问的隐患。
+无法完...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/09/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java">Java</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/07/12/Jetty UrlRewrite 使用/" >
+                
+                    <span>Jetty UrlRewrite 使用</span>
+            </a>
+            <div class="abstract-content">
+                Jetty下载Jetty文档UrlRewrite
+
+更加简洁明快，例如http://www.zhilehuo.com/video.jsp?id=1的网址可以使用rewrite写成http://www.zhilehuo.com/video/1.html
+提高安全性，有效避免一些参数名，ID等直接暴露在用户面前，同时不出    现.jsp、.aspx等字眼，能够隐藏网站开发语言
+有利于搜索引擎更好的抓取网站内容，搜索引擎更喜欢静态页面形式的网页，对静态页面的评分相对高于动态页面，使用UrlRewrite重写URl后更容易被搜索引擎收录
+
+
+目录结构
+
+
+Location
+Descriptio...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/07/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/05/22/主 app 性能测试总结/" >
+                
+                    <span>主 app 性能测试总结</span>
+            </a>
+            <div class="abstract-content">
+                2017年5月，我们针对半米主app进行了目标为 30万 日活跃量的后端性能测试，所以记录一下测试的准备、实施、调优过程。（具体的业务和数据，不希望在文章中公开，都放在了公司内部文档服务器-&gt;作者的个人文件夹中^^）
+背景：
+
+当前活跃量：1.6万/天目标活跃量：30万/天
+
+结论：30W日活时性能稳定；60W日活时服务偶尔有性能抖动，短时间内可恢复，待优化。
+准备阶段上面已经说了这次的目标是支撑30万日活，准备阶段我们提出了如下几个问题：
+
+如何搭建测试环境
+如何确定测试目标接口、参数集合、并发量等指标
+如何准备测试用假数据
+如何执行测试请求
+评估结果并找出可能的性能瓶颈
+
+下面...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/22</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Test">Test</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/05/19/公众号菜单网页授权功能/" >
+                
+                    <span>公众号菜单网页授权功能</span>
+            </a>
+            <div class="abstract-content">
+                官方官方文档参照：在官方开发者文档 中 –&gt; 微信网页授权项（要下班啦，官方文档上的说明不描述啦，这里仅显示实现方法及代码demo）
+公众号菜单配置1.获取菜单配置接口：https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN access_token由自己存储在服务器端 
+2.菜单配置方式: 使用Postman工具进行配置请求：POSTHeaders: Content-Type：application/jsonBody:(raw型 JSON) 
+
+{“button”:...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/19</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Wechat">Wechat</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/05/12/狼人杀新手教科书/" >
+                
+                    <span>狼人杀新手教科书</span>
+            </a>
+            <div class="abstract-content">
+                游戏背景/起源网上对狼人杀游戏的起源说法不一，较为可靠的版本是起源于中世纪的欧洲。  
+在中世纪的欧洲，狼人是一种传说中的生物，是邪恶的象征，是与魔鬼达成协议的人。在那个年代一时间涌现了很多关于狼人的传说和文学作品。这些都深深地影响了后世各种文学、影视、游戏等的创作。“狼人游戏”便是其中之一。
+1986年的春天，苏联莫斯科大学心理学系的迪米特里·达维多夫发明一种游戏，名叫：杀人游戏。在最开始，游戏只在校园内流传。玩家们在莫斯科大学的教室、寝室等处玩此游戏。而到了1990年代初期，该游戏开始逐渐在俄罗斯其他学校流行起来，并跨过国界，传播到了欧洲各国（匈牙利、波兰、英国、挪威等），随后传到了...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "狼人杀">狼人杀</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/05/09/初识 Zookeeper/" >
+                
+                    <span>初识 Zookeeper</span>
+            </a>
+            <div class="abstract-content">
+                Zookeeper 中的概念Zookeeper是apache下的一个分布式系统协调框架，被广泛应用到Hadoop、HBase、Kafka、Dubbo等分布式系统中，用于系统各个模块间的协调工作。
+Zookeeper提供的API比较原始，这也意味着使用者有很大的灵活性来让它发挥各种功能。
+数据节点
+Zookeeper可以看做一个高可用的分布式文件系统，每个文件叫做一个节点。既然是文件系统，节点之间是存在父子关系的，整体组成一个树形结构，如下图：
+每个节点都可以保存小于1M的数据。
+
+节点可分为临时/永久节点，顺序/非顺序节点。
+
+临时节点：在客户端会话中断后会被自动删除，可以此判断某些机器...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/09</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Zookeeper">Zookeeper</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2017/05/08/Hibernate学习笔记（易）/" >
                 
                     <span>Hibernate学习笔记（易）</span>
@@ -326,7 +651,7 @@ Hibernate API
   Hibernate 将对象-关系映射元素放到对象-关系映射文件中，以hbm.xml命名作为文件扩展名。 下面是monkey类和MONKEYS表的映射关系
 
 
-​1234567891011121314//指定类和表的映射  //主键      //指定对象标识符生成器，为对象OID生成唯一标识符 ...
+​1234567891011121314        //指定类和表的映射          //主键              //指...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -344,351 +669,10 @@ Hibernate API
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >
-                
-                    <span>jetty 容器实例部署时的问题解决方法</span>
-            </a>
-            <div class="abstract-content">
-                jetty应用部署时的注意点本文的目的不是为了手把手教你部署一个jetty容器实例，而是为了让你在碰到部署问题是来查阅，节省网上搜索的时间，所以如果你发现并解决了本文未涵盖的部署问题，欢迎编辑此文。
-
-在start.d/http.ini修改容器监听的端口号：
-jetty.port=8046
-
-向jetty实例中添加jsp、jsp-impl、jstl、plus四个模块，命令：
- java -jar ../../jetty-distribution-9.2.21.v20170120/start.jar –add-to-start=jsp,jstl,jsp-impl,plus
-
-配置dataS...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/03</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/28/ProxySQL 调研记录/" >
-                
-                    <span>ProxySQL 调研记录</span>
-            </a>
-            <div class="abstract-content">
-                
-ProxySQL官网： http://www.proxysql.com/ProxySQL文档： https://github.com/sysown/proxysql/wiki
-
-背景阿里云的RDS按连接数售卖，所以，当我们部署了很多的服务实例后，每个实例再配置适当的连接池，就导致了RDS经常连接数过多，因为很多连接是由连接池创建的。而我们在调整多次连接池的参数后，也没有达到满意的效果。
-所以，这个情况下的解决方案就是设置一个统一的MySQL代理，所有应用的连接池都连至这个代理，然后代理通过自己的连接池再连接Backend MySQL，这样能够更有效的利用连接资源。
-
-几个可选的项目概况...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL">SQL</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/28/Servlet 从入门到实战/" >
-                
-                    <span>Servlet 从入门到实战</span>
-            </a>
-            <div class="abstract-content">
-                Javaweb的后端研发需要学习的是tomcat+servlet+jsp+mysql 这些技术，其中的核心技术就是servlet。本篇详细介绍servlet。
-Servlet 简介Java Servlet 是运行在 Web 服务器或应用服务器上的程序，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。
-使用 Servlet，您可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录。
-简而言之呀，servlet就是将从web界面或者app界面这些前端界面上获取的含有参数的请求request进行解析处理，用响应respon...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Java">Java</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/28/Shell 编程简介/" >
-                
-                    <span>Shell 编程简介</span>
-            </a>
-            <div class="abstract-content">
-                
-以下示例都在Mac系统中进行，因为大家用Mac居多，而且Mac系统也是在Linux基础上开发的，所以很多东西和Linux都是一样的。Mac下的终端程序Terminal是很好用的，工欲善其事必先利其器，所以我们可以先来配置一下终端程序。
-
-什么是Shell编程
-什么是Shell直译就是外壳，可以理解成是Linux系统内核的外壳，我们通过这个外壳和Linux系统进度交互。再具体点，可以理解成是终端。
-
-一般情况下，我们在操作Linux系统时，就是在终端上搞各种指令。而Shell编程，或者通俗点说叫Shell脚本，其实就是把一堆指令集中在一个脚本文件里，然后通过运行这个脚本文件，来执行这一大...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Shell">Shell</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/20/SSL 认证体系备忘录/" >
-                
-                    <span>SSL 认证体系备忘录</span>
-            </a>
-            <div class="abstract-content">
-                本文不涉及SSL通信相关的知识，只介绍一下最近通过我的调研，了解到的关于SSL认证相关的东西。
-
-
-JSSE Reference Guide一个关于SSL的比较专业的介绍，来自JSSE(Java Secure Socket Extension)
-
-
-什么是密钥要说证书，需要先说一下密钥是怎么回事。目前的加密算法，分为对称加密和非对称加密两类，而密钥，可以把它想像成一把钥匙：
-
-对称加密: 使用同一把钥匙，即可实现对一段信息的加密和解密
-非对称加密：加密和解密信息，需要使用不同的钥匙
-
-对称加密的优点就是速度快，所以可以用来加密大段的信息，但缺点也很明显，因为通信双方需要提前交换密钥，那么...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/20</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SSL">SSL</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/17/Markdown-简明教程/" >
-                
-                    <span>Markdown 简明教程</span>
-            </a>
-            <div class="abstract-content">
-                主要内容
-（一）Markdown 是什么
-
-
-（二）为什么要使用 Markdown
-
-
-（三）如何使用 Markdown
-
-
-（四）Markdown 编辑器  
-
-
-正文（一）Markdown是什么Markdown 是一种轻量级的 标记语言，以 纯文本 的形式编写文档，通过简洁的语法代替排版，并且可以导出 HTML、PDF 等格式。
-（二）为什么要使用 Markdown
-格式清晰，读起来很舒服
-语法简洁，编写时可以更专注于内容而非排版格式  
-纯文本形式，兼容所有的文本编辑器
-可导出 HTML、PDF 等常见格式  
-
-（三）如何使用 MarkdownMarkdown 的语法非常简单，主...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/17</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Markdown">Markdown</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >
-                
-                    <span>Xcode 自动批量打包脚本使用方法</span>
-            </a>
-            <div class="abstract-content">
-                所需工具
-xlcodetool.sh
-SVN地址：svn://svn.zaijiawan.com/mengwenfeng/CommonLib/PackageTool
-
-
-
-1.Xcode中配置
-检查target的名字（名字中间不要出现空格） 
-
-
-将scheme里的名字需要和target的名字对应 
-
-
-修改target对应的info.plist名字(如 FM收音机tian 对应的是 FM收音机.plist)，需要修改三个地方，名称保持一致
-  &gt; `Build Settings`
-![76ab7de08e5a40b18fee7cc01803ce9f-201704143.25.00...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/14</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Xcode">Xcode</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/01/Jetty 概览/" >
-                
-                    <span>Jetty 概览</span>
-            </a>
-            <div class="abstract-content">
-                
-不严肃地说，这并不算是一篇文章，只能算是一篇笔记，时间有限，等有时间我再来好好整理一下吧。
-
-官方文档感觉很不错：
-http://www.eclipse.org/jetty/documentation/9.2.21.v20170120/index.html
-版本记录：
-http://www.eclipse.org/jetty/documentation/current/what-jetty-version.html
-
-
-
-Version
-Year
-Home
-JVM
-Protocols
-Servlet
-JSP
-Status
-
-
-
-
-9.4
-2016
-Eclipse
-1.8
-HTTP/1....
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/01/Maven 从陌生到入门/" >
-                
-                    <span>Maven 从陌生到入门</span>
-            </a>
-            <div class="abstract-content">
-                基本介绍官网： http://maven.apache.org/
-主要功能：
-
-工程管理（工程创建、编译、测试、发布），其中工程依赖管理功能非常强大，也是我们要使用它的主要目的
-
-版本说明： 
-
-3.3.+： JDK1.7及以上
-3.2.+： JDK1.6及以上
-
-POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的，下面是一个简单的POM文件的例子：1234567891011121314151617181920212223242526272829303132333435363738394041424344&lt;?xml version...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Maven">Maven</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1030,7 +1014,106 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 29 </div>
     
     <div class="post-archive">
     
@@ -1042,7 +1125,52 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
         </li>
     
     
@@ -1111,12 +1239,12 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
@@ -1141,12 +1269,12 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
         </li>
     
     </div>
@@ -1192,6 +1320,10 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
         <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
     
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -1228,6 +1360,28 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
     
         <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

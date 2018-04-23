@@ -356,65 +356,28 @@ height:50vh;
 <p>  Hibernate 将对象-关系映射元素放到对象-关系映射文件中，以hbm.xml命名作为文件扩展名。 下面是monkey类和MONKEYS表的映射关系</p>
 </li>
 </ul>
-<pre><code>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//指定类和表的映射</span><br><span class="line"></span><br><span class="line">  //主键</span><br><span class="line">   </span><br><span class="line">   //指定对象标识符生成器，为对象OID生成唯一标识符</span><br><span class="line">     ​</span><br><span class="line">   </span><br><span class="line">  //属性和表的字段映射</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+<pre><code>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    //指定类和表的映射</span><br><span class="line">    </span><br><span class="line">      //主键</span><br><span class="line">       </span><br><span class="line">       //指定对象标识符生成器，为对象OID生成唯一标识符</span><br><span class="line">         ​</span><br><span class="line">       </span><br><span class="line">      //属性和表的字段映射</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​        </span><br><span class="line">​    </span><br><span class="line">    ​</span><br></pre></td></tr></table></figure>
 </code></pre><ul>
 <li>Hierbnate的配置文件</li>
 <li>Hierbnate的配置文件<br>1.XML格式，同上。小tips：可通过直接将数据库中的表与java中对应的实体bean类进行映射,如： </li>
 </ul>
 <pre><code>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-2.hibernate.properties：java属性文件，采用“健=值”形式 
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//指定数据库使用的sql方言</span><br><span class="line">hibernate.dialect=org.hibernate.dialect.MYSQLDialect</span><br><span class="line">//指定数据库驱动程序</span><br><span class="line">hibernate.connoction.dirver_class=com.mysql.jdbc.Drivcer</span><br><span class="line">//指定连接数据库的URL</span><br><span class="line">hibernate.connection.url=jdbc:mysql://localhost:3306/sampleDB</span><br><span class="line">//指定连接数据库的用户名、口令</span><br><span class="line">hibernate.connection.username=root</span><br><span class="line">hibernate.connettion.password=123456</span><br><span class="line">//值为true时，控制台输出sql语句</span><br><span class="line">hibernate.show_sql=true</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-</code></pre><ul>
+</code></pre><p>​<br>    2.hibernate.properties：java属性文件，采用“健=值”形式 </p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//指定数据库使用的sql方言</span><br><span class="line">hibernate.dialect=org.hibernate.dialect.MYSQLDialect</span><br><span class="line">//指定数据库驱动程序</span><br><span class="line">hibernate.connoction.dirver_class=com.mysql.jdbc.Drivcer</span><br><span class="line">//指定连接数据库的URL</span><br><span class="line">hibernate.connection.url=jdbc:mysql://localhost:3306/sampleDB</span><br><span class="line">//指定连接数据库的用户名、口令</span><br><span class="line">hibernate.connection.username=root</span><br><span class="line">hibernate.connettion.password=123456</span><br><span class="line">//值为true时，控制台输出sql语句</span><br><span class="line">hibernate.show_sql=true</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<ul>
 <li>Hibernate API中的接口</li>
 <li>Hibernate API中的接口<br>1.Configuration接口：配置并启动Hibernate </li>
 </ul>
 <pre><code>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//创建一个Configuration类实例，读入hibernate.properties配置文件中的配置信息</span><br><span class="line">Configuration config = new Configuration();  </span><br><span class="line">config.addClass(Monkey.class);</span><br><span class="line">//创建一个sessionfactory实例，把配置信息放入sessionFactory缓存</span><br><span class="line">sessionFactory=config.buildSessionFactory();  </span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-也可以写成：
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">seessionFactory = new Configuration().addClass(Monkey.class).buildSessionFactory();     </span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-2.SessionFactory接口：一个SessionFactory实例对应一个数据存储源
-3.Session接口：提供了和持久化相关的操作，如保存、更新、删除、加载对象,可通过SessionFactory实例的openSession()方法获取Session实例。
-Session提供了save()方法，update()方法，delete()方法，get()/load()方法
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Session session = factory.openSession(); </span><br><span class="line">tx=session.beginTransaction();</span><br><span class="line">session.save(monkey);</span><br><span class="line">tx.commit();</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-4.Transaction接口：是hibernate的数据库事物接口 
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Transaction tx;</span><br><span class="line">    try&#123;</span><br><span class="line">        tx=session.beginTransaction();</span><br><span class="line">        //执行事务；</span><br><span class="line">        ..</span><br><span class="line">        //提交事务</span><br><span class="line">        tx.commit();</span><br><span class="line">    &#125;catch(RuntimeException e)&#123;</span><br><span class="line">        if(tx!=null) tx.rollback();</span><br><span class="line">        throw e;</span><br><span class="line">    &#125;finally&#123;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-5.Query接口：Hibernate的查询接口,
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;from Monkey as m order by m.name by m.name asc&quot;);</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-</code></pre><ul>
+</code></pre><p>​<br>    也可以写成：</p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">seessionFactory = new Configuration().addClass(Monkey.class).buildSessionFactory();     </span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<p>​<br>    2.SessionFactory接口：一个SessionFactory实例对应一个数据存储源<br>    3.Session接口：提供了和持久化相关的操作，如保存、更新、删除、加载对象,可通过SessionFactory实例的openSession()方法获取Session实例。<br>    Session提供了save()方法，update()方法，delete()方法，get()/load()方法</p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Session session = factory.openSession(); </span><br><span class="line">tx=session.beginTransaction();</span><br><span class="line">session.save(monkey);</span><br><span class="line">tx.commit();</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<p>​<br>    4.Transaction接口：是hibernate的数据库事物接口 </p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Transaction tx;</span><br><span class="line">    try&#123;</span><br><span class="line">        tx=session.beginTransaction();</span><br><span class="line">        //执行事务；</span><br><span class="line">        ..</span><br><span class="line">        //提交事务</span><br><span class="line">        tx.commit();</span><br><span class="line">    &#125;catch(RuntimeException e)&#123;</span><br><span class="line">        if(tx!=null) tx.rollback();</span><br><span class="line">        throw e;</span><br><span class="line">    &#125;finally&#123;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<p>​<br>    5.Query接口：Hibernate的查询接口,</p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;from Monkey as m order by m.name by m.name asc&quot;);</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<ul>
 <li>OID</li>
 <li>OID<br>Hibernate通过OID来维持java对象和数据库表中的对应关系。Hibernate会保证在一个Session对象的缓存中，每个Monkey对象都有唯一的OID（提取两个Monkey1，Monkey2对应的是同一个对象）</li>
 </ul>
@@ -427,34 +390,13 @@ Session提供了save()方法，update()方法，delete()方法，get()/load()方
 </li>
 </ul>
 <pre><code>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;from Monkey as m where m.name=:monkeyName &quot;+&quot;and m.age=:monkeyAge&quot;)</span><br><span class="line"></span><br><span class="line">query.setString(&quot;MonkeyName&quot;,&quot;Tom&quot;);</span><br><span class="line">query.setInteger(&quot;monkeyAge&quot;,21);</span><br><span class="line"></span><br><span class="line">List result=query.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-或者采用方法链编程风格：
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;from Monkey as m where m.name=:monkeyName &quot;+&quot;and m.age=:monkeyAge&quot;)</span><br><span class="line">.setString(&quot;MonkeyName&quot;,&quot;Tom&quot;)</span><br><span class="line">.setInteger(&quot;monkeyAge&quot;,21)</span><br><span class="line">.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-2.QBC检索方式 QBC API由org.hibernate.Criteria接口和org.hibernate.criterion.Criterion接口和org.hibernate.criterion.Restrictions类组成
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List result=session.createCriteria(Monkey.class)</span><br><span class="line">.add(Restrictions.like(&quot;name&quot;,&quot;T%&quot;))</span><br><span class="line">.add(Restrictions.eq(&quot;age&quot;,newInteger(21)))</span><br><span class="line">.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-
-
-
-
-3.sql检索方式 有的时候可能需要根据底层数据库的sql方言来生成一些特殊的查询语句，这时候将sql语句代入即可
-
-
-
-​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;select * from MONKEYS where NAME like :monkeyName &quot;+&quot;and AGE=:monkeyAge&quot;)</span><br><span class="line">.setString(&quot;MonkeyName&quot;,&quot;Tom&quot;)</span><br><span class="line">.setInteger(&quot;monkeyAge&quot;,21)</span><br><span class="line">.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-</code></pre><ul>
+</code></pre><p>​<br>    或者采用方法链编程风格：</p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;from Monkey as m where m.name=:monkeyName &quot;+&quot;and m.age=:monkeyAge&quot;)</span><br><span class="line">.setString(&quot;MonkeyName&quot;,&quot;Tom&quot;)</span><br><span class="line">.setInteger(&quot;monkeyAge&quot;,21)</span><br><span class="line">.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<p>​<br>    2.QBC检索方式 QBC API由org.hibernate.Criteria接口和org.hibernate.criterion.Criterion接口和org.hibernate.criterion.Restrictions类组成</p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List result=session.createCriteria(Monkey.class)</span><br><span class="line">.add(Restrictions.like(&quot;name&quot;,&quot;T%&quot;))</span><br><span class="line">.add(Restrictions.eq(&quot;age&quot;,newInteger(21)))</span><br><span class="line">.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<p>​<br>    3.sql检索方式 有的时候可能需要根据底层数据库的sql方言来生成一些特殊的查询语句，这时候将sql语句代入即可</p>
+<p>​<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Query query=session.createQuery(&quot;select * from MONKEYS where NAME like :monkeyName &quot;+&quot;and AGE=:monkeyAge&quot;)</span><br><span class="line">.setString(&quot;MonkeyName&quot;,&quot;Tom&quot;)</span><br><span class="line">.setInteger(&quot;monkeyAge&quot;,21)</span><br><span class="line">.list();</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<ul>
 <li>实际使用</li>
 <li>实际使用<br>在实际使用时，一般会根据自己的需求情况对Hibernate进行封装，通过将Hibernate类封装形成自己的Dao父类，实现ListBySQL(String sql,Class c),ListByCriteria(DetachedCriteria criteria)等方法，将会在自己写接口，调用数据库时事半功倍！只用考虑接口如何实现而不需在繁琐的建立JDBC连接等等一系列操作啦~~非常方便快捷~</li>
 </ul>
@@ -813,7 +755,106 @@ top:50vh;
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 29 </div>
     
     <div class="post-archive">
     
@@ -825,7 +866,52 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
         </li>
     
     
@@ -894,12 +980,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
@@ -924,12 +1010,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
         </li>
     
     </div>
@@ -975,6 +1061,10 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
     
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -1011,6 +1101,28 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
     
         <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

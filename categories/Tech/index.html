@@ -300,6 +300,135 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/23/Spring-Cloud-Config-配置中心/" >
+                
+                    <span>Spring Cloud Config 配置中心</span>
+            </a>
+            <div class="abstract-content">
+                Spring Cloud Config 用于为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，分为服务端和客户端。
+服务端为分布式配置中心，是一个独立的微服务应用；客户端为分布式系统中的基础设置或微服务应用，通过指定配置中心来管理相关的配置。
+Spring Cloud Config 构建的配置中心，除了适用于 Spring 构建的应用外，也可以在任何其他语言构建的应用中使用。
+Spring Cloud Config 默认采用 Git 存储配置信息，天然支持对配置信息的版本管理。
+
+构建配置中心创建 Spring Boot 工程 config-server，然后按以下步骤完成配...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/23</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >
+                
+                    <span>Spring Cloud Zuul 网关（二）</span>
+            </a>
+            <div class="abstract-content">
+                上篇文章 Spring Cloud Zuul 网关（一） 介绍了 Spring Cloud Zuul 的基本使用方法，本篇文章会对 Zuul 的过滤器机制、hystrix 及 ribbon 支持做进一步介绍。
+
+过滤器Zuul 中的过滤器负责在转发外部请求的过程中对处理过程进行干预，在实际运行时，路由映射和请求转发等步骤都是由不同的过滤器完成。
+Spring Cloud Zuul 中的过滤器包含以下 4 个基本特征：
+
+过滤类型
+
+
+过滤器所处的生命周期，Zuul 默认定义了 4 种不同生命周期，分别为 pre（请求被路由前调用）、routing（在路由请求时被调用）、post（在 ro...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >
+                
+                    <span>Spring Cloud Zuul 网关（一）</span>
+            </a>
+            <div class="abstract-content">
+                利用之前提到的微服务组件，已经可以建立起一个简单的微服务系统：
+
+通过 Spring Cloud Eureka 实现高可用服务注册中心
+通过 Spring Cloud Ribbon 或 Feign 实现服务间负载均衡的接口调用
+通过 Spring Cloud Hystrix 实现线程隔离和熔断，防止故障扩散
+
+
+但是由于在微服务架构中，后端服务往往不直接开放给外部程序调用，所以需要一个 API 网关，根据请求的 Url 路由到相应的服务。API 网关负责外部应用到微服务系统之间的请求路由、负载均衡和校验过滤等功能的实现。
+在 Spring Cloud 体系中，Spring Cloud Z...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/17</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >
+                
+                    <span>Spring Cloud Feign 声明式服务调用</span>
+            </a>
+            <div class="abstract-content">
+                在微服务的实践过程中，Spring Cloud Ribbon 和 Spring Cloud Hystrix 通常一起使用。
+Spring Cloud Feign 是对这两个基础工具的更高层次封装，在 Netflix Feign 的基础上扩展了对 Spring MVC 的注解支持，提供了一种声明式的 Web 服务客户端定义方式。
+
+快速入门启动服务注册中心 eureka-server 及服务提供方 hello-service，创建 spring boot 工程 feign-consumer。
+1.添加依赖12345678&lt;dependency&gt;    &lt;groupId&g...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/13</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/09/Hexo + Github 搭建博客/" >
                 
                     <span>Hexo + Github 搭建博客</span>
@@ -338,48 +467,32 @@ Git
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/12/12/Git 操作指南/" >
+            <a class="abstract-title" href = "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >
                 
-                    <span>Git 操作指南</span>
+                    <span>Spring Cloud Hystrix 容错保护</span>
             </a>
             <div class="abstract-content">
-                安装gitLinuxyum install git 
-Mac OS下载地址
-让仓库忽略一些文件编辑 .gitignore 文件
-target/
-!.mvn/wrapper/maven-wrapper.jar
+                在微服务架构中，系统被拆分成很多个服务单元，各个服务单元的应用通过 HTTP 相互调用、依赖。
+在某个服务由于网络或其他原因自身出现故障、延迟时，调用方也会出现延迟。若调用方请求不断增加，可能会形成任务积压，最终导致调用方服务瘫痪，服务不可用现象逐渐放大。
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
+Spring Cloud Hystrix针对上述问题，Spring Cloud Hystrix 实现了一系列服务保护措施，从而实现服务降级、服务熔断等功能，对延迟和故障提供强大的容错能力。
+Hystrix 有以下主要特性：
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+服务熔断
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbd...
+
+Hystrix 会记录各个服务的请求信息，通过 成功、失败、拒绝、超时 等统计信息判断是否打开...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/12/12</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/09</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Git">Git</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
     
 </div>
                 
@@ -389,30 +502,28 @@ nbd...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/26/DNS 服务 bind 配置说明/" >
+            <a class="abstract-title" href = "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >
                 
-                    <span>DNS 服务 bind 配置说明</span>
+                    <span>Spring Cloud Ribbon 客户端负载均衡</span>
             </a>
             <div class="abstract-content">
-                
-官网：https://www.isc.org/downloads/bind/
+                Spring Cloud Ribbon 是基于 Netflix Ribbon 实现的客户端负载均衡工具。
+Spring Cloud Ribbon 在单独使用时，可以通过在客户端中配置 ribbonServerList 来指定服务实例列表，通过轮训访问的方式起到负载均衡的作用。
+在与 Eureka 联合使用时，ribbonServerList 会被重写，改为通过 Eureka 服务注册中心获取服务实例列表，可以通过简单的几行配置完成 Spring Cloud 中服务调用的负载均衡。
 
-安装：
-123yum install bindyum install bind-utils # 包含了dig/nslookup/host等工具yum install bind-chroot # 说是可以出于安全原因，改变配置文件的根路径，但不知道怎么用，感觉不装也行
-安装完成后，默认配置文件位于：
-12/etc/named.conf/var/named/
-注意，/var/named/目录下的解析文件权限必须是0640，且必须在named用户组，否则解析文件会加载失败，导致解析相应域名时出现SERVFAIL错...
+负载均衡实践在实践客户端负载均衡之前，首先构建并启动 eureka-server，作为服务注册中心。
+然后...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/21</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "DNS">DNS</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
     
 </div>
                 
@@ -422,35 +533,28 @@ nbd...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/10/26/Vue 介绍/" >
+            <a class="abstract-title" href = "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >
                 
-                    <span>Vue 介绍</span>
+                    <span>Spring Cloud Eureka 服务治理</span>
             </a>
             <div class="abstract-content">
-                
-官方文档：https://cn.vuejs.org/v2/guide/
+                Spring Cloud Eureka 是对 Netflix Eureka 的二次封装，增加了 Spring Boot 风格的自动化配置，只需简单地引入依赖和注解就能提供完整的服务注册和服务发现。
 
-简介
-Vue.js（后面简称Vue）是国人开发的，用于Web前端开发，可以做UI、界面路由等，利用插件还可以实现HTTP请求等更加丰富的功能
-Vue比较轻量，而且使用简单，上手很容易，同时功能也很丰富
-目前感觉开发大型前端项目可能比较费力，当然也很可能是我目前应用经验不足，认知有限
-
-与其它常见框架/工具/名词的关系
-后记：写完这段后才发现文字太多了，这些和学习Vue没啥太大关系，所以，可以不看……
-
-
-Node.js是一个Javascript独立运行环境，可以理解成一个Javascript解释器，就像Pytho...
+服务中心服务中心又称注册中心，集中式地管理各个服务的注册和发现。
+在服务较多、每个服务又多份部署的的情况下，手动管理服务间的调用关系既麻烦又容易出错，其中一个服务改动，就会牵连好几个服务跟着重启。
+在包含服务中心的微服务体系中，每个服务都将自身的信息注册到服务中心，各个服务间的调用都需要通过服务中心来调用，服务间调用关系有服务中心来统一管理。
+EurekaEureka 采用 C-S 设计架构...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/20</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Vue">Vue</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
     
 </div>
                 
@@ -460,108 +564,28 @@ Node.js是一个Javascript独立运行环境，可以理解成一个Javascript�
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/09/11/Java 8 中的日期时间 API/" >
+            <a class="abstract-title" href = "/2018/03/10/Spring-Cloud-简介/" >
                 
-                    <span>Java 8 中的日期时间 API</span>
+                    <span>Spring Cloud 简介</span>
             </a>
             <div class="abstract-content">
-                
-本文内容基本是对《Java 8实战》这本书中关于新日期时间API的讲述的再整理。
+                Spring Cloud 是一些列框架的集合，基于 Spring Boot，是实现微服务的一整套解决方案。
+Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡、断路器、消息总线、数据监控等提供了一种简单的开发方式，降低了构建大型系统的要求，能以较低的成本搭建出一套高效、分布式、容错的平台。
 
-Java 8之前的日期、时间类的缺陷使用过java8之前的日期和时间类（Date、Calendar、DateFormat）的同学一定对其易用性的缺失表示遗憾，我本人平时使用时，对它们有以下几点不爽：
-
-Date和Calendar类的Month值是从0开始计算的，有点反人类。
-Date和Calendar类是可变对象，给代码可维护性造成了困难。
-DateFormat类的方法不是线程安全的，导致无法在线程间共享单例。只能每次使用时去new个新对象或是使用ThreadLocal机制避开多线程访问的隐患。
-无法完...
+什么是微服务微服务是系统架构的一种设计风格，主旨是将原本独立的系统拆分为多个小型服务。
+每个服务维护着自身的数据存储、业务开发、自动化测试案例及部署机制，能独立部署、独立维护、独立扩展，服务与服务间通过诸如RESTful API的方式互相调用。
+为什么要采用微服务相比于单体应用，...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/09/11</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/10</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Java">Java</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/07/12/Jetty UrlRewrite 使用/" >
-                
-                    <span>Jetty UrlRewrite 使用</span>
-            </a>
-            <div class="abstract-content">
-                Jetty下载Jetty文档UrlRewrite
-
-更加简洁明快，例如http://www.zhilehuo.com/video.jsp?id=1的网址可以使用rewrite写成http://www.zhilehuo.com/video/1.html
-提高安全性，有效避免一些参数名，ID等直接暴露在用户面前，同时不出    现.jsp、.aspx等字眼，能够隐藏网站开发语言
-有利于搜索引擎更好的抓取网站内容，搜索引擎更喜欢静态页面形式的网页，对静态页面的评分相对高于动态页面，使用UrlRewrite重写URl后更容易被搜索引擎收录
-
-
-目录结构
-
-
-Location
-Descriptio...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/07/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/22/主 app 性能测试总结/" >
-                
-                    <span>主 app 性能测试总结</span>
-            </a>
-            <div class="abstract-content">
-                2017年5月，我们针对半米主app进行了目标为 30万 日活跃量的后端性能测试，所以记录一下测试的准备、实施、调优过程。（具体的业务和数据，不希望在文章中公开，都放在了公司内部文档服务器-&gt;作者的个人文件夹中^^）
-背景：
-
-当前活跃量：1.6万/天目标活跃量：30万/天
-
-结论：30W日活时性能稳定；60W日活时服务偶尔有性能抖动，短时间内可恢复，待优化。
-准备阶段上面已经说了这次的目标是支撑30万日活，准备阶段我们提出了如下几个问题：
-
-如何搭建测试环境
-如何确定测试目标接口、参数集合、并发量等指标
-如何准备测试用假数据
-如何执行测试请求
-评估结果并找出可能的性能瓶颈
-
-下面...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/22</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Test">Test</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
     
 </div>
                 
@@ -592,74 +616,6 @@ Descriptio...
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Wechat">Wechat</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/09/初识 Zookeeper/" >
-                
-                    <span>初识 Zookeeper</span>
-            </a>
-            <div class="abstract-content">
-                Zookeeper 中的概念Zookeeper是apache下的一个分布式系统协调框架，被广泛应用到Hadoop、HBase、Kafka、Dubbo等分布式系统中，用于系统各个模块间的协调工作。
-Zookeeper提供的API比较原始，这也意味着使用者有很大的灵活性来让它发挥各种功能。
-数据节点
-Zookeeper可以看做一个高可用的分布式文件系统，每个文件叫做一个节点。既然是文件系统，节点之间是存在父子关系的，整体组成一个树形结构，如下图：
-每个节点都可以保存小于1M的数据。
-
-节点可分为临时/永久节点，顺序/非顺序节点。
-
-临时节点：在客户端会话中断后会被自动删除，可以此判断某些机器...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/09</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Zookeeper">Zookeeper</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/08/Hibernate学习笔记（易）/" >
-                
-                    <span>Hibernate学习笔记（易）</span>
-            </a>
-            <div class="abstract-content">
-                
-Hibernate API
-  Hibernate API对 JDBC API 进行封装，提供面向对象的数据库访问API，这样不懂数据库语言的人，也能通过Hibernate的接口来访问数据库，无需书写sql语句即可实现对数据的查询操作。增强了代码的独立性和可维护性。
-
-对象-关系映射元数据
-  Hibernate 将对象-关系映射元素放到对象-关系映射文件中，以hbm.xml命名作为文件扩展名。 下面是monkey类和MONKEYS表的映射关系
-
-
-​1234567891011121314//指定类和表的映射  //主键      //指定对象标识符生成器，为对象OID生成唯一标识符 ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/08</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hibernate">Hibernate</a>
     
 </div>
                 
@@ -975,7 +931,106 @@ Hibernate API
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 29 </div>
     
     <div class="post-archive">
     
@@ -987,7 +1042,52 @@ Hibernate API
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
         </li>
     
     
@@ -1056,12 +1156,12 @@ Hibernate API
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
@@ -1086,12 +1186,12 @@ Hibernate API
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
         </li>
     
     </div>
@@ -1137,6 +1237,10 @@ Hibernate API
     
         <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
     
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -1173,6 +1277,28 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
     
         <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
