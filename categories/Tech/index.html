@@ -502,6 +502,111 @@ Hystrix 会记录各个服务的请求信息，通过 成功、失败、拒绝�
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/29/JVM-性能监控与故障处理工具/" >
+                
+                    <span>JVM 性能监控与故障处理工具</span>
+            </a>
+            <div class="abstract-content">
+                JDK 中包含一些命令行工具，这些工具能在处理应用程序性能问题、定位故障时发挥很大的作用。
+jpsJVM Process Status Tool，用于显示系统内所有的 HotSpot 虚拟机进程。
+jps 可以列出正在运行的 JVM 进程，显示 JVM 执行主类及进程的本地虚拟机唯一 ID（与操作系统进程 ID 一致）。
+常用选项：
+
+-q：只输出进程 ID，隐藏主类名称
+-m：输出进程启动时传递给主类 main() 函数的参数
+-l：输出主类全名，如进程执行的是 Jar 包，输出 Jar 路径
+-v：输出虚拟机进程启动时 JVM 参数
+
+
+jstatJVM Statistics Mon...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/28/JVM-GC-与-内存分配策略/" >
+                
+                    <span>JVM GC 与 内存分配策略</span>
+            </a>
+            <div class="abstract-content">
+                对象存活算法Java 堆中存放着几乎所有的对象实例，垃圾收集器在对堆进行回收前，需要确定对象是否存活。
+引用计数算法给对象添加一个引用计数器，每当一个地方引用它时，计数器的值加 1；引用失效时减 1。
+主流 JVM 没有选用此种算法管理内存，主要原因是它难以解决对象间循环引用的问题。
+
+可达性分析算法可达性分析算法是 JVM 主流实现中采用的算法。基本思路是通过一系列 GC Roots 对象为起点向下搜索，搜索所走过的路径称为 引用链 。当一个对象到 GC Roots 没有任何引用链相连时，会被判定为可回收对象。
+GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区中类静态属...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/27/JVM-内存区域/" >
+                
+                    <span>JVM 内存区域</span>
+            </a>
+            <div class="abstract-content">
+                JVM 在执行 Java 程序的过程中会把它所管理的内存划分为如下几个数据区域：
+
+程序计数器
+虚拟机栈
+本地方法栈 
+堆
+方法区
+
+
+程序计数器程序计数器是一块很小的内存空间，是当前线程所执行字节码的行号指示器，线程间私有不共享。执行 Java 方法时计数器的值为字节码指令的地址，执行 Native 方法时值为空。不会出现OutOfMemoryError。
+虚拟机栈虚拟机栈为线程私有，生命周期与线程相同，描述 Java 方法执行的内存模型。方法执行时创建栈帧，用于存储局部变量表、操作数栈、方法出口等信息。
+局部变量表存放了编译器可知的基本数据类型、对象引用和 returnAddress...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >
                 
                     <span>Spring Cloud Ribbon 客户端负载均衡</span>
@@ -524,98 +629,6 @@ Spring Cloud Ribbon 在单独使用时，可以通过在客户端中配置 ribbo
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >
-                
-                    <span>Spring Cloud Eureka 服务治理</span>
-            </a>
-            <div class="abstract-content">
-                Spring Cloud Eureka 是对 Netflix Eureka 的二次封装，增加了 Spring Boot 风格的自动化配置，只需简单地引入依赖和注解就能提供完整的服务注册和服务发现。
-
-服务中心服务中心又称注册中心，集中式地管理各个服务的注册和发现。
-在服务较多、每个服务又多份部署的的情况下，手动管理服务间的调用关系既麻烦又容易出错，其中一个服务改动，就会牵连好几个服务跟着重启。
-在包含服务中心的微服务体系中，每个服务都将自身的信息注册到服务中心，各个服务间的调用都需要通过服务中心来调用，服务间调用关系有服务中心来统一管理。
-EurekaEureka 采用 C-S 设计架构...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/20</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/10/Spring-Cloud-简介/" >
-                
-                    <span>Spring Cloud 简介</span>
-            </a>
-            <div class="abstract-content">
-                Spring Cloud 是一些列框架的集合，基于 Spring Boot，是实现微服务的一整套解决方案。
-Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡、断路器、消息总线、数据监控等提供了一种简单的开发方式，降低了构建大型系统的要求，能以较低的成本搭建出一套高效、分布式、容错的平台。
-
-什么是微服务微服务是系统架构的一种设计风格，主旨是将原本独立的系统拆分为多个小型服务。
-每个服务维护着自身的数据存储、业务开发、自动化测试案例及部署机制，能独立部署、独立维护、独立扩展，服务与服务间通过诸如RESTful API的方式互相调用。
-为什么要采用微服务相比于单体应用，...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/19/公众号菜单网页授权功能/" >
-                
-                    <span>公众号菜单网页授权功能</span>
-            </a>
-            <div class="abstract-content">
-                官方官方文档参照：在官方开发者文档 中 –&gt; 微信网页授权项（要下班啦，官方文档上的说明不描述啦，这里仅显示实现方法及代码demo）
-公众号菜单配置1.获取菜单配置接口：https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN access_token由自己存储在服务器端 
-2.菜单配置方式: 使用Postman工具进行配置请求：POSTHeaders: Content-Type：application/jsonBody:(raw型 JSON) 
-
-{“button”:...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/19</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Wechat">Wechat</a>
     
 </div>
                 
@@ -1030,7 +1043,70 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     
     
-    <div class="total-archive"> Total : 29 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 32 </div>
     
     <div class="post-archive">
     
@@ -1073,6 +1149,21 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/JVM-性能监控与故障处理工具/" >JVM 性能监控与故障处理工具</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/JVM-GC-与-内存分配策略/" >JVM GC 与 内存分配策略</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2018/03/27/JVM-内存区域/" >JVM 内存区域</a>
         </li>
     
     
@@ -1240,6 +1331,8 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
         <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
     
         <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

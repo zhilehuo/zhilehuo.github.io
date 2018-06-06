@@ -300,6 +300,111 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/29/JVM-性能监控与故障处理工具/" >
+                
+                    <span>JVM 性能监控与故障处理工具</span>
+            </a>
+            <div class="abstract-content">
+                JDK 中包含一些命令行工具，这些工具能在处理应用程序性能问题、定位故障时发挥很大的作用。
+jpsJVM Process Status Tool，用于显示系统内所有的 HotSpot 虚拟机进程。
+jps 可以列出正在运行的 JVM 进程，显示 JVM 执行主类及进程的本地虚拟机唯一 ID（与操作系统进程 ID 一致）。
+常用选项：
+
+-q：只输出进程 ID，隐藏主类名称
+-m：输出进程启动时传递给主类 main() 函数的参数
+-l：输出主类全名，如进程执行的是 Jar 包，输出 Jar 路径
+-v：输出虚拟机进程启动时 JVM 参数
+
+
+jstatJVM Statistics Mon...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/28/JVM-GC-与-内存分配策略/" >
+                
+                    <span>JVM GC 与 内存分配策略</span>
+            </a>
+            <div class="abstract-content">
+                对象存活算法Java 堆中存放着几乎所有的对象实例，垃圾收集器在对堆进行回收前，需要确定对象是否存活。
+引用计数算法给对象添加一个引用计数器，每当一个地方引用它时，计数器的值加 1；引用失效时减 1。
+主流 JVM 没有选用此种算法管理内存，主要原因是它难以解决对象间循环引用的问题。
+
+可达性分析算法可达性分析算法是 JVM 主流实现中采用的算法。基本思路是通过一系列 GC Roots 对象为起点向下搜索，搜索所走过的路径称为 引用链 。当一个对象到 GC Roots 没有任何引用链相连时，会被判定为可回收对象。
+GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区中类静态属...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/27/JVM-内存区域/" >
+                
+                    <span>JVM 内存区域</span>
+            </a>
+            <div class="abstract-content">
+                JVM 在执行 Java 程序的过程中会把它所管理的内存划分为如下几个数据区域：
+
+程序计数器
+虚拟机栈
+本地方法栈 
+堆
+方法区
+
+
+程序计数器程序计数器是一块很小的内存空间，是当前线程所执行字节码的行号指示器，线程间私有不共享。执行 Java 方法时计数器的值为字节码指令的地址，执行 Native 方法时值为空。不会出现OutOfMemoryError。
+虚拟机栈虚拟机栈为线程私有，生命周期与线程相同，描述 Java 方法执行的内存模型。方法执行时创建栈帧，用于存储局部变量表、操作数栈、方法出口等信息。
+局部变量表存放了编译器可知的基本数据类型、对象引用和 returnAddress...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >
                 
                     <span>Spring Cloud Ribbon 客户端负载均衡</span>
@@ -794,7 +899,70 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     
     
-    <div class="total-archive"> Total : 29 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 32 </div>
     
     <div class="post-archive">
     
@@ -837,6 +1005,21 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/JVM-性能监控与故障处理工具/" >JVM 性能监控与故障处理工具</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/JVM-GC-与-内存分配策略/" >JVM GC 与 内存分配策略</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2018/03/27/JVM-内存区域/" >JVM 内存区域</a>
         </li>
     
     
@@ -1004,6 +1187,8 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
         <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
     
         <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
