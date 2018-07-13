@@ -300,6 +300,43 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/27/JVM-内存区域/" >
+                
+                    <span>JVM 内存区域</span>
+            </a>
+            <div class="abstract-content">
+                JVM 在执行 Java 程序的过程中会把它所管理的内存划分为如下几个数据区域：
+
+程序计数器
+虚拟机栈
+本地方法栈 
+堆
+方法区
+
+
+程序计数器程序计数器是一块很小的内存空间，是当前线程所执行字节码的行号指示器，线程间私有不共享。执行 Java 方法时计数器的值为字节码指令的地址，执行 Native 方法时值为空。不会出现OutOfMemoryError。
+虚拟机栈虚拟机栈为线程私有，生命周期与线程相同，描述 Java 方法执行的内存模型。方法执行时创建栈帧，用于存储局部变量表、操作数栈、方法出口等信息。
+局部变量表存放了编译器可知的基本数据类型、对象引用和 returnAddress...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >
                 
                     <span>Spring Cloud Ribbon 客户端负载均衡</span>
@@ -861,7 +898,30 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     
     
-    <div class="total-archive"> Total : 32 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 33 </div>
     
     <div class="post-archive">
     
@@ -870,6 +930,11 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1088,6 +1153,8 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
         <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
     
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

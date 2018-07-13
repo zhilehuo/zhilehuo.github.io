@@ -300,6 +300,41 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/08/读书笔记-《大型网站技术架构》/" >
+                
+                    <span>读书笔记-《大型网站技术架构》</span>
+            </a>
+            <div class="abstract-content">
+                
+架构随业务而生，业务重于架构。架构是对高并发、大数据、大流量网站的优化措施，网站规模小但一味的追求架构只是逐末舍本，业务一定是一个网站最核心的支持 
+
+在网站架构端提升性能的第一手段是缓存，由近逐远可粗略分为：
+
+本地缓存，用户端/浏览器端的缓存
+CDN缓存，将一些热点数据、静态文件存放于网络提供商端，这是网络请求经过的的第个关卡
+反向代理服务器缓存，存在于网络机房一侧，除了请求转发、负载均衡、安全保护功能，反向代理服务器的缓存机制也能很大程度上减轻应用服务器的压力
+分布式缓存集群，对于一些大型网站，使用一些大内存的服务器作为专门的缓存服务器集群是很有必要的
+应用服务器的缓存，在应用部...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/08</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "架构">架构</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/23/Spring-Cloud-Config-配置中心/" >
                 
                     <span>Spring Cloud Config 配置中心</span>
@@ -598,37 +633,6 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >
-                
-                    <span>Spring Cloud Ribbon 客户端负载均衡</span>
-            </a>
-            <div class="abstract-content">
-                Spring Cloud Ribbon 是基于 Netflix Ribbon 实现的客户端负载均衡工具。
-Spring Cloud Ribbon 在单独使用时，可以通过在客户端中配置 ribbonServerList 来指定服务实例列表，通过轮训访问的方式起到负载均衡的作用。
-在与 Eureka 联合使用时，ribbonServerList 会被重写，改为通过 Eureka 服务注册中心获取服务实例列表，可以通过简单的几行配置完成 Spring Cloud 中服务调用的负载均衡。
-
-负载均衡实践在实践客户端负载均衡之前，首先构建并启动 eureka-server，作为服务注册中心。
-然后...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/21</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
     
 </div>
                 
@@ -1106,7 +1110,30 @@ Spring Cloud Ribbon 在单独使用时，可以通过在客户端中配置 ribbo
     
     
     
-    <div class="total-archive"> Total : 32 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 33 </div>
     
     <div class="post-archive">
     
@@ -1115,6 +1142,11 @@ Spring Cloud Ribbon 在单独使用时，可以通过在客户端中配置 ribbo
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1333,6 +1365,8 @@ Spring Cloud Ribbon 在单独使用时，可以通过在客户端中配置 ribbo
         <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
     
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

@@ -300,120 +300,32 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/07/12/Jetty UrlRewrite 使用/" >
+            <a class="abstract-title" href = "/2018/07/08/读书笔记-《大型网站技术架构》/" >
                 
-                    <span>Jetty UrlRewrite 使用</span>
+                    <span>读书笔记-《大型网站技术架构》</span>
             </a>
             <div class="abstract-content">
-                Jetty下载Jetty文档UrlRewrite
+                
+架构随业务而生，业务重于架构。架构是对高并发、大数据、大流量网站的优化措施，网站规模小但一味的追求架构只是逐末舍本，业务一定是一个网站最核心的支持 
 
-更加简洁明快，例如http://www.zhilehuo.com/video.jsp?id=1的网址可以使用rewrite写成http://www.zhilehuo.com/video/1.html
-提高安全性，有效避免一些参数名，ID等直接暴露在用户面前，同时不出    现.jsp、.aspx等字眼，能够隐藏网站开发语言
-有利于搜索引擎更好的抓取网站内容，搜索引擎更喜欢静态页面形式的网页，对静态页面的评分相对高于动态页面，使用UrlRewrite重写URl后更容易被搜索引擎收录
+在网站架构端提升性能的第一手段是缓存，由近逐远可粗略分为：
 
-
-目录结构
-
-
-Location
-Descriptio...
+本地缓存，用户端/浏览器端的缓存
+CDN缓存，将一些热点数据、静态文件存放于网络提供商端，这是网络请求经过的的第个关卡
+反向代理服务器缓存，存在于网络机房一侧，除了请求转发、负载均衡、安全保护功能，反向代理服务器的缓存机制也能很大程度上减轻应用服务器的压力
+分布式缓存集群，对于一些大型网站，使用一些大内存的服务器作为专门的缓存服务器集群是很有必要的
+应用服务器的缓存，在应用部...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/07/12</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/08</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >
-                
-                    <span>jetty 容器实例部署时的问题解决方法</span>
-            </a>
-            <div class="abstract-content">
-                jetty应用部署时的注意点本文的目的不是为了手把手教你部署一个jetty容器实例，而是为了让你在碰到部署问题是来查阅，节省网上搜索的时间，所以如果你发现并解决了本文未涵盖的部署问题，欢迎编辑此文。
-
-在start.d/http.ini修改容器监听的端口号：
-jetty.port=8046
-
-向jetty实例中添加jsp、jsp-impl、jstl、plus四个模块，命令：
- java -jar ../../jetty-distribution-9.2.21.v20170120/start.jar –add-to-start=jsp,jstl,jsp-impl,plus
-
-配置dataS...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/03</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/04/01/Jetty 概览/" >
-                
-                    <span>Jetty 概览</span>
-            </a>
-            <div class="abstract-content">
-                
-不严肃地说，这并不算是一篇文章，只能算是一篇笔记，时间有限，等有时间我再来好好整理一下吧。
-
-官方文档感觉很不错：
-http://www.eclipse.org/jetty/documentation/9.2.21.v20170120/index.html
-版本记录：
-http://www.eclipse.org/jetty/documentation/current/what-jetty-version.html
-
-
-
-Version
-Year
-Home
-JVM
-Protocols
-Servlet
-JSP
-Status
-
-
-
-
-9.4
-2016
-Eclipse
-1.8
-HTTP/1....
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "架构">架构</a>
     
 </div>
                 

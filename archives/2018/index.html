@@ -300,6 +300,41 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/08/读书笔记-《大型网站技术架构》/" >
+                
+                    <span>读书笔记-《大型网站技术架构》</span>
+            </a>
+            <div class="abstract-content">
+                
+架构随业务而生，业务重于架构。架构是对高并发、大数据、大流量网站的优化措施，网站规模小但一味的追求架构只是逐末舍本，业务一定是一个网站最核心的支持 
+
+在网站架构端提升性能的第一手段是缓存，由近逐远可粗略分为：
+
+本地缓存，用户端/浏览器端的缓存
+CDN缓存，将一些热点数据、静态文件存放于网络提供商端，这是网络请求经过的的第个关卡
+反向代理服务器缓存，存在于网络机房一侧，除了请求转发、负载均衡、安全保护功能，反向代理服务器的缓存机制也能很大程度上减轻应用服务器的压力
+分布式缓存集群，对于一些大型网站，使用一些大内存的服务器作为专门的缓存服务器集群是很有必要的
+应用服务器的缓存，在应用部...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/08</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "架构">架构</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/23/Spring-Cloud-Config-配置中心/" >
                 
                     <span>Spring Cloud Config 配置中心</span>
@@ -590,43 +625,6 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
                 <!-- date  -->
                 <div class="abstract-date">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/27/JVM-内存区域/" >
-                
-                    <span>JVM 内存区域</span>
-            </a>
-            <div class="abstract-content">
-                JVM 在执行 Java 程序的过程中会把它所管理的内存划分为如下几个数据区域：
-
-程序计数器
-虚拟机栈
-本地方法栈 
-堆
-方法区
-
-
-程序计数器程序计数器是一块很小的内存空间，是当前线程所执行字节码的行号指示器，线程间私有不共享。执行 Java 方法时计数器的值为字节码指令的地址，执行 Native 方法时值为空。不会出现OutOfMemoryError。
-虚拟机栈虚拟机栈为线程私有，生命周期与线程相同，描述 Java 方法执行的内存模型。方法执行时创建栈帧，用于存储局部变量表、操作数栈、方法出口等信息。
-局部变量表存放了编译器可知的基本数据类型、对象引用和 returnAddress...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
                 </div>
                 <!-- tags  -->
                 
@@ -1110,7 +1108,30 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
     
     
     
-    <div class="total-archive"> Total : 32 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 33 </div>
     
     <div class="post-archive">
     
@@ -1119,6 +1140,11 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1337,6 +1363,8 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
         <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
     
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
