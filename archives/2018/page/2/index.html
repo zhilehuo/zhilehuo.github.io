@@ -300,6 +300,245 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >
+                
+                    <span>Spring Cloud Zuul 网关（二）</span>
+            </a>
+            <div class="abstract-content">
+                上篇文章 Spring Cloud Zuul 网关（一） 介绍了 Spring Cloud Zuul 的基本使用方法，本篇文章会对 Zuul 的过滤器机制、hystrix 及 ribbon 支持做进一步介绍。
+
+过滤器Zuul 中的过滤器负责在转发外部请求的过程中对处理过程进行干预，在实际运行时，路由映射和请求转发等步骤都是由不同的过滤器完成。
+Spring Cloud Zuul 中的过滤器包含以下 4 个基本特征：
+
+过滤类型
+
+
+过滤器所处的生命周期，Zuul 默认定义了 4 种不同生命周期，分别为 pre（请求被路由前调用）、routing（在路由请求时被调用）、post（在 ro...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >
+                
+                    <span>Spring Cloud Zuul 网关（一）</span>
+            </a>
+            <div class="abstract-content">
+                利用之前提到的微服务组件，已经可以建立起一个简单的微服务系统：
+
+通过 Spring Cloud Eureka 实现高可用服务注册中心
+通过 Spring Cloud Ribbon 或 Feign 实现服务间负载均衡的接口调用
+通过 Spring Cloud Hystrix 实现线程隔离和熔断，防止故障扩散
+
+
+但是由于在微服务架构中，后端服务往往不直接开放给外部程序调用，所以需要一个 API 网关，根据请求的 Url 路由到相应的服务。API 网关负责外部应用到微服务系统之间的请求路由、负载均衡和校验过滤等功能的实现。
+在 Spring Cloud 体系中，Spring Cloud Z...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/17</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >
+                
+                    <span>Spring Cloud Feign 声明式服务调用</span>
+            </a>
+            <div class="abstract-content">
+                在微服务的实践过程中，Spring Cloud Ribbon 和 Spring Cloud Hystrix 通常一起使用。
+Spring Cloud Feign 是对这两个基础工具的更高层次封装，在 Netflix Feign 的基础上扩展了对 Spring MVC 的注解支持，提供了一种声明式的 Web 服务客户端定义方式。
+
+快速入门启动服务注册中心 eureka-server 及服务提供方 hello-service，创建 spring boot 工程 feign-consumer。
+1.添加依赖12345678&lt;dependency&gt;    &lt;groupId&g...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/13</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/09/Hexo + Github 搭建博客/" >
+                
+                    <span>Hexo + Github 搭建博客</span>
+            </a>
+            <div class="abstract-content">
+                Hexo 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。
+配置环境安装 Hexo 前，需要检查是否已经安装下列应用；
+
+Node.js
+Git
+
+如已安装上述必备程序，通过 sudo npm install -g hexo-cli 安装Hexo。
+建站流程
+在 Github 中创建仓库 username.github.io
+创建本地目录 username.github.io 并在目录中执行 hexo init
+修改目录中的 _config.yml ，详见 Hexo 配置 ，如下为部署相关配...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/09</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >
+                
+                    <span>Spring Cloud Hystrix 容错保护</span>
+            </a>
+            <div class="abstract-content">
+                在微服务架构中，系统被拆分成很多个服务单元，各个服务单元的应用通过 HTTP 相互调用、依赖。
+在某个服务由于网络或其他原因自身出现故障、延迟时，调用方也会出现延迟。若调用方请求不断增加，可能会形成任务积压，最终导致调用方服务瘫痪，服务不可用现象逐渐放大。
+
+Spring Cloud Hystrix针对上述问题，Spring Cloud Hystrix 实现了一系列服务保护措施，从而实现服务降级、服务熔断等功能，对延迟和故障提供强大的容错能力。
+Hystrix 有以下主要特性：
+
+服务熔断
+
+
+Hystrix 会记录各个服务的请求信息，通过 成功、失败、拒绝、超时 等统计信息判断是否打开...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/09</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/29/JVM-性能监控与故障处理工具/" >
+                
+                    <span>JVM 性能监控与故障处理工具</span>
+            </a>
+            <div class="abstract-content">
+                JDK 中包含一些命令行工具，这些工具能在处理应用程序性能问题、定位故障时发挥很大的作用。
+jpsJVM Process Status Tool，用于显示系统内所有的 HotSpot 虚拟机进程。
+jps 可以列出正在运行的 JVM 进程，显示 JVM 执行主类及进程的本地虚拟机唯一 ID（与操作系统进程 ID 一致）。
+常用选项：
+
+-q：只输出进程 ID，隐藏主类名称
+-m：输出进程启动时传递给主类 main() 函数的参数
+-l：输出主类全名，如进程执行的是 Jar 包，输出 Jar 路径
+-v：输出虚拟机进程启动时 JVM 参数
+
+
+jstatJVM Statistics Mon...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/28/JVM-GC-与-内存分配策略/" >
+                
+                    <span>JVM GC 与 内存分配策略</span>
+            </a>
+            <div class="abstract-content">
+                对象存活算法Java 堆中存放着几乎所有的对象实例，垃圾收集器在对堆进行回收前，需要确定对象是否存活。
+引用计数算法给对象添加一个引用计数器，每当一个地方引用它时，计数器的值加 1；引用失效时减 1。
+主流 JVM 没有选用此种算法管理内存，主要原因是它难以解决对象间循环引用的问题。
+
+可达性分析算法可达性分析算法是 JVM 主流实现中采用的算法。基本思路是通过一系列 GC Roots 对象为起点向下搜索，搜索所走过的路径称为 引用链 。当一个对象到 GC Roots 没有任何引用链相连时，会被判定为可回收对象。
+GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区中类静态属...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/03/27/JVM-内存区域/" >
                 
                     <span>JVM 内存区域</span>
@@ -396,41 +635,10 @@ EurekaEureka 采用 C-S 设计架构...
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/10/Spring-Cloud-简介/" >
-                
-                    <span>Spring Cloud 简介</span>
-            </a>
-            <div class="abstract-content">
-                Spring Cloud 是一些列框架的集合，基于 Spring Boot，是实现微服务的一整套解决方案。
-Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡、断路器、消息总线、数据监控等提供了一种简单的开发方式，降低了构建大型系统的要求，能以较低的成本搭建出一套高效、分布式、容错的平台。
-
-什么是微服务微服务是系统架构的一种设计风格，主旨是将原本独立的系统拆分为多个小型服务。
-每个服务维护着自身的数据存储、业务开发、自动化测试案例及部署机制，能独立部署、独立维护、独立扩展，服务与服务间通过诸如RESTful API的方式互相调用。
-为什么要采用微服务相比于单体应用，...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/archives/2018/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2018/page/3/">3</a><a class="extend next" rel="next" href="/archives/2018/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -921,7 +1129,148 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     
     
-    <div class="total-archive"> Total : 33 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 40 </div>
     
     <div class="post-archive">
     
@@ -933,7 +1282,42 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/管理-Kafka/" >管理 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/Kafka-可靠的数据传递/" >Kafka 可靠的数据传递</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2018/07/23/Kafka-内部工作原理/" >Kafka 内部工作原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2018/07/20/Kafka-消费者/" >Kafka 消费者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2018/06/07/Kafka-生产者/" >Kafka 生产者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/Kafka-安装与基本配置/" >Kafka 安装与基本配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href= "/2018/06/05/初识-Kafka/" >初识 Kafka</a>
         </li>
     
     
@@ -1067,12 +1451,12 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
@@ -1155,6 +1539,8 @@ Spring Cloud 为微服务中涉及的配置管理、服务治理、负载均衡�
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
     
         <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kafka"><span class="iconfont-archer">&#xe606;</span>Kafka</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

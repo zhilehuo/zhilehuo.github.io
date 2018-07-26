@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>Kafka 可靠的数据传递 · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Kafka 可靠的数据传递</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Kafka 可靠的数据传递
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/07/24</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>Kafka 在数据传递可靠性方面具有很大的灵活性，是高度可配置的，通过使用客户端 API 可以满足不同程度的可靠性需求。</p>
+<p>Kafka 有一些基本的保证：1. Kafka 可以保证分区内消息的顺序；2. 消息被写入到分区的所有同步副本才算是已经提交的消息；3. 只要有一个副本活跃，已经提交的消息就不会丢失；4. 消费者只能读取已经提交的消息。</p>
+<p>以上的基本保证用于构建可靠的系统，开发者在配置参数上作出权衡（可靠性、一致性的重要程度与可用性、高吞吐量、低延迟和硬件成本重要程度之间的权衡），从而获得想要达到的可靠性。</p>
+<a id="more"></a>
+<h2 id="配置-broker"><a href="#配置-broker" class="headerlink" title="配置 broker"></a>配置 broker</h2><p>broker 有 3 个配置会影响消息存储的可靠性，应用在 broker 级别时控制所有主题的行为，应用在主题级别时控制个别主题的行为。</p>
+<h3 id="复制系数"><a href="#复制系数" class="headerlink" title="复制系数"></a>复制系数</h3><p>复制系数即数据数据副本的个数，复制系数 N 需要至少 N 个 broker，在 N - 1 个 broker 失效的情况下仍然可用，默认为 3。主题级别的配置是 replication.factor，而 broker 级别通过 default.replication.factor 来配合自动创建主题的复制系数。</p>
+<p>更高的复制系数会带来更高的可用性和更少的故障，不过会占用 N 倍的磁盘空间，一般要在可用性和存储硬件之间作出权衡。</p>
+<p>如果重启等导致主题不可用是可以接受的，那么复制系数设为 1 就可以，不过在节省硬件成本的同时也降低了可用性。复制系数为 2 可以容忍 1 个 broker 失效，不过有时候 1 个broker 失效会导致集群不稳定（通常是旧版 Kafka）。建议在要求可用性的场景把复制系数设置为 3，在大多数情况下足够安全。</p>
+<p>同时注意副本的分布也很重要，Kafka 会保证分区的每个副本在不同的 broker 上，如果把 broker 分布在不同机架上，并使用 broker.rack 配置机架信息，可以获得更高的可用性。</p>
+<h3 id="不完全首领选举"><a href="#不完全首领选举" class="headerlink" title="不完全首领选举"></a>不完全首领选举</h3><p>当分区首领不可用时，一个同步副本会被选为新首领。但如果首领不可用时其他副本都是不同步的，就要做出一个艰难的选择。</p>
+<p>如果将不同步副本提升为新首领，则副本不同步后写入旧首领的消息丢失，导致数据不一致，否则分区在旧首领（最后一个同步副本）恢复之前不可用。</p>
+<p>默认情况下 unclean.leader.election.enable 的值为 true，即允许【不完全的选举】。</p>
+<h3 id="最少同步副本"><a href="#最少同步副本" class="headerlink" title="最少同步副本"></a>最少同步副本</h3><p>尽管可以将复制系数设为 3，可还是会出现只有一个同步副本的情况，如果唯一的同步副本不可用，就必须在可用性和一致性间做选择。如果要确保已提交的消息被写入到不止一个副本，就需要把最小同步副本的值设置大一点。</p>
+<p>最小同步副本在主题和 broker 级别均为 min.insync.replicas，如果设置为 2，则至少存在两个同步副本才能向分区写入数据。如果可用副本不足，生产者会受到 NotEnoughReplicasException。此配置配合生产者的 acks（需要接收到多少个同步副本的响应才算写入成功）配置能使消息的可靠性更好。</p>
+<h2 id="配置生产者"><a href="#配置生产者" class="headerlink" title="配置生产者"></a>配置生产者</h2><p>即使我们尽可能地把 broker 配置的很可靠，但如果没有对生产者进行可靠性方面的配置，系统仍然可能出现突发的数据丢失。</p>
+<p>比如 broker 配置为 3 个副本，禁用不完全选举，如果生产者 acks 为 1，首领副本接到消息后崩溃，虽然有两个同步副本，但还没有来得及同步消息，其中一个副本称为新首领，从生产者的角度就丢失了一个消息。</p>
+<p>再比如 acks 设为 all，但发送消息时首领崩溃，生产者收到【首领不可用】的错误相应，如果没有处理错误，也会丢失消息。</p>
+<p>所以，生产者首先需要将 acks 配置为合适的值，其次需要处理 broker 返回的错误。</p>
+<p>broker 返回的错误如果是可以通过重试解决的，生产者会自动处理错误，比如 LEADER_NOT_AVAILABLE 错误，可以通过配置 retries 来指定最大重试次数。需要注意的是，重试会带来一些风险，比如生产者因为网络问题没有收到 broker 的确认。</p>
+<p>如果需要【只保存一次】，可以在消息中假如唯一标识符，或者使消息【幂等】，即出现了重复消息也不会有负面影响。【这个账号里有 10 美元】是幂等的，【给这个账号加 10 美元】不是幂等的。</p>
+<p>另一种不可通过重试解决的错误，比如消息过大、重试达上限等，需要开发者根据业务逻辑处理错误。</p>
+<h2 id="配置消费者"><a href="#配置消费者" class="headerlink" title="配置消费者"></a>配置消费者</h2><p>只有被写入到所有同步副本的消息才会被消费者读取，消息已经具备一致性，所以消费者要做的就是记住哪些消息已经被读取过，哪些还没有读取。</p>
+<p>从分区读取数据时，消费者会获取一批事件，检查事件中最大的偏移量，然后从最大偏移量开始读取下一批事件。而如果消费者退出，其他消费者需要知道之前的消费者读取的进度，这也就是提交偏移量的作用。</p>
+<p>消费者需要注意以下配置：1. group.id，具有相同 group.id 的消费者会共同读取订阅的主题。2. auto.offset.reset 指定在没有记录偏移量时从何处开始读取，earliest 表示从分区开始位置读取，latest 表示从末尾开始读取。3. enable.auto.commit 配置是否开启自动提交偏移量。4. auto.commit.interval.ms 自动提交偏移量的时间间隔。</p>
+<p>手动提交偏移量会更准确，关于手动提交偏移量需要注意以下几点：</p>
+<ol>
+<li>要在消息事件处理完后再提交偏移量</li>
+<li>在提交频率和重复消息数量之前作权衡</li>
+<li>注意再均衡，在失去控制前提交偏移量</li>
+<li>注意消息事件处理失败的逻辑</li>
+<li>数据处理要花费很长时间时注意保持心跳</li>
+<li>需要【仅一次】传递时可以借助支持唯一键、事务的系统</li>
+</ol>
+<h2 id="验证系统可靠性"><a href="#验证系统可靠性" class="headerlink" title="验证系统可靠性"></a>验证系统可靠性</h2><p>在确认了可靠性需求，并且配置 broker 和客户端后，最好还是先对系统可靠性做些验证。建议在 3 个层面做验证：配置验证、应用程序验证及生产环境的应用程序监控。</p>
+<h3 id="配置验证"><a href="#配置验证" class="headerlink" title="配置验证"></a>配置验证</h3><p>Kafka 提供了两个用于验证配置的重要工具：org.apache.kafka.tools 包内的 VerifiableProducer 和 VerifiableConsumer 两个类，可以从命令行运行两个类或嵌入自动化测试框架。</p>
+<p>使用和生产者、消费者相同的方式来配置 VerifiableProducer 和 VerifiableComsumer，VerifiableProducer 生成一系列消息，通过 VerifiableComsumer 检查每个消息。可以在首领选举、控制器选举、依次重启、不完全首领选举测试等场景测试系统的可靠性。</p>
+<h3 id="应用程序验证"><a href="#应用程序验证" class="headerlink" title="应用程序验证"></a>应用程序验证</h3><p>确保 broker 和客户端配置满足需求后，可以再从应用程序方面检查，包括错误处理、提交偏移量、再均衡监听等，建议基于如下故障条件测试应用程序：客户端从服务器断开连接、首领选举、依次重启 broker、依次重启生产者和依次重启消费者。</p>
+<h3 id="生产环境监控"><a href="#生产环境监控" class="headerlink" title="生产环境监控"></a>生产环境监控</h3><p>测试无法替代生产环境的持续监控，监控的目的是确保数据按期望的方式流动，可以按照业务需求对重要的数据指标进行持续地监控。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://kafka.apache.org/documentation/" target="_blank" rel="noopener">Kafka 官方文档</a></p>
+<p><a href="http://shop.oreilly.com/product/0636920044123.do" target="_blank" rel="noopener">Kafka 权威指南</a></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/07/25/管理-Kafka/" title= 管理 Kafka >
+                    <div class="nextTitle">管理 Kafka</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/07/23/Kafka-内部工作原理/" title= Kafka 内部工作原理 >
+                    <div class="prevTitle">Kafka 内部工作原理</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-broker"><span class="toc-number">1.</span> <span class="toc-text">配置 broker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#复制系数"><span class="toc-number">1.1.</span> <span class="toc-text">复制系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不完全首领选举"><span class="toc-number">1.2.</span> <span class="toc-text">不完全首领选举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最少同步副本"><span class="toc-number">1.3.</span> <span class="toc-text">最少同步副本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置生产者"><span class="toc-number">2.</span> <span class="toc-text">配置生产者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置消费者"><span class="toc-number">3.</span> <span class="toc-text">配置消费者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证系统可靠性"><span class="toc-number">4.</span> <span class="toc-text">验证系统可靠性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置验证"><span class="toc-number">4.1.</span> <span class="toc-text">配置验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用程序验证"><span class="toc-number">4.2.</span> <span class="toc-text">应用程序验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生产环境监控"><span class="toc-number">4.3.</span> <span class="toc-text">生产环境监控</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 40 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/管理-Kafka/" >管理 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/Kafka-可靠的数据传递/" >Kafka 可靠的数据传递</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2018/07/23/Kafka-内部工作原理/" >Kafka 内部工作原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2018/07/20/Kafka-消费者/" >Kafka 消费者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2018/06/07/Kafka-生产者/" >Kafka 生产者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/Kafka-安装与基本配置/" >Kafka 安装与基本配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href= "/2018/06/05/初识-Kafka/" >初识 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/JVM-性能监控与故障处理工具/" >JVM 性能监控与故障处理工具</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/JVM-GC-与-内存分配策略/" >JVM GC 与 内存分配策略</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2018/03/27/JVM-内存区域/" >JVM 内存区域</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kafka"><span class="iconfont-archer">&#xe606;</span>Kafka</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

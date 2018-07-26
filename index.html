@@ -313,6 +313,124 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/25/管理-Kafka/" >
+                
+                    <span>管理 Kafka</span>
+            </a>
+            <div class="abstract-content">
+                Kafka 提供了一些用于管理集群变更的命令行工具，这些工具由 Java 实现，Kafka 提供一些脚本来调用这些 Java 类。这些工具只提供一些基本的功能，无法完成复杂操作。Kafka 社区有很多高级工具，如 Kafka Manager。
+
+一、主题操作使用 kafka-topics.sh 可以执行主题的大部分操作，如创建、修改、删除和查看集群内的主题（配置变更部分已经移动到 kafka-configs.sh 中），使用时需要通过 –zookeeper 参数提供 ZooKeeper 地址，如 zoo1.example.com:2181/kafka。
+1.创建主题在集群内创建主题，需要...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/25</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/24/Kafka-可靠的数据传递/" >
+                
+                    <span>Kafka 可靠的数据传递</span>
+            </a>
+            <div class="abstract-content">
+                Kafka 在数据传递可靠性方面具有很大的灵活性，是高度可配置的，通过使用客户端 API 可以满足不同程度的可靠性需求。
+Kafka 有一些基本的保证：1. Kafka 可以保证分区内消息的顺序；2. 消息被写入到分区的所有同步副本才算是已经提交的消息；3. 只要有一个副本活跃，已经提交的消息就不会丢失；4. 消费者只能读取已经提交的消息。
+以上的基本保证用于构建可靠的系统，开发者在配置参数上作出权衡（可靠性、一致性的重要程度与可用性、高吞吐量、低延迟和硬件成本重要程度之间的权衡），从而获得想要达到的可靠性。
+
+配置 brokerbroker 有 3 个配置会影响消息存储的可靠性，应用在...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/24</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/23/Kafka-内部工作原理/" >
+                
+                    <span>Kafka 内部工作原理</span>
+            </a>
+            <div class="abstract-content">
+                了解 Kafka 的内部工作原理有助于理解 Kafka 的行为和诊断问题，本篇文章主要从集群成员关系、控制器、复制、处理请求和存储等方面介绍 Kafka 的内部机制。
+
+集群成员关系Kafka 使用 ZooKeeper 来维护集群内成员的信息，每个 broker 在启动时都通过在 /brokers/ids 路径创建临时节点将自己的唯一标示 broker.id 注册到 ZooKeeper。
+Kafka 会订阅 ZooKeeper 的 /brokers/ids 路径，在有 broker 加入或退出集群时收到通知。
+关闭 broker 时对应的临时节点会消失，不过它的 id 会继续存储在其他数...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/23</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/20/Kafka-消费者/" >
+                
+                    <span>Kafka 消费者</span>
+            </a>
+            <div class="abstract-content">
+                应用程序使用 KafkaConsumer 向 Kafka 订阅主题，并从订阅的主题上接收消息。Kafka 的消费者涉及一些独特的概念，本篇文章首先解析一些重要概念，然后介绍如何读取消息及相关配置。
+
+概念消费者和消费者群组Kafka 消费者从属于消费者群组，群组内的消费者订阅同一个主题，每个消费者接收主题一部分分区的消息。
+如果主题 T1 有 4 个分区，消费者 C1 是订阅了 T1 的群组 G1 内的唯一消费者，则 C1 将接收到全部 4 个分区的消息。而如果 G1 内包含 2 个消费者，则每个消费者接收 2 个分区的消息；如果 G1 包含 4 个消费者，则每个消费者接收 1 个分区的...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/07/08/读书笔记-《大型网站技术架构》/" >
                 
                     <span>读书笔记-《大型网站技术架构》</span>
@@ -339,6 +457,104 @@ CDN缓存，将一些热点数据、静态文件存放于网络提供商端，�
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "架构">架构</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/07/Kafka-生产者/" >
+                
+                    <span>Kafka 生产者</span>
+            </a>
+            <div class="abstract-content">
+                不管把 Kafka 用作消息队列还是数据存储平台，总需要向 Kafka 写入消息的生产者和从 Kafka 读取消息的消费者。
+本篇文章介绍如何创建生产者和消息对象、如何发送消息到 Kafka、生产者的相关配置，以及如何使用分区。
+
+创建生产者和消息对象要往 Kafka 写入消息，首先要创建一个生产者对象，并设置一些必要的属性。Kafka 生产者有 3 个必选属性。
+
+bootstrap.servers
+
+指定 broker 的地址，格式为 host:port ，多个地址用逗号 , 分隔。建议至少提供两个 broker 地址，其中一台宕机仍然可以连接到集群上。
+
+key.serialize...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/07</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/06/Kafka-安装与基本配置/" >
+                
+                    <span>Kafka 安装与基本配置</span>
+            </a>
+            <div class="abstract-content">
+                Kafka 是使用 Java 开发的应用程序，可以在安装了 Java 环境的多种操作系统上运行。另外 Kafka 使用 ZooKeeper 保存 broker 的元数据。
+在配置好 Java 环境和 ZooKeeper 之后，就可以开始下载并安装 Kafka 了。
+
+安装 Kafka Broker在 Kafka 官网 可以下载到最新版本的 Kafka，如 kafka_2.11-1.1.0.tgz 。使用命令
+1$ tar -zxf kafka_2.11-1.1.0.tgz
+解压文件，在启动 ZooKeeper 后进入 Kafka 主目录，通过命令启动
+1$ bin/kafka-serve...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/06</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/05/初识-Kafka/" >
+                
+                    <span>初识 Kafka</span>
+            </a>
+            <div class="abstract-content">
+                Kafka 最初是 LinkedIn 的一个内部基础组件，用于处理持续的数据流，之后开源成为 Apache 项目。
+Kafka 初衷是构建一个流平台，在平台上发布和订阅数据流，保存和处理数据。
+Kafka 不同于一般的消息系统。作为现代分布式系统，Kafka 以集群方式运行，可以自由伸缩；Kafka 可以按要求存储数据，通过复制、持久化提供数据传递保证；Kafka 拥有流式处理能力，可动态处理派生流和数据集。
+
+发布与订阅消息系统在正式介绍 Kafka 之前，先介绍一下发布与订阅消息系统的概念及重要性。
+在发布与订阅消息系统中，发送方不直接将消息发送到接收方，而是先以某种方式对消息进行分...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/05</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
     
 </div>
                 
@@ -405,245 +621,6 @@ written by xiaokaiqun, 2018-04-20
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "安全">安全</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >
-                
-                    <span>Spring Cloud Zuul 网关（二）</span>
-            </a>
-            <div class="abstract-content">
-                上篇文章 Spring Cloud Zuul 网关（一） 介绍了 Spring Cloud Zuul 的基本使用方法，本篇文章会对 Zuul 的过滤器机制、hystrix 及 ribbon 支持做进一步介绍。
-
-过滤器Zuul 中的过滤器负责在转发外部请求的过程中对处理过程进行干预，在实际运行时，路由映射和请求转发等步骤都是由不同的过滤器完成。
-Spring Cloud Zuul 中的过滤器包含以下 4 个基本特征：
-
-过滤类型
-
-
-过滤器所处的生命周期，Zuul 默认定义了 4 种不同生命周期，分别为 pre（请求被路由前调用）、routing（在路由请求时被调用）、post（在 ro...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >
-                
-                    <span>Spring Cloud Zuul 网关（一）</span>
-            </a>
-            <div class="abstract-content">
-                利用之前提到的微服务组件，已经可以建立起一个简单的微服务系统：
-
-通过 Spring Cloud Eureka 实现高可用服务注册中心
-通过 Spring Cloud Ribbon 或 Feign 实现服务间负载均衡的接口调用
-通过 Spring Cloud Hystrix 实现线程隔离和熔断，防止故障扩散
-
-
-但是由于在微服务架构中，后端服务往往不直接开放给外部程序调用，所以需要一个 API 网关，根据请求的 Url 路由到相应的服务。API 网关负责外部应用到微服务系统之间的请求路由、负载均衡和校验过滤等功能的实现。
-在 Spring Cloud 体系中，Spring Cloud Z...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/17</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >
-                
-                    <span>Spring Cloud Feign 声明式服务调用</span>
-            </a>
-            <div class="abstract-content">
-                在微服务的实践过程中，Spring Cloud Ribbon 和 Spring Cloud Hystrix 通常一起使用。
-Spring Cloud Feign 是对这两个基础工具的更高层次封装，在 Netflix Feign 的基础上扩展了对 Spring MVC 的注解支持，提供了一种声明式的 Web 服务客户端定义方式。
-
-快速入门启动服务注册中心 eureka-server 及服务提供方 hello-service，创建 spring boot 工程 feign-consumer。
-1.添加依赖12345678&lt;dependency&gt;    &lt;groupId&g...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/13</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/09/Hexo + Github 搭建博客/" >
-                
-                    <span>Hexo + Github 搭建博客</span>
-            </a>
-            <div class="abstract-content">
-                Hexo 是一款基于 Node.js 的静态博客框架，支持 Github Flavored Markdown 语法，可一键部署到 Github Pages。
-配置环境安装 Hexo 前，需要检查是否已经安装下列应用；
-
-Node.js
-Git
-
-如已安装上述必备程序，通过 sudo npm install -g hexo-cli 安装Hexo。
-建站流程
-在 Github 中创建仓库 username.github.io
-创建本地目录 username.github.io 并在目录中执行 hexo init
-修改目录中的 _config.yml ，详见 Hexo 配置 ，如下为部署相关配...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/09</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hexo">Hexo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Github">Github</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >
-                
-                    <span>Spring Cloud Hystrix 容错保护</span>
-            </a>
-            <div class="abstract-content">
-                在微服务架构中，系统被拆分成很多个服务单元，各个服务单元的应用通过 HTTP 相互调用、依赖。
-在某个服务由于网络或其他原因自身出现故障、延迟时，调用方也会出现延迟。若调用方请求不断增加，可能会形成任务积压，最终导致调用方服务瘫痪，服务不可用现象逐渐放大。
-
-Spring Cloud Hystrix针对上述问题，Spring Cloud Hystrix 实现了一系列服务保护措施，从而实现服务降级、服务熔断等功能，对延迟和故障提供强大的容错能力。
-Hystrix 有以下主要特性：
-
-服务熔断
-
-
-Hystrix 会记录各个服务的请求信息，通过 成功、失败、拒绝、超时 等统计信息判断是否打开...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/09</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Spring Cloud">Spring Cloud</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/29/JVM-性能监控与故障处理工具/" >
-                
-                    <span>JVM 性能监控与故障处理工具</span>
-            </a>
-            <div class="abstract-content">
-                JDK 中包含一些命令行工具，这些工具能在处理应用程序性能问题、定位故障时发挥很大的作用。
-jpsJVM Process Status Tool，用于显示系统内所有的 HotSpot 虚拟机进程。
-jps 可以列出正在运行的 JVM 进程，显示 JVM 执行主类及进程的本地虚拟机唯一 ID（与操作系统进程 ID 一致）。
-常用选项：
-
--q：只输出进程 ID，隐藏主类名称
--m：输出进程启动时传递给主类 main() 函数的参数
--l：输出主类全名，如进程执行的是 Jar 包，输出 Jar 路径
--v：输出虚拟机进程启动时 JVM 参数
-
-
-jstatJVM Statistics Mon...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/28/JVM-GC-与-内存分配策略/" >
-                
-                    <span>JVM GC 与 内存分配策略</span>
-            </a>
-            <div class="abstract-content">
-                对象存活算法Java 堆中存放着几乎所有的对象实例，垃圾收集器在对堆进行回收前，需要确定对象是否存活。
-引用计数算法给对象添加一个引用计数器，每当一个地方引用它时，计数器的值加 1；引用失效时减 1。
-主流 JVM 没有选用此种算法管理内存，主要原因是它难以解决对象间循环引用的问题。
-
-可达性分析算法可达性分析算法是 JVM 主流实现中采用的算法。基本思路是通过一系列 GC Roots 对象为起点向下搜索，搜索所走过的路径称为 引用链 。当一个对象到 GC Roots 没有任何引用链相连时，会被判定为可回收对象。
-GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区中类静态属...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "JVM">JVM</a>
     
 </div>
                 
@@ -1180,7 +1157,148 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
     
     
     
-    <div class="total-archive"> Total : 33 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 40 </div>
     
     <div class="post-archive">
     
@@ -1192,7 +1310,42 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/管理-Kafka/" >管理 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/Kafka-可靠的数据传递/" >Kafka 可靠的数据传递</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2018/07/23/Kafka-内部工作原理/" >Kafka 内部工作原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2018/07/20/Kafka-消费者/" >Kafka 消费者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2018/06/07/Kafka-生产者/" >Kafka 生产者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/Kafka-安装与基本配置/" >Kafka 安装与基本配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href= "/2018/06/05/初识-Kafka/" >初识 Kafka</a>
         </li>
     
     
@@ -1326,12 +1479,12 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
@@ -1414,6 +1567,8 @@ GC Roots 对象包括以下几种：虚拟机栈中引用的对象；方法区�
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
     
         <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kafka"><span class="iconfont-archer">&#xe606;</span>Kafka</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

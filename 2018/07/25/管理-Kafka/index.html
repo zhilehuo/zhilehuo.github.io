@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>管理 Kafka · 智乐活</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/img/favicon.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >智乐活</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">管理 Kafka</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>智乐活</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            管理 Kafka
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/07/25</span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>Kafka 提供了一些用于管理集群变更的命令行工具，这些工具由 Java 实现，Kafka 提供一些脚本来调用这些 Java 类。这些工具只提供一些基本的功能，无法完成复杂操作。Kafka 社区有很多高级工具，如 Kafka Manager。</p>
+<a id="more"></a>
+<h2 id="一、主题操作"><a href="#一、主题操作" class="headerlink" title="一、主题操作"></a>一、主题操作</h2><p>使用 kafka-topics.sh 可以执行主题的大部分操作，如创建、修改、删除和查看集群内的主题（配置变更部分已经移动到 kafka-configs.sh 中），使用时需要通过 –zookeeper 参数提供 ZooKeeper 地址，如 zoo1.example.com:2181/kafka。</p>
+<h3 id="1-创建主题"><a href="#1-创建主题" class="headerlink" title="1.创建主题"></a>1.创建主题</h3><p>在集群内创建主题，需要指定主题名、复制系数和分区数 3 个必要参数，主题名建议不适用英文句号及下划线（会用于度量指标），格式为 <code>kafka-topics.sh --zookeeper &lt;zookeeper connect&gt; --create --topic &lt;topic name&gt; --replication-factor &lt;integer&gt; --partitions &lt;integer&gt;</code> 。</p>
+<p>如果不需要基于机架信息的分配分区，可以指定参数 <code>--disable-rack-aware</code> 。添加 <code>--if-not-exists</code> 参数可以仅在主题不存在时创建主题。</p>
+<h3 id="2-增加分区"><a href="#2-增加分区" class="headerlink" title="2.增加分区"></a>2.增加分区</h3><p>主题基于分区进行伸缩和复制，当需要扩展主题容量或降低单个分区吞吐量时可以增加分区，如果消费者群组内需要增加消费者，主题的分区数也需要增加至大于组内消费者数。</p>
+<p>对于基于键来划分消息分区的主题，改变分区数会导致键和分区的映射关系发生变化，对于这种主题，最好在一开始就确定好分区数，尽量不要调整。</p>
+<p>调整主题分区数的命令格式为 <code>kafka-topics.sh --zookeeper &lt;zookeeper connect&gt; --alter --topic &lt;topic name&gt; --partitions &lt;integer&gt;</code> ，<code>--if-exists</code> 参数可以在主题不存在时忽略错误。</p>
+<p>通常情况下无法减少主题的分区数，如果删除了分区，分区内的数据也会被删除，导致数据不一致。如果一定要减少分区数，只能删除整个主题，然后重新创建。</p>
+<h3 id="3-删除主题"><a href="#3-删除主题" class="headerlink" title="3.删除主题"></a>3.删除主题</h3><p>如果一个主题不再使用，可以删除主题从而减少磁盘占用、释放资源。要删除主题，broker 的 delete.topic.enable 参数必须为 true，否则删除请求会被忽略。</p>
+<p>删除命令的格式为 <code>kafka-topics.sh --zookeeper &lt;zookeeper connect&gt; --delete --topic &lt;topic name&gt;</code> 。</p>
+<h3 id="4-列出集群内主题"><a href="#4-列出集群内主题" class="headerlink" title="4.列出集群内主题"></a>4.列出集群内主题</h3><p><code>kafka-topics.sh --zookeeper &lt;zookeeper connect&gt; --list</code> 用于列出集群内的所有主题，将 <code>--list</code> 参数改为 <code>--describe</code> 参数会列出包含分区数等信息的主题。指定 <code>--topic &lt;topic name&gt;</code> 可以用于主题过滤。</p>
+<p>如果要找出所有包含覆盖配置的主题可以添加 <code>--topics-with-overrides</code> 参数，<code>under-replicated-partitions</code> 参数用于列出包含不同步副本的分区，<code>--unavailable-partition</code> 参数可以列出所有没有首领的分区。注意这些参数都不能和 <code>--topic</code> 参数一起使用。</p>
+<h2 id="二、消费者群组操作"><a href="#二、消费者群组操作" class="headerlink" title="二、消费者群组操作"></a>二、消费者群组操作</h2><p>Kafka 提供 kafka-consumer-groups.sh 工具来列出消费者群组信息，对于旧版的 Kafka 还可以删除消费者群组和管理偏移量。新版 Kafka 的消费者群组信息保存在 broker 中，使用命令行工具时需要指定 –bootstrap-server；旧版 Kafka 的消费者群组信息保存在 ZooKeeper 中，使用时需指定 –zookeeper。</p>
+<h3 id="1-列出并描述群组"><a href="#1-列出并描述群组" class="headerlink" title="1.列出并描述群组"></a>1.列出并描述群组</h3><p>通过命令 <code>kafka-consumer-groups.sh --bootstrap-server &lt;server connect&gt; --list</code> 可以列出所有的消费者群组，将 <code>--list</code> 改为 <code>--describe</code> ，并通过 <code>--group &lt;group name&gt;</code> 参数指定特定的群组，可以获得该群组更详细的信息。</p>
+<h3 id="2-删除群组"><a href="#2-删除群组" class="headerlink" title="2.删除群组"></a>2.删除群组</h3><p>旧版本的 Kafka 支持使用命令行工具删除群组，也支持在不删除群组的情况下删除单个主题的偏移量。注意，删除群组或偏移量前必须关闭组内所有消费者，否则可能会导致消费者不可预测的行为。</p>
+<p>删除群组的命令格式为 <code>kafka-consumer-groups.sh --zookeeper &lt;zookeeper connect&gt; --delete --group &lt;group name&gt;</code> 。删除主题偏移量的命令格式为 <code>kafka-consumer-groups.sh --zookeeper &lt;zookeeper connect&gt; --delete --group &lt;group name&gt; --topic &lt;topic name&gt;</code> 。</p>
+<h3 id="3-管理偏移量"><a href="#3-管理偏移量" class="headerlink" title="3.管理偏移量"></a>3.管理偏移量</h3><p>旧版本的 Kafka 将偏移量保存在 ZooKeeper 的 /consumers 路径下，通过命令 <code>kafka-run-class.sh kafka.tools.ExportZkOffsets --zkconnect &lt;zk connect&gt; --group &lt;group name&gt; --output-file &lt;file name&gt;</code> 可以导出偏移量到文件，而通过命令 <code>kafka-run-class.sh kafka.tools.ImportZkOffsets --zkconnect &lt;zk connect&gt; --group &lt;group name&gt; --input-file &lt;file name&gt;</code> 可以将偏移量导入。</p>
+<p>注意导入时必须关闭所有消费者，否则有可能将导入的偏移量覆盖掉。</p>
+<p>新版本的 Kafka 将偏移量保存在一个内部主题 __consumer_offsets 中，目前没有工具管理客户端提交到 Kafka 的偏移量，只能通过客户端使用相应 API 提交群组偏移量。</p>
+<h2 id="三、动态配置变更"><a href="#三、动态配置变更" class="headerlink" title="三、动态配置变更"></a>三、动态配置变更</h2><p>在集群处于运行状态时，可以通过 kafka-configs.sh 来覆盖主题及客户端的配置参数，一旦设置完毕，就会成为集群的永久配置，保存在 ZooKeeper 中，broker 会读取它们。</p>
+<h3 id="1-覆盖主题的默认配置"><a href="#1-覆盖主题的默认配置" class="headerlink" title="1.覆盖主题的默认配置"></a>1.覆盖主题的默认配置</h3><p>为了满足不同的使用场景，主题可以进行单独的配置，配置在没有被覆盖的情况下使用 broker 的默认配置。更改主题配置的命令格式为 <code>kafka-configs.sh --zookeeper &lt;zk connect&gt; --alter --entity-type topics --entity-name &lt;topic name&gt; --add-config &lt;key&gt;=&lt;value&gt;[,&lt;key&gt;=&lt;value&gt;...]</code> 。</p>
+<h3 id="2-覆盖客户端的默认配置"><a href="#2-覆盖客户端的默认配置" class="headerlink" title="2.覆盖客户端的默认配置"></a>2.覆盖客户端的默认配置</h3><p>对于 Kafka 客户端，只能覆盖生产者和消费者的配额，即每秒在单个 broker 上的生产速率和消费速率，如有 2 个 broker，配额为 10 MB/s，则生成数据的总速率为 20 MB/s。</p>
+<p>修改客户端配置的命令格式为 <code>kafka-configs.sh --zookeeper &lt;zk connect&gt; --alter --entity-type clients --entity-name &lt;client-id&gt; --add-config &lt;key&gt;=&lt;value&gt;[,&lt;key&gt;=&lt;value&gt;...]</code> 。可选参数有 producer_byte_rate 和 consumer_byte_rate。</p>
+<h3 id="3-列出被覆盖的配置"><a href="#3-列出被覆盖的配置" class="headerlink" title="3.列出被覆盖的配置"></a>3.列出被覆盖的配置</h3><p>此功能通过 –describe 来实现，格式为 <code>kafka-configs.sh --zookeeper &lt;zk connect&gt; --describe --entity-type topics --entity-name &lt;topic name&gt;</code> 。该命令只能显示被覆盖的配置，包含 broker 的默认配置。</p>
+<h3 id="4-移除被覆盖的配置"><a href="#4-移除被覆盖的配置" class="headerlink" title="4.移除被覆盖的配置"></a>4.移除被覆盖的配置</h3><p>动态配置可以被移除，恢复到集群的默认配置，命令格式为 <code>kafka-configs.sh --zookeeper &lt;zk connect&gt; --alter --entity-type topics --entity-name &lt;topic name&gt; --delete-config &lt;config key&gt;</code> 。</p>
+<h2 id="四、分区管理"><a href="#四、分区管理" class="headerlink" title="四、分区管理"></a>四、分区管理</h2><p>Kafka 提供了两个用于管理分区的工具，一个用于重新选举首领，另一个用于将分区分配给 broker。</p>
+<h3 id="1-首领选举"><a href="#1-首领选举" class="headerlink" title="1.首领选举"></a>1.首领选举</h3><p>broker 有一个配置 auto.leader.rebalance.enable 用于启用自动首领再均衡，即如果当前首领不是首选首领会自动触发再均衡，不过不建议在生产环境使用此功能，在大型集群中可能带来严重的性能问题。</p>
+<p>Kafka 提供命令行工具来手动触发副本选举，命令格式为 <code>kafka-perferred-replica-election.sh --zookeeper &lt;zk connect&gt;</code> 。</p>
+<p>进行选举时，集群元数据需要写入 ZooKeeper，如果元数据超过节点允许的大小（默认 1 MB）就会选举失败。这种情况需要将分区清单的信息写到一个 JSON 文件中，通过参数 <code>--path-to-json &lt;json file&gt;</code> 分多个步骤进行。JSON 文件的格式为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"partitions"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"partition"</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="attr">"topic"</span>: <span class="string">"t1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"partition"</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="attr">"topic"</span>: <span class="string">"t2"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-修改分区副本"><a href="#2-修改分区副本" class="headerlink" title="2.修改分区副本"></a>2.修改分区副本</h3><p>主题的分区在集群内分配不均衡时会造成负载的不均衡，Kafka 提供了 kafka-reassign-partitions.sh 工具来修改分区分布。首先需要根据 broker 清单和主题清单生成一组迁移步骤，然后执行迁移步骤，最后（可选）使用生成的迁移步骤验证分区重新分配的进度和完成情况。</p>
+<p>为了生成迁移步骤，首先需要创建一个包含了主题清单的 JSON 文件，格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"topics"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"topic"</span>: <span class="string">"t1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"topic"</span>: <span class="string">"t2"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用命令 <code>kafka-reassign-partitions.sh --zookeeper &lt;zk connect&gt; --generate --topics-to-move-json-file &lt;json file&gt; --broker-list &lt;brokers&gt;</code> 会得到两个 JSON，其中 brokers 为使用英文逗号分隔的 broker id。第一个为当前分配情况，可以用于回滚；第二个为分配步骤。</p>
+<p>使用命令 <code>kafka-reassign-partitions.sh --zookeeper &lt;zk connect&gt; --execute --reassignment-json-file &lt;josn file&gt;</code> 来执行第二个步骤。  </p>
+<p>重分配完成后可以使用命令 <code>kafka-reassign-partitions.sh --zookeeper &lt;zk connect&gt; --verify --reassignment-json-file &lt;json file&gt;</code> 来验证重分配情况。</p>
+<h3 id="3-修改复制系数"><a href="#3-修改复制系数" class="headerlink" title="3. 修改复制系数"></a>3. 修改复制系数</h3><p>分区重分配工具提供了修改分区复制系数的功能，不过没有在文档中说明。如果在创建分区时指定了错误的复制系数，可以通过创建一个 JSON 对象并通过分区重分配工具完成对复制系数的修改。JSON 的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"partitions"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"partition"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"replicas"</span>: [</span><br><span class="line">                <span class="number">1</span>,</span><br><span class="line">                <span class="number">2</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"topic"</span>: <span class="string">"t1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"version"</span>: <span class="number">1</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-查看日志片段"><a href="#4-查看日志片段" class="headerlink" title="4.查看日志片段"></a>4.查看日志片段</h3><p>通过命令 <code>kafka-run-class.sh kafka.tools.DumpLogSegments --file &lt;file&gt;</code> 可以在不读取消息的情况下查看消息内容，接收以逗号分隔的日志片段文件清单为参数，打印出每个消息的概要信息及数据内容。</p>
+<p>这个工具也会检查日志片段的索引文件，–index-sanity-check 将会检查无用的索引，–verify-index-only 将会只检查索引匹配而不打印出全部索引。</p>
+<h3 id="5-副本验证"><a href="#5-副本验证" class="headerlink" title="5.副本验证"></a>5.副本验证</h3><p>kafka-replica-verification.sh 工具用于验证集群副本分区一致性，从指定分区的副本上获取消息并检查所有副本是否具有相同的消息，使用时需使用正则表达式传入要验证的主题，否则会检查所有的主题，另外需要显示地提供 broker 清单，格式为 <code>kafka-replica-verification.sh --broker-list &lt;broker list&gt; --topic-white-list &lt;regexp&gt;</code> 。</p>
+<h2 id="五、控制台生产者和消费者"><a href="#五、控制台生产者和消费者" class="headerlink" title="五、控制台生产者和消费者"></a>五、控制台生产者和消费者</h2><p>有时为了验证应用程序，可以使用命令行工具 kafka-console-producer.sh 和 kafka-console-consumer.sh 手动生成和读取消息，不过不应该在生产环境采用此种方式，控制台生产者和消费者无法使用客户端的所有特性，本篇文章不对这部分做详细介绍。</p>
+<h2 id="六、不安全操作"><a href="#六、不安全操作" class="headerlink" title="六、不安全操作"></a>六、不安全操作</h2><p>有些操作在技术上是可行的，但涉及 ZooKeeper 上的元数据，有可能给应用程序带来风险，除非情况紧急，否则不应该使用。</p>
+<h3 id="1-移动集群控制器"><a href="#1-移动集群控制器" class="headerlink" title="1.移动集群控制器"></a>1.移动集群控制器</h3><p>有时需要将控制器从一个 broker 移到另一个 broker 上，如当前控制器网络波动大无法提供正常服务。手动删除 /controller 节点会释放当前控制器，集群会进行新的控制器选举。</p>
+<h3 id="2-取消分区重分配"><a href="#2-取消分区重分配" class="headerlink" title="2.取消分区重分配"></a>2.取消分区重分配</h3><p>分区重分配是并行进行的，一般情况下没理由取消任务，不过如果在重分配进行一半时，broker 发生故障且无法重启，就会导致重分配无法结束，这是可以让集群忽略这个任务，即从 ZooKeeper 中删除 /admin/reassign_partitions 节点并重新选举控制器（删除 /controller 节点）。</p>
+<p>注意，取消重分配时，旧的 broker 不会在副本清单中删除，导致部分分区的复制系数比正常的大。如果主题的分区包含不同的复制系数，broker 会禁止对其操作（如增加分区），所以需要在取消任务后检查分区可用性，确保复制系数正确。</p>
+<h3 id="3-移除待删除的主题"><a href="#3-移除待删除的主题" class="headerlink" title="3.移除待删除的主题"></a>3.移除待删除的主题</h3><p>使用命令行删除主题，会在 ZooKeeper 上创建一个节点作为删除主题的请求，正常会立即执行这个请求，但如果集群没有开启删除主题的功能，请求会被挂起。删除 /admin/delete_topic 节点下创建的以删除主题名字命名的子节点即可移除被挂起的请求。</p>
+<h3 id="4-手动删除主题"><a href="#4-手动删除主题" class="headerlink" title="4.手动删除主题"></a>4.手动删除主题</h3><p>如果集群禁用了删除主题的功能，或者需要通过非正式的途径删除主题，可以进行手动删除。</p>
+<p>手动删除前，首先需要关闭集群内所有的 broker，否则会造成集群不稳定。然后删除 /brokers/topics/TOPICNAME 路径（先删除其子节点）。接着删除每个 broker 的分区目录（log-dirs），名称为 <code>&lt;topic name&gt;-&lt;partition id&gt;</code>。最后重启所有 broker。</p>
+<h2 id="七、参考"><a href="#七、参考" class="headerlink" title="七、参考"></a>七、参考</h2><p><a href="http://kafka.apache.org/documentation/" target="_blank" rel="noopener">Kafka 官方文档</a></p>
+<p><a href="http://shop.oreilly.com/product/0636920044123.do" target="_blank" rel="noopener">Kafka 权威指南</a></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/07/24/Kafka-可靠的数据传递/" title= Kafka 可靠的数据传递 >
+                    <div class="prevTitle">Kafka 可靠的数据传递</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="//github.com/zhilehuo" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、主题操作"><span class="toc-number">1.</span> <span class="toc-text">一、主题操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-创建主题"><span class="toc-number">1.1.</span> <span class="toc-text">1.创建主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-增加分区"><span class="toc-number">1.2.</span> <span class="toc-text">2.增加分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-删除主题"><span class="toc-number">1.3.</span> <span class="toc-text">3.删除主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-列出集群内主题"><span class="toc-number">1.4.</span> <span class="toc-text">4.列出集群内主题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、消费者群组操作"><span class="toc-number">2.</span> <span class="toc-text">二、消费者群组操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-列出并描述群组"><span class="toc-number">2.1.</span> <span class="toc-text">1.列出并描述群组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-删除群组"><span class="toc-number">2.2.</span> <span class="toc-text">2.删除群组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-管理偏移量"><span class="toc-number">2.3.</span> <span class="toc-text">3.管理偏移量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、动态配置变更"><span class="toc-number">3.</span> <span class="toc-text">三、动态配置变更</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-覆盖主题的默认配置"><span class="toc-number">3.1.</span> <span class="toc-text">1.覆盖主题的默认配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-覆盖客户端的默认配置"><span class="toc-number">3.2.</span> <span class="toc-text">2.覆盖客户端的默认配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-列出被覆盖的配置"><span class="toc-number">3.3.</span> <span class="toc-text">3.列出被覆盖的配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-移除被覆盖的配置"><span class="toc-number">3.4.</span> <span class="toc-text">4.移除被覆盖的配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、分区管理"><span class="toc-number">4.</span> <span class="toc-text">四、分区管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-首领选举"><span class="toc-number">4.1.</span> <span class="toc-text">1.首领选举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-修改分区副本"><span class="toc-number">4.2.</span> <span class="toc-text">2.修改分区副本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-修改复制系数"><span class="toc-number">4.3.</span> <span class="toc-text">3. 修改复制系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-查看日志片段"><span class="toc-number">4.4.</span> <span class="toc-text">4.查看日志片段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-副本验证"><span class="toc-number">4.5.</span> <span class="toc-text">5.副本验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、控制台生产者和消费者"><span class="toc-number">5.</span> <span class="toc-text">五、控制台生产者和消费者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、不安全操作"><span class="toc-number">6.</span> <span class="toc-text">六、不安全操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-移动集群控制器"><span class="toc-number">6.1.</span> <span class="toc-text">1.移动集群控制器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-取消分区重分配"><span class="toc-number">6.2.</span> <span class="toc-text">2.取消分区重分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-移除待删除的主题"><span class="toc-number">6.3.</span> <span class="toc-text">3.移除待删除的主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-手动删除主题"><span class="toc-number">6.4.</span> <span class="toc-text">4.手动删除主题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、参考"><span class="toc-number">7.</span> <span class="toc-text">七、参考</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 40 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/管理-Kafka/" >管理 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/Kafka-可靠的数据传递/" >Kafka 可靠的数据传递</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2018/07/23/Kafka-内部工作原理/" >Kafka 内部工作原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2018/07/20/Kafka-消费者/" >Kafka 消费者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2018/06/07/Kafka-生产者/" >Kafka 生产者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/Kafka-安装与基本配置/" >Kafka 安装与基本配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href= "/2018/06/05/初识-Kafka/" >初识 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/Spring-Cloud-Config-配置中心/" >Spring Cloud Config 配置中心</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/互联网安全问题/" >互联网应用安全威胁及应对方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Spring-Cloud-Zuul-网关（二）/" >Spring Cloud Zuul 网关（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/Spring-Cloud-Zuul-网关（一）/" >Spring Cloud Zuul 网关（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/Spring-Cloud-Feign-声明式服务调用/" >Spring Cloud Feign 声明式服务调用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Hexo + Github 搭建博客/" >Hexo + Github 搭建博客</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2018/04/09/Spring-Cloud-Hystrix-容错保护/" >Spring Cloud Hystrix 容错保护</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/JVM-性能监控与故障处理工具/" >JVM 性能监控与故障处理工具</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/JVM-GC-与-内存分配策略/" >JVM GC 与 内存分配策略</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2018/03/27/JVM-内存区域/" >JVM 内存区域</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2018/03/21/Spring-Cloud-Ribbon-客户端负载均衡/" >Spring Cloud Ribbon 客户端负载均衡</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2018/03/20/Spring-Cloud-Eureka-服务治理/" >Spring Cloud Eureka 服务治理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2018/03/10/Spring-Cloud-简介/" >Spring Cloud 简介</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2017/12/12/Git 操作指南/" >Git 操作指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/DNS 服务 bind 配置说明/" >DNS 服务 bind 配置说明</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2017/10/26/Vue 介绍/" >Vue 介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2017/09/11/Java 8 中的日期时间 API/" >Java 8 中的日期时间 API</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2017/07/12/Jetty UrlRewrite 使用/" >Jetty UrlRewrite 使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href= "/2017/05/22/主 app 性能测试总结/" >主 app 性能测试总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2017/05/19/公众号菜单网页授权功能/" >公众号菜单网页授权功能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/狼人杀新手教科书/" >狼人杀新手教科书</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2017/05/09/初识 Zookeeper/" >初识 Zookeeper</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href= "/2017/05/08/Hibernate学习笔记（易）/" >Hibernate学习笔记（易）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >jetty 容器实例部署时的问题解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Shell 编程简介/" >Shell 编程简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/SSL 认证体系备忘录/" >SSL 认证体系备忘录</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/Markdown-简明教程/" >Markdown 简明教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >Xcode 自动批量打包脚本使用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Maven 从陌生到入门/" >Maven 从陌生到入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2017/04/01/Jetty 概览/" >Jetty 概览</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="DNS"><span class="iconfont-archer">&#xe606;</span>DNS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Git"><span class="iconfont-archer">&#xe606;</span>Git</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hibernate"><span class="iconfont-archer">&#xe606;</span>Hibernate</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jetty"><span class="iconfont-archer">&#xe606;</span>Jetty</span>
+    
+        <span class="sidebar-tag-name" data-tags="Markdown"><span class="iconfont-archer">&#xe606;</span>Markdown</span>
+    
+        <span class="sidebar-tag-name" data-tags="Maven"><span class="iconfont-archer">&#xe606;</span>Maven</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSL"><span class="iconfont-archer">&#xe606;</span>SSL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Shell"><span class="iconfont-archer">&#xe606;</span>Shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="Xcode"><span class="iconfont-archer">&#xe606;</span>Xcode</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Test"><span class="iconfont-archer">&#xe606;</span>Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Wechat"><span class="iconfont-archer">&#xe606;</span>Wechat</span>
+    
+        <span class="sidebar-tag-name" data-tags="Zookeeper"><span class="iconfont-archer">&#xe606;</span>Zookeeper</span>
+    
+        <span class="sidebar-tag-name" data-tags="狼人杀"><span class="iconfont-archer">&#xe606;</span>狼人杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="Spring Cloud"><span class="iconfont-archer">&#xe606;</span>Spring Cloud</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全"><span class="iconfont-archer">&#xe606;</span>安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kafka"><span class="iconfont-archer">&#xe606;</span>Kafka</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Game"><span class="iconfont-archer">&#xe60a;</span>Game</span>
+    
+        <span class="sidebar-category-name" data-categories="安全"><span class="iconfont-archer">&#xe60a;</span>安全</span>
+    
+        <span class="sidebar-category-name" data-categories="架构"><span class="iconfont-archer">&#xe60a;</span>架构</span>
+    
+        <span class="sidebar-category-name" data-categories="Git"><span class="iconfont-archer">&#xe60a;</span>Git</span>
+    
+        <span class="sidebar-category-name" data-categories="数据库"><span class="iconfont-archer">&#xe60a;</span>数据库</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
+    
+        <span class="sidebar-category-name" data-categories="构建-部署"><span class="iconfont-archer">&#xe60a;</span>构建-部署</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="分布式系统"><span class="iconfont-archer">&#xe60a;</span>分布式系统</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Zhilehuo'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

@@ -300,6 +300,250 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2017/05/08/Hibernate学习笔记（易）/" >
+                
+                    <span>Hibernate学习笔记（易）</span>
+            </a>
+            <div class="abstract-content">
+                
+Hibernate API
+  Hibernate API对 JDBC API 进行封装，提供面向对象的数据库访问API，这样不懂数据库语言的人，也能通过Hibernate的接口来访问数据库，无需书写sql语句即可实现对数据的查询操作。增强了代码的独立性和可维护性。
+
+对象-关系映射元数据
+  Hibernate 将对象-关系映射元素放到对象-关系映射文件中，以hbm.xml命名作为文件扩展名。 下面是monkey类和MONKEYS表的映射关系
+
+
+​1234567891011121314        //指定类和表的映射          //主键              //指...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/08</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Hibernate">Hibernate</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/05/03/Jetty 容器实例部署时的问题解决方法/" >
+                
+                    <span>jetty 容器实例部署时的问题解决方法</span>
+            </a>
+            <div class="abstract-content">
+                jetty应用部署时的注意点本文的目的不是为了手把手教你部署一个jetty容器实例，而是为了让你在碰到部署问题是来查阅，节省网上搜索的时间，所以如果你发现并解决了本文未涵盖的部署问题，欢迎编辑此文。
+
+在start.d/http.ini修改容器监听的端口号：
+jetty.port=8046
+
+向jetty实例中添加jsp、jsp-impl、jstl、plus四个模块，命令：
+ java -jar ../../jetty-distribution-9.2.21.v20170120/start.jar –add-to-start=jsp,jstl,jsp-impl,plus
+
+配置dataS...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/05/03</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Jetty">Jetty</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/04/28/ProxySQL 调研记录/" >
+                
+                    <span>ProxySQL 调研记录</span>
+            </a>
+            <div class="abstract-content">
+                
+ProxySQL官网： http://www.proxysql.com/ProxySQL文档： https://github.com/sysown/proxysql/wiki
+
+背景阿里云的RDS按连接数售卖，所以，当我们部署了很多的服务实例后，每个实例再配置适当的连接池，就导致了RDS经常连接数过多，因为很多连接是由连接池创建的。而我们在调整多次连接池的参数后，也没有达到满意的效果。
+所以，这个情况下的解决方案就是设置一个统一的MySQL代理，所有应用的连接池都连至这个代理，然后代理通过自己的连接池再连接Backend MySQL，这样能够更有效的利用连接资源。
+
+几个可选的项目概况...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/28</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL">SQL</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/04/28/Servlet 从入门到实战/" >
+                
+                    <span>Servlet 从入门到实战</span>
+            </a>
+            <div class="abstract-content">
+                Javaweb的后端研发需要学习的是tomcat+servlet+jsp+mysql 这些技术，其中的核心技术就是servlet。本篇详细介绍servlet。
+Servlet 简介Java Servlet 是运行在 Web 服务器或应用服务器上的程序，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。
+使用 Servlet，您可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录。
+简而言之呀，servlet就是将从web界面或者app界面这些前端界面上获取的含有参数的请求request进行解析处理，用响应respon...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/28</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java">Java</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/04/28/Shell 编程简介/" >
+                
+                    <span>Shell 编程简介</span>
+            </a>
+            <div class="abstract-content">
+                
+以下示例都在Mac系统中进行，因为大家用Mac居多，而且Mac系统也是在Linux基础上开发的，所以很多东西和Linux都是一样的。Mac下的终端程序Terminal是很好用的，工欲善其事必先利其器，所以我们可以先来配置一下终端程序。
+
+什么是Shell编程
+什么是Shell直译就是外壳，可以理解成是Linux系统内核的外壳，我们通过这个外壳和Linux系统进度交互。再具体点，可以理解成是终端。
+
+一般情况下，我们在操作Linux系统时，就是在终端上搞各种指令。而Shell编程，或者通俗点说叫Shell脚本，其实就是把一堆指令集中在一个脚本文件里，然后通过运行这个脚本文件，来执行这一大...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/28</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Shell">Shell</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/04/20/SSL 认证体系备忘录/" >
+                
+                    <span>SSL 认证体系备忘录</span>
+            </a>
+            <div class="abstract-content">
+                本文不涉及SSL通信相关的知识，只介绍一下最近通过我的调研，了解到的关于SSL认证相关的东西。
+
+
+JSSE Reference Guide一个关于SSL的比较专业的介绍，来自JSSE(Java Secure Socket Extension)
+
+
+什么是密钥要说证书，需要先说一下密钥是怎么回事。目前的加密算法，分为对称加密和非对称加密两类，而密钥，可以把它想像成一把钥匙：
+
+对称加密: 使用同一把钥匙，即可实现对一段信息的加密和解密
+非对称加密：加密和解密信息，需要使用不同的钥匙
+
+对称加密的优点就是速度快，所以可以用来加密大段的信息，但缺点也很明显，因为通信双方需要提前交换密钥，那么...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SSL">SSL</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2017/04/17/Markdown-简明教程/" >
+                
+                    <span>Markdown 简明教程</span>
+            </a>
+            <div class="abstract-content">
+                主要内容
+（一）Markdown 是什么
+
+
+（二）为什么要使用 Markdown
+
+
+（三）如何使用 Markdown
+
+
+（四）Markdown 编辑器  
+
+
+正文（一）Markdown是什么Markdown 是一种轻量级的 标记语言，以 纯文本 的形式编写文档，通过简洁的语法代替排版，并且可以导出 HTML、PDF 等格式。
+（二）为什么要使用 Markdown
+格式清晰，读起来很舒服
+语法简洁，编写时可以更专注于内容而非排版格式  
+纯文本形式，兼容所有的文本编辑器
+可导出 HTML、PDF 等常见格式  
+
+（三）如何使用 MarkdownMarkdown 的语法非常简单，主...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/04/17</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Markdown">Markdown</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2017/04/14/Xcode 自动批量打包脚本使用方法/" >
                 
                     <span>Xcode 自动批量打包脚本使用方法</span>
@@ -922,7 +1166,148 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
     
-    <div class="total-archive"> Total : 33 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 40 </div>
     
     <div class="post-archive">
     
@@ -934,7 +1319,42 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/管理-Kafka/" >管理 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/Kafka-可靠的数据传递/" >Kafka 可靠的数据传递</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2018/07/23/Kafka-内部工作原理/" >Kafka 内部工作原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2018/07/20/Kafka-消费者/" >Kafka 消费者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2018/06/07/Kafka-生产者/" >Kafka 生产者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/Kafka-安装与基本配置/" >Kafka 安装与基本配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href= "/2018/06/05/初识-Kafka/" >初识 Kafka</a>
         </li>
     
     
@@ -1068,12 +1488,12 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
@@ -1156,6 +1576,8 @@ POM (Project Object Model)Maven的运行是基于一个XML格式的POM文件的�
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
     
         <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kafka"><span class="iconfont-archer">&#xe606;</span>Kafka</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

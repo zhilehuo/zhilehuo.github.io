@@ -300,6 +300,124 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/25/管理-Kafka/" >
+                
+                    <span>管理 Kafka</span>
+            </a>
+            <div class="abstract-content">
+                Kafka 提供了一些用于管理集群变更的命令行工具，这些工具由 Java 实现，Kafka 提供一些脚本来调用这些 Java 类。这些工具只提供一些基本的功能，无法完成复杂操作。Kafka 社区有很多高级工具，如 Kafka Manager。
+
+一、主题操作使用 kafka-topics.sh 可以执行主题的大部分操作，如创建、修改、删除和查看集群内的主题（配置变更部分已经移动到 kafka-configs.sh 中），使用时需要通过 –zookeeper 参数提供 ZooKeeper 地址，如 zoo1.example.com:2181/kafka。
+1.创建主题在集群内创建主题，需要...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/25</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/24/Kafka-可靠的数据传递/" >
+                
+                    <span>Kafka 可靠的数据传递</span>
+            </a>
+            <div class="abstract-content">
+                Kafka 在数据传递可靠性方面具有很大的灵活性，是高度可配置的，通过使用客户端 API 可以满足不同程度的可靠性需求。
+Kafka 有一些基本的保证：1. Kafka 可以保证分区内消息的顺序；2. 消息被写入到分区的所有同步副本才算是已经提交的消息；3. 只要有一个副本活跃，已经提交的消息就不会丢失；4. 消费者只能读取已经提交的消息。
+以上的基本保证用于构建可靠的系统，开发者在配置参数上作出权衡（可靠性、一致性的重要程度与可用性、高吞吐量、低延迟和硬件成本重要程度之间的权衡），从而获得想要达到的可靠性。
+
+配置 brokerbroker 有 3 个配置会影响消息存储的可靠性，应用在...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/24</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/23/Kafka-内部工作原理/" >
+                
+                    <span>Kafka 内部工作原理</span>
+            </a>
+            <div class="abstract-content">
+                了解 Kafka 的内部工作原理有助于理解 Kafka 的行为和诊断问题，本篇文章主要从集群成员关系、控制器、复制、处理请求和存储等方面介绍 Kafka 的内部机制。
+
+集群成员关系Kafka 使用 ZooKeeper 来维护集群内成员的信息，每个 broker 在启动时都通过在 /brokers/ids 路径创建临时节点将自己的唯一标示 broker.id 注册到 ZooKeeper。
+Kafka 会订阅 ZooKeeper 的 /brokers/ids 路径，在有 broker 加入或退出集群时收到通知。
+关闭 broker 时对应的临时节点会消失，不过它的 id 会继续存储在其他数...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/23</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/20/Kafka-消费者/" >
+                
+                    <span>Kafka 消费者</span>
+            </a>
+            <div class="abstract-content">
+                应用程序使用 KafkaConsumer 向 Kafka 订阅主题，并从订阅的主题上接收消息。Kafka 的消费者涉及一些独特的概念，本篇文章首先解析一些重要概念，然后介绍如何读取消息及相关配置。
+
+概念消费者和消费者群组Kafka 消费者从属于消费者群组，群组内的消费者订阅同一个主题，每个消费者接收主题一部分分区的消息。
+如果主题 T1 有 4 个分区，消费者 C1 是订阅了 T1 的群组 G1 内的唯一消费者，则 C1 将接收到全部 4 个分区的消息。而如果 G1 内包含 2 个消费者，则每个消费者接收 2 个分区的消息；如果 G1 包含 4 个消费者，则每个消费者接收 1 个分区的...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/20</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kafka">Kafka</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/07/08/读书笔记-《大型网站技术架构》/" >
                 
                     <span>读书笔记-《大型网站技术架构》</span>
@@ -822,7 +940,148 @@ CDN缓存，将一些热点数据、静态文件存放于网络提供商端，�
     
     
     
-    <div class="total-archive"> Total : 33 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 40 </div>
     
     <div class="post-archive">
     
@@ -834,7 +1093,42 @@ CDN缓存，将一些热点数据、静态文件存放于网络提供商端，�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/管理-Kafka/" >管理 Kafka</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/Kafka-可靠的数据传递/" >Kafka 可靠的数据传递</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2018/07/23/Kafka-内部工作原理/" >Kafka 内部工作原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2018/07/20/Kafka-消费者/" >Kafka 消费者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/读书笔记-《大型网站技术架构》/" >读书笔记-《大型网站技术架构》</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2018/06/07/Kafka-生产者/" >Kafka 生产者</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/Kafka-安装与基本配置/" >Kafka 安装与基本配置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href= "/2018/06/05/初识-Kafka/" >初识 Kafka</a>
         </li>
     
     
@@ -968,12 +1262,12 @@ CDN缓存，将一些热点数据、静态文件存放于网络提供商端，�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/Servlet 从入门到实战/" >Servlet 从入门到实战</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2017/04/28/ProxySQL 调研记录/" >ProxySQL 调研记录</a>
         </li>
     
     
@@ -1056,6 +1350,8 @@ CDN缓存，将一些热点数据、静态文件存放于网络提供商端，�
         <span class="sidebar-tag-name" data-tags="JVM"><span class="iconfont-archer">&#xe606;</span>JVM</span>
     
         <span class="sidebar-tag-name" data-tags="架构"><span class="iconfont-archer">&#xe606;</span>架构</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kafka"><span class="iconfont-archer">&#xe606;</span>Kafka</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
